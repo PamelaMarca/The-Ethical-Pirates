@@ -1,0 +1,19 @@
+{
+  "name": "tp2_intro",
+  "version": "1.0.0",
+  "main": "BACKEND/index.js",
+  "scripts": {
+    "dev": "nodemon BACKEND/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
