@@ -53,23 +53,97 @@ section{
 	border-radius: 1em;
 	border: 0.2em solid #8a4199;
 }
+
 .navegador{
 	width: 100%;
 	margin: 0%;
 	padding: 1% 20%;
 	text-align: center;
 	background-color: #0e1030;
+	position: relative;
 }
+
 .navegador a{
-	padding-right: 5%;
+	margin: 5%;
+	padding: 2%;
 	text-decoration: none;
 	color: #9ba8bb;
 	font-size: large;
 }
+
+#navegador_interno{
+	position: relative;
+	margin-left:2em ;
+}
+
+.icono_menu{
+	cursor: pointer;
+	color: #abd2ff;
+	font-size: xxx-large;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.cuadro_interno {
+	width: 150px;
+	padding: 1.5em 1.5em 1.5em 1em;
+	display: none;
+	position: absolute;
+	background-color:#b5daf3 ;
+	z-index: 1000;
+	
+}
+
+.cuadro_interno li{
+	list-style-type: none;
+	padding: 2px;
+}
+
+.cuadro_interno a:hover, .cuadro_interno button:hover {
+	background-color: #b5daf3; 
+}
+
+
+.cuadro_interno button, .cuadro_interno a{
+	background-color: transparent;
+	border: none;
+	color: #000020;
+	text-decoration: none;
+	align-content: baseline;
+
+
+}
+
 .cuadro{
 	margin: 5%;
 	padding: 5%;
 	background-color: #8693ce;
 	font-family: Georgia, 'Times New Roman', Times, serif;
 	color: #2e0838;
+}
+
+.fichas{
+	width: 100%;
+	list-style-type: none;
+	display: flex;
+	flex-wrap: wrap;
+}
+.items{
+	width: 48%;
+	margin: 1%;
+	padding: 1%;
+	margin-left: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	border: 0.4em solid #8f5e99;
+	border-radius: 20px;
+	background-color: #171738;
+}
+.info{
+	width: auto;
+	height: 100%;
+	padding: 1%;
+	background-color: #8693ce;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	color: #280f2e;
 }
