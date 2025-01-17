@@ -26,7 +26,7 @@
                         <li><a href="">Perfil</a></li>
                         <li>
                             <button class="biblio" aria-expanded="false" aria-controls="menu">Mi Biblioteca</button>
-                            <ul id="menu">
+                            <ul id="menu" hidden>
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
@@ -50,7 +50,6 @@
     </header>
     <main>
         <div class="cuadro" id="cuadro">
-            
         </div>
 
     </main>
@@ -62,6 +61,7 @@
             if (menu.style.display === 'none' || menu.style.display === '') {
                 menu.style.display = 'block' ;
                 icono.innerHTML='x';
+
             } 
             else {
                 menu.style.display = 'none';
@@ -69,10 +69,32 @@
             }
         }
         
-        fetch('http://localhost:3000/')
+        fetch('http://localhost:3000/api/v1/Series')
         .then(respuesta => respuesta.json())
         .then(json=>{
-            document.getElementById('cuadro').innerHTML = json.mensaje;
+            const cuadro = document.getElementById('cuadro');
+            
+            cuadro.innerHTML =`<h3>Series</h3>`
+
+            const lista = document.createElement('ul');
+            lista.classList.add('fichas')
+            json.mensaje.forEach(serie =>{
+                const fila = document.createElement('li');
+                fila.classList.add('items');
+                
+                fila.innerHTML= `
+                <div class="info"><p>Serie: <strong>${serie.nombre}</strong></p>
+                    <p>Fecha de Lanzamiento: ${serie.fecha_de_lanzamiento}</p>
+                    <p>Genero: ${serie.genero}</p>
+                    <p>Sinopsis: ${serie.sinopsis}</p>
+                </div>
+                <img src="${serie.portada}" width='170px'>
+                ` ;
+                lista.appendChild(fila);
+
+            })
+            cuadro.appendChild(lista);
+            // document.getElementById('cuadro').innerHTML = json.mensaje.nombre;
         })   
 
     </script>

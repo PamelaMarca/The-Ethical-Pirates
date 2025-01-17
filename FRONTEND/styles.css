@@ -6,11 +6,11 @@
 }
 .Home {
 	width: 100%;
-	background-color: #000020;
+	background-color: #0d0d24;
 }
 
 .cabezal {
-	background-color:#03031f;
+	background-color:#06061d;
 	padding: 0;
 	display: flex;
     flex-flow: nowrap;
@@ -88,25 +88,27 @@ section{
 	padding: 1.5em 1.5em 1.5em 1em;
 	display: none;
 	position: absolute;
-	background-color:#b5daf3 ;
+	background-color:#333661 ;
 	z-index: 1000;
 	
 }
 
 .cuadro_interno li{
+	width: 100%;
 	list-style-type: none;
 	padding: 2px;
 }
 
 .cuadro_interno a:hover, .cuadro_interno button:hover {
-	background-color: #b5daf3; 
+	color: #7a70b3;
+	background-color: #d0d0d4;
 }
 
 
 .cuadro_interno button, .cuadro_interno a{
 	background-color: transparent;
 	border: none;
-	color: #000020;
+	color: #a1a1b6;
 	text-decoration: none;
 	align-content: baseline;
 
@@ -116,9 +118,9 @@ section{
 .cuadro{
 	margin: 5%;
 	padding: 5%;
-	background-color: #8693ce;
+	background-color: #181e3f;
 	font-family: Georgia, 'Times New Roman', Times, serif;
-	color: #2e0838;
+	color: #bcc9cc;
 }
 
 .fichas{
@@ -135,15 +137,16 @@ section{
 	display: flex;
 	flex-wrap: wrap;
 	gap: 20px;
-	border: 0.4em solid #8f5e99;
+	border: 0.4em solid #5e6799;
 	border-radius: 20px;
 	background-color: #171738;
+	word-wrap: break-word;
 }
 .info{
-	width: auto;
+	width: 60%;
 	height: 100%;
 	padding: 1%;
-	background-color: #8693ce;
+	background-color: #404d86;
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-	color: #280f2e;
+	color: #c9cccf;
 }

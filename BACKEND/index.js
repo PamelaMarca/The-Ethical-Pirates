@@ -55,13 +55,36 @@ let peliculas = [
 ];
 
 
-let series=[{
-    nombre: "Senior Reina",
-    estado: "TERMINADO",
-    portada: "https://mx.web.img3.acsta.net/pictures/23/02/20/22/12/3555184.jpg",
-    genero: ["comedia", "romance", "historia"],
-    acceso: "PUBLICO"
-}]
+let series = [
+    {
+        nombre: "Señor Reina",
+        estado: "TERMINADO",
+        portada: "https://i.pinimg.com/736x/67/0a/13/670a13e77c3819087f370ae86303a492.jpg",
+        genero: ["Comedia", "Romance", "Historia", "Transmigración"],
+        acceso: "PUBLICO"
+    },
+    {
+        nombre: "La Casa de Papel",
+        estado: "TERMINADO",
+        portada: "https://tse3.mm.bing.net/th?id=OIP.9VqVkN3onE94I1C2NxRp-wHaJQ&rs=1&pid=ImgDetMain",
+        genero: ["Crimen", "Drama", "Suspenso"],
+        acceso: "PUBLICO"
+    },
+    {
+        nombre: "Stranger Things",
+        estado: "EN PRODUCCIÓN",
+        portada: "https://tse4.mm.bing.net/th?id=OIP.614ZOmkVvcOLGAci76bp1gHaJQ&rs=1&pid=ImgDetMain",
+        genero: ["Ciencia Ficción", "Horror", "Misterio"],
+        acceso: "PUBLICO"
+    },
+    {
+        nombre: "Game of Thrones",
+        estado: "TERMINADO",
+        portada: "https://tse3.mm.bing.net/th?id=OIP.gpoVFAyUAbnmDN33iBRRdgHaLH&rs=1&pid=ImgDetMain",
+        genero: ["Fantasía", "Drama", "Aventura"],
+        acceso: "PUBLICO"
+    }
+];
 
 let usuario=[] //pensando en dejar esta seccion en otro file.
 
@@ -99,7 +122,7 @@ app.get("/api/v1/Peliculas", (req, res)=>{
     const peliculas_g = peliculas.filter((pelicula)=> pelicula.acceso === "PUBLICO")
     if(peliculas_g.length === 0){
         const mensaje={
-            mensaje:`<h2>404</h2><h3>No se encontro ninguna pelicula</h3>`
+            mensaje:`<h2>Lo sentimos </h2><h3>No se encontro ninguna pelicula</h3>`
         }
         res.status(200).json(mensaje)
         return
@@ -108,11 +131,11 @@ app.get("/api/v1/Peliculas", (req, res)=>{
 
 })
 
-app.get("/api/v1/Series/api/v1/Series", (req,res)=>{
+app.get("/api/v1/Series", (req,res)=>{
     const series_g = series.filter ((series)=> series.acceso === "PUBLICO")
     if(series_g.length === 0){
         const mensaje={
-            mensaje:`<h2>404</h2><h3>No se encontro ninguna lista de Series</h3>`
+            mensaje:`<h2>Lo sentimos!</h2><h3>No se encontro ninguna lista de Series</h3>`
         }
         res.status(200).json(mensaje)
         return  
