@@ -91,10 +91,12 @@ let usuario=[] //pensando en dejar esta seccion en otro file.
 
 app.get("/", (req,res)=>{
     texto=`<h2>Bienvenido</h2>
-            <h3>Esta es una pagina para guardar, buscar, puedes hasta reseñar y recomendar peliculas o series.<br>
+            <h4>Esta es una pagina para guardar, buscar, puedes hasta reseñar y recomendar peliculas o series.<br>
                 Puedes tambien publicar o ver publicaciones de otros usuarios!<br>
                 Seremos tu lista de peliculas que quieras ver! <br><br>
-                Registrate y comiensa a guardar la ubicacion de tus peliculas y series favoritas o que quieras ver mas tarde </h3>`
+                Registrate y comiensa a guardar la ubicacion de tus peliculas y series favoritas o que quieras ver mas tarde </h4>
+                <a href="inicio.html" class="boton" width=50px >Iniciar Sesion</a>
+                <a href="registro.html" class="boton">Registrarse</a>`
     res.json({ mensaje: texto })
 
 })

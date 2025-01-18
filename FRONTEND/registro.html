@@ -9,35 +9,10 @@
 <body class="Home">
     <header class="cabezal">
         <section>
-            <div class="presentacion">
+			<div class="presentacion">
                 <img src="imagenes/cine.png" alt="imagen" width="200px">
                 <h1 id="titulo">Piratas del cine</h1>                
-            </div>
-
-            <div class ="ingresar" id="ingresar" hidden>
-                <a href="inicio.html" class="boton">Iniciar Sesion</a>
-                <a href="registro.html" class="boton">Registrarse</a>
-            </div>
-            
-            <nav id="navegador_interno">
-                <div class="icono_menu" onclick="desplegar()">☰</div>
-                <div class="cuadro_interno" id="cuadro_interno">
-                    <ul>
-                        <li><a href="">Perfil</a></li>
-                        <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong> </button>
-                            <ul id="menu" hidden>
-                                <li><a href="">Mis Series</a></li>
-                                <li><a href="">MIs Peliculas</a></li>
-                            </ul>
-                        </li>
-    
-                        <li><a href="">Comentarios</a></li>
-                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
-                    </ul>
-                </div>
-
-            </nav> 
+            </div>          
         </section>    
         <section>
             <nav class="navegador">
@@ -49,9 +24,32 @@
   
     </header>
     <main>
-        <div class="cuadro" id="cuadro">
-            
-        </div>
+		<div class="cuadro">
+			<form>
+				<div id="Personal">
+					<h3>Personal</h3>
+					<p>Nombre: <br><input type="text" required></p>
+					<p>Apellido: <br><input type="text" required></p>
+					<p>fecha de Nacimiento <br><input type="date" name="fecha" id="Nacimiento"></p>
+					<p>Correo electronico <br> <input type="email" name="contacto" id="correo"></p>
+                    <p>Telefono <br> <input type="tel" name="contacto" id="telefono"></p>
+                    <p>Genero:
+					<select name="genero" id="1">
+						<option value="1">Femenino</option>
+						<option value="2">Masculino</option>
+					</select></p>
+				</div>
+				<div id="usuario">
+					<h3>Usuario</h3>
+                    <p>Nombre de usuario:<br><input type="text" required></p>
+                    <p>Contraseña <br> <input type="password" name="contra" id="contra" required></p>
+                    <p>Confirmar contraseña <br> <input type="password" name="contra" id="verif-contra" required></p>
+
+                </div>
+				<input type="submit" value="Crear Cuenta">
+			</form>
+		</div>
+
 
     </main>
     <script src="../BACKEND/index.js"></script>
@@ -77,12 +75,6 @@
             else 
                 signo.innerHTML = 'v';
         }
-
-        fetch('http://localhost:3000/')
-        .then(respuesta => respuesta.json())
-        .then(json=>{
-            document.getElementById('cuadro').innerHTML = json.mensaje;
-        })   
 
     </script>
 </body>

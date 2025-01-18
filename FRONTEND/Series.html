@@ -15,8 +15,8 @@
             </div>
 
             <div class ="ingresar" id="ingresar" hidden>
-                <a href="inicio" class="boton">Iniciar Sesion</a>
-                <a href="registro" class="boton">Registrarse</a>
+                <a href="inicio.html" class="boton">Iniciar Sesion</a>
+                <a href="registro.html" class="boton">Registrarse</a>
             </div>
             
             <nav id="navegador_interno">
@@ -25,7 +25,7 @@
                     <ul>
                         <li><a href="">Perfil</a></li>
                         <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong>&lt</strong></button>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong></button>
                             <ul id="menu" hidden>
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
@@ -70,7 +70,12 @@
         }
         function desplega_biblio(){
             const menu= document.getElementById('menu');
+            const signo =document.getElementById('signo');
             menu.hidden=!menu.hidden;
+            if(menu.hidden)
+                signo.innerHTML = '&lt;';
+            else 
+                signo.innerHTML = 'v';
         }
 
         fetch('http://localhost:3000/api/v1/Series')

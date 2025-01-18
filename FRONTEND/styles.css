@@ -42,16 +42,22 @@ section{
 	color:#226332;
 }
 
-#ingresar .boton{
+.boton{
 	display: inline-block;
 	padding: 3%;
-	background-color: #4f96a8;
+	background-color: #579bac;
 	margin: 2%;
-	color: rgb(5, 2, 36);
+	color: rgb(21, 16, 78);
 	text-align: center;
 	text-decoration: none;
 	border-radius: 1em;
-	border: 0.2em solid #8a4199;
+	border: 0.2em solid #7f2991;
+}
+.boton:hover{
+	background-color: #181e3f;
+	color: #50c9eb;
+	border-color:#20606e ;
+	transition: 1s;
 }
 
 .navegador{
@@ -101,6 +107,7 @@ section{
 .cuadro_interno a:hover, .cuadro_interno button:hover,.navegador a:hover {
 	color: #7a70b3;
 	background-color: #d0d0d4;
+	
 }
 
 .cuadro_interno button, .cuadro_interno a{
@@ -113,6 +120,8 @@ section{
 	color: #a1a1b6;
 	text-decoration: none;
 	cursor: pointer;
+	font-family:Arial, Helvetica, sans-serif ;
+	font-size: 14px;
 }
 
 
@@ -145,6 +154,8 @@ section{
 .items:hover {
 	background-color: #50c9eb;
 	border-color: #a5e9fc;
+	transition: 1s;
+
 }
 
 .info{
