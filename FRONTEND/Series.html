@@ -25,7 +25,7 @@
                     <ul>
                         <li><a href="">Perfil</a></li>
                         <li>
-                            <button class="biblio" aria-expanded="false" aria-controls="menu">Mi Biblioteca</button>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong>&lt</strong></button>
                             <ul id="menu" hidden>
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
@@ -68,7 +68,11 @@
                 icono.innerHTML = '☰';
             }
         }
-        
+        function desplega_biblio(){
+            const menu= document.getElementById('menu');
+            menu.hidden=!menu.hidden;
+        }
+
         fetch('http://localhost:3000/api/v1/Series')
         .then(respuesta => respuesta.json())
         .then(json=>{
@@ -84,11 +88,11 @@
                 
                 fila.innerHTML= `
                 <div class="info"><p>Serie: <strong>${serie.nombre}</strong></p>
-                    <p>Fecha de Lanzamiento: ${serie.fecha_de_lanzamiento}</p>
+                    <p>Lanzamiento: ${serie.fecha_de_lanzamiento}</p>
                     <p>Genero: ${serie.genero}</p>
                     <p>Sinopsis: ${serie.sinopsis}</p>
                 </div>
-                <img src="${serie.portada}" width='170px'>
+                <img class="imagen" src="${serie.portada}" width='170px'>
                 ` ;
                 lista.appendChild(fila);
 

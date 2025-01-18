@@ -82,6 +82,7 @@ let series = [
         estado: "TERMINADO",
         portada: "https://tse3.mm.bing.net/th?id=OIP.gpoVFAyUAbnmDN33iBRRdgHaLH&rs=1&pid=ImgDetMain",
         genero: ["Fantasía", "Drama", "Aventura"],
+        sinopsis: 'En un mundo donde la magia y la ciencia coexisten, la joven Eris Luminous se encuentra atrapada entre dos realidades: la de los humanos y la de los magos. Tras el misterioso asesinato de su padre, un renombrado científico, Eris descubre que su familia es portadora de un antiguo linaje de magos cuyo poder es codiciado por oscuros intereses. A medida que Eris navega por un mundo lleno de peligros y secretos, se une a un grupo de rebeldes conocidos como "La Orden del Alba". Con ellos, intenta desentrañar la verdad detrás de la muerte de su padre y evitar que una poderosa organización llamada "laSombra Eterna" desate una guerra entre magos y humanos. En su viaje, Eris descubre sus propios poderes mágicos latentes y debe aprender a controlarlos. Entre sus aliados se encuentran Kael, un mago de fuego con un pasado tormentoso; Liora, una experta en ilusiones y espionaje; y Thalos, un guerrero humano que busca venganza contra La Sombra Eterna por la destrucción de su aldea.',
         acceso: "PUBLICO"
     }
 ];

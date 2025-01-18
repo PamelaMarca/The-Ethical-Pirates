@@ -25,8 +25,8 @@
                     <ul>
                         <li><a href="">Perfil</a></li>
                         <li>
-                            <button class="biblio" aria-expanded="false" aria-controls="menu">Mi Biblioteca</button>
-                            <ul id="menu">
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong>&lt</strong> </button>
+                            <ul id="menu" hidden>
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
@@ -68,7 +68,11 @@
                 icono.innerHTML = '☰';
             }
         }
-        
+        function desplega_biblio(){
+            const menu= document.getElementById('menu');
+            menu.hidden=!menu.hidden;
+        }
+
         fetch('http://localhost:3000/')
         .then(respuesta => respuesta.json())
         .then(json=>{
