@@ -14,9 +14,8 @@
                 <h1 id="titulo">Piratas del cine</h1>                
             </div>
 
-            <div class ="ingresar" id="ingresar" hidden>
-                <a href="inicio.html" class="boton">Iniciar Sesion</a>
-                <a href="registro.html" class="boton">Registrarse</a>
+            <div class ="ingresar" id="ingresar">
+                <a href="registro.html" class="boton">Iniciar Sesion</a>
             </div>
             
             <nav id="navegador_interno">
@@ -53,6 +52,9 @@
         </div>
 
     </main>
+    <footer>
+        <p>&copy; 2024 The Ethical Pirates</p>
+    </footer>
     <script src="../BACKEND/index.js"></script>
     <script>
         function desplegar() {
@@ -76,6 +78,19 @@
                 signo.innerHTML = '&lt;';
             else 
                 signo.innerHTML = 'v';
+        }
+        function iniciado(){
+            const navegador=document.querySelector('#navegador_interno');
+            const boton_registro=document.querySelector('#ingresar .boton');
+            if(navegador.style.display=== 'none' || navegador.style.display==''){
+                navegador.style.display = 'block';
+                boton_registro.style.display='none';
+            }
+            else{
+                navegador.style.display = 'none';
+                boton_registro.style.display='block';
+            }
+
         }
 
         fetch('http://localhost:3000/api/v1/Series')
