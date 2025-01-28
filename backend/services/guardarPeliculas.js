@@ -20,11 +20,10 @@ async function fetchData(query) {
     }
 }
 
-async function guardarPeliculasDesdeAPI() {
+async function guardarPeliculasDesdeAPI(query) {
     try {
         console.log('Iniciando la ejecución para guardar las películas...');
         
-        const query = "batman"; // Consulta
         const data = await fetchData(query);
 
         console.log('Datos recibidos de la API:', data);
@@ -60,10 +59,11 @@ async function guardarPeliculasDesdeAPI() {
     }
 }
 
-// Sincronizar la base de datos antes de guardar las películas
+// Función para ejecutar el script, pasando el título de la película que deseas buscar
+const tituloDePelicula = "barbie";  // Cambia este valor por cualquier película que desees buscar
 sequelize.sync()
     .then(() => {
         console.log("Base de datos sincronizada");
-        guardarPeliculasDesdeAPI();
+        guardarPeliculasDesdeAPI(tituloDePelicula);  // Aquí se pasa el título dinámicamente
     })
     .catch(err => console.error("Error al sincronizar la base de datos:", err));
