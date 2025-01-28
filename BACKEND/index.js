@@ -94,9 +94,8 @@ app.get("/", (req,res)=>{
             <h4>Esta es una pagina para guardar, buscar, puedes hasta reseñar y recomendar peliculas o series.<br>
                 Puedes tambien publicar o ver publicaciones de otros usuarios!<br>
                 Seremos tu lista de peliculas que quieras ver! <br><br>
-                Registrate y comiensa a guardar la ubicacion de tus peliculas y series favoritas o que quieras ver mas tarde </h4>
-                <a href="inicio.html" class="boton" width=50px >Iniciar Sesion</a>
-                <a href="registro.html" class="boton">Registrarse</a>`
+                Registrate o Inicia Sesion y comiensa a guardar la ubicacion de tus peliculas y series favoritas o que quieras ver mas tarde </h4>
+                <a href="registro.html" class="boton" >Iniciar Sesion/ Registrarse</a>`
     res.json({ mensaje: texto })
 
 })
