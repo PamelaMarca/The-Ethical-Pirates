@@ -1,9 +1,9 @@
 {
   "name": "tp2_intro",
   "version": "1.0.0",
-  "main": "BACKEND/index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon BACKEND/index.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

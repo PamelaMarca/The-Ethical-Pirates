@@ -29,12 +29,12 @@
                 <div class="pregunta-inicio">
                     <h3>¿Tienes una cuenta?</h3>
                     <p>Entonce entra apretando</p>
-                    <button class="boton">Iniciar Sesion</button>
+                    <button class="boton" onclick="desliza()">Iniciar Sesion</button>
                 </div>
                 <div class="pregunta-registro">
                     <h3>¿Aun no tienes una cuenta?</h3>
                     <p>Entonce create una apretando</p>
-                    <button class="boton">Registrarse</button>
+                    <button class="boton" onclick="desliza()">Registrarse</button>
                 </div>
             </div>
             <div class="formularios">
@@ -64,7 +64,7 @@
                         <h4>Usuario</h4>
                         <input type="text" placeholder="Nombre de usuario" required>
                         <input type="password" name="contra" id="contra" placeholder="Contraseña" required >
-                        <input type="password" name="contra" id="verif-contra" placeholder="Confirmar Contraseña" required>
+                        <!-- <input type="password" name="contra" id="verif-contra" placeholder="Confirmar Contraseña" required> -->
                     </div>
                     <input class="button" type="submit" value="Crear Cuenta">
                 </form>         
@@ -78,7 +78,7 @@
     <footer>
         <p>&copy; 2024 The Ethical Pirates</p>
     </footer>
-    <script src="../BACKEND/index.js"></script>
+    <script src="../BACKEND/app.js"></script>
     <script>
         function desplegar() {
             const menu = document.querySelector('#navegador_interno .cuadro_interno');
@@ -100,6 +100,28 @@
                 signo.innerHTML = '&lt;';
             else 
                 signo.innerHTML = 'v';
+        }
+        function desliza(){
+            const registro= document.querySelector('.formularios .formulario-registro');
+            const inicio= document.querySelector('.formularios .formulario-inicio');
+            const contenedor = document.querySelector('.formularios');
+            const pregunta_registro = document.querySelector('.pregunta-registro');          
+            const pregunta_inicio = document.querySelector('.pregunta-inicio');          
+            
+            if(registro.style.display==='none'){
+                registro.style.display="block";
+                contenedor.style.left="50%";
+                inicio.style.display="none";
+                pregunta_registro.style.opacity='0';
+                pregunta_inicio.style.opacity='1';
+            }else{
+                contenedor.style.left="0";
+                inicio.style.display="block"
+                inicio.style.padding=""
+                registro.style.display="none";
+                pregunta_registro.style.opacity='1';
+                pregunta_inicio.style.opacity='0';
+            }
         }
 
     </script>

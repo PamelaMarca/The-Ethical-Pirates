@@ -53,6 +53,7 @@ section{
 	text-decoration: none;
 	border-radius: 1em;
 	border: 0.2em solid #7f2991;
+	cursor: pointer;
 }
 .boton:hover{
 	background-color: #181e3f;
@@ -186,7 +187,7 @@ section{
 	justify-content: center;
 }
 .cuadro_pregunta div{
-	margin:120px 40px;
+	margin:120px 60px;
 	color: white;
 	font-family: Arial, sans-serif;
 	transition: all 0.5s;
@@ -197,6 +198,9 @@ section{
 .cuadro_pregunta div h3{
 	font-weight: 400;
 	font-size: 24px;
+}
+.pregunta-inicio{
+	opacity:0;
 }
 
 .formularios {
@@ -209,7 +213,7 @@ section{
 
 .formularios form{
 	width: 100%;
-	background: #181e3f;
+	background: #6776ca;
 	position: absolute;
 	padding: 20px 90px;
 }
@@ -238,7 +242,21 @@ section{
 	border-radius: 15px;
 	font-size: 16px;
 	color: rgb(7, 11, 41);
+	cursor: pointer;
 }
+
+.formulario-inicio{
+	opacity: 1;
+	display: block;
+
+
+}
+
+.formulario-registro{
+	display: none;
+}
+
+
 
 footer{
 	height: 50px;
