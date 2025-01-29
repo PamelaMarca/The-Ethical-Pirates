@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piratas del cine</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="Home">
+    <header class="cabezal">
+        <section>
+			<div class="presentacion">
+                <img src="imagenes/cine.png" alt="imagen" width="200px">
+                <h1 id="titulo">Piratas del cine</h1>                
+            </div>          
+        </section>    
+        <section>
+            <nav class="navegador">
+                <a href="index.html">Home</a>
+                <a href="Series.html">Series</a>
+                <a href="Peliculas.html">Peliculas</a>
+            </nav>
+        </section>
+  
+    </header>
+    <main>
+		<div class="cuadro ">
+            <div class="cuadro_pregunta">
+                <div class="pregunta-inicio">
+                    <h3>¿Tienes una cuenta?</h3>
+                    <p>Entonce entra apretando</p>
+                    <button class="boton" onclick="desliza()">Iniciar Sesion</button>
+                </div>
+                <div class="pregunta-registro">
+                    <h3>¿Aun no tienes una cuenta?</h3>
+                    <p>Entonce create una apretando</p>
+                    <button class="boton" onclick="desliza()">Registrarse</button>
+                </div>
+            </div>
+            <div class="formularios">
+                <form class="formulario-inicio">
+                    <h2>Inicio de Sesion</h2>
+                    <input type="text" placeholder="Nombre de Usuario" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <input class="button" type="submit" value="Entrar">
+                </form>
+    			<form class="formulario-registro">
+                    <h2>Registro</h2>
+				    <div id="Personal">
+                        <h4>Datos Personales</h4>
+                        <input type="text" placeholder="Apellido" required>
+                        <input type="text" placeholder="Nombre" required>
+                        <p>Fecha de Nacimiento</p>
+                        <input type="date" name="fecha" id="Nacimiento">
+                        <input type="email" name="contacto" id="correo" placeholder="Email">
+                        <input type="tel" name="contacto" id="telefono" placeholder="Telefono">
+                        <p>Genero:
+                        <select name="genero" id="1">
+                            <option value="1">Femenino</option>
+                            <option value="2">Masculino</option>
+                        </select></p>
+                    </div>
+                    <div id="usuario">
+                        <h4>Usuario</h4>
+                        <input type="text" placeholder="Nombre de usuario" required>
+                        <input type="password" name="contra" id="contra" placeholder="Contraseña" required >
+                        <!-- <input type="password" name="contra" id="verif-contra" placeholder="Confirmar Contraseña" required> -->
+                    </div>
+                    <input class="button" type="submit" value="Crear Cuenta">
+                </form>         
+
+            </div>
+
+		</div>
+
+
+    </main>
+    <footer>
+        <p>&copy; 2024 The Ethical Pirates</p>
+    </footer>
+    <script src="../BACKEND/app.js"></script>
+    <script>
+        function desplegar() {
+            const menu = document.querySelector('#navegador_interno .cuadro_interno');
+            const icono = document.querySelector('.icono_menu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block' ;
+                icono.innerHTML='x';
+            } 
+            else {
+                menu.style.display = 'none';
+                icono.innerHTML = '☰';
+            }
+        }
+        function desplega_biblio(){
+            const menu= document.getElementById('menu');
+            const signo =document.getElementById('signo');
+            menu.hidden=!menu.hidden;
+            if(menu.hidden)
+                signo.innerHTML = '&lt;';
+            else 
+                signo.innerHTML = 'v';
+        }
+        function desliza(){
+            const registro= document.querySelector('.formularios .formulario-registro');
+            const inicio= document.querySelector('.formularios .formulario-inicio');
+            const contenedor = document.querySelector('.formularios');
+            const pregunta_registro = document.querySelector('.pregunta-registro');          
+            const pregunta_inicio = document.querySelector('.pregunta-inicio');          
+            
+            if(registro.style.display==='none'){
+                registro.style.display="block";
+                contenedor.style.left="50%";
+                inicio.style.display="none";
+                pregunta_registro.style.opacity='0';
+                pregunta_inicio.style.opacity='1';
+            }else{
+                contenedor.style.left="0";
+                inicio.style.display="block"
+                inicio.style.padding=""
+                registro.style.display="none";
+                pregunta_registro.style.opacity='1';
+                pregunta_inicio.style.opacity='0';
+            }
+        }
+
+    </script>
+</body>
+</html>

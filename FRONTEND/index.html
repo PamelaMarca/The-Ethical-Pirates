@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piratas del cine</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="Home">
+    <header class="cabezal">
+        <section>
+            <div class="presentacion">
+                <img src="imagenes/cine.png" alt="imagen" width="200px">
+                <h1 id="titulo">Piratas del cine</h1>                
+            </div>
+
+            <div class ="ingresar" id="ingresar">
+                <a href="registro.html" class="boton">Iniciar Sesion</a>
+            </div>
+            
+            <nav id="navegador_interno">
+                <div class="icono_menu" onclick="desplegar()">☰</div>
+                <div class="cuadro_interno" id="cuadro_interno">
+                    <ul>
+                        <li><a href="">Perfil</a></li>
+                        <li>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong> </button>
+                            <ul id="menu" hidden>
+                                <li><a href="">Mis Series</a></li>
+                                <li><a href="">MIs Peliculas</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="">Comentarios</a></li>
+                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
+                    </ul>
+                </div>
+
+            </nav> 
+        </section>    
+        <section>
+            <nav class="navegador">
+                <a href="index.html">Home</a>
+                <a href="Series.html">Series</a>
+                <a href="Peliculas.html">Peliculas</a>
+            </nav>
+        </section>
+  
+    </header>
+    <main>
+        <div class="cuadro" id="cuadro">
+            
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>&copy; 2024 The Ethical Pirates</p>
+        </div>
+    </footer>
+    <script src="../BACKEND/app.js"></script>
+    <script>
+        function desplegar() {
+            const menu = document.querySelector('#navegador_interno .cuadro_interno');
+            const icono = document.querySelector('.icono_menu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block' ;
+                icono.innerHTML='x';
+            } 
+            else {
+                menu.style.display = 'none';
+                icono.innerHTML = '☰';
+            }
+        }
+        function desplega_biblio(){
+            const menu= document.getElementById('menu');
+            const signo =document.getElementById('signo');
+            menu.hidden=!menu.hidden;
+            if(menu.hidden)
+                signo.innerHTML = '&lt;';
+            else 
+                signo.innerHTML = 'v';
+        }
+        function iniciado(){
+            const navegador=document.querySelector('#navegador_interno');
+            const boton_registro=document.querySelector('#ingresar');
+            if(navegador.style.display=== 'none' || navegador.style.display==''){
+                navegador.style.display = 'block';
+                boton_registro.style.display='none';
+            }
+            else{
+                navegador.style.display = 'none';
+                boton_registro.style.display='block';
+            }
+
+        }
+
+        fetch('http://localhost:3000/')
+        .then(respuesta => respuesta.json())
+        .then(json=>{
+            document.getElementById('cuadro').innerHTML = json.mensaje;
+        })   
+
+    </script>
+</body>
+</html>
