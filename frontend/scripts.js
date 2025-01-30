@@ -1,5 +1,5 @@
-document.getElementById("searchButton").addEventListener("click", async () => {
-  const query = document.getElementById("searchInput").value;
+document.getElementById("buscar").addEventListener("click", async () => {
+  const query = document.getElementById("limpiarInput").value;
   if (!query) return;
 
   const response = await fetch(`/api/buscar?query=${query}`);

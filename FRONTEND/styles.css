@@ -2,6 +2,7 @@
 	margin:0;
 	padding:0;
 	box-sizing: border-box;
+	font-family: Arial;
 }
 .Home {
 	width: 100%;
@@ -64,15 +65,38 @@ section{
 
 .navegador{
 	width: 100%;
-	margin: 0%;
-	padding: 1% 20%;
-	text-align: center;
+	margin: 0;
+	padding: 0% 20%;
 	background-color: #0e1030;
+	display: flex;
+}
+.paginas{
+	width: 100%;
+	text-align: center;
 	position: relative;
+	display: flex;
+	
 }
 
-.navegador a{
-	padding: 2% 5%;
+#buscador{
+	width: 30%;
+	position: relative;
+	left: 15%;
+}
+#buscador input{
+	width: 300px;
+	padding: 6px;
+	font-size: 16px;
+	border-radius: 15px;
+}
+#buscador span{
+	font-size: large;
+	cursor: pointer;
+	margin: 0 8px;
+}
+
+.paginas a{
+	padding: 3% 5%;
 	text-decoration: none;
 	color: #9ba8bb;
 	font-size: large;
@@ -106,7 +130,7 @@ section{
 	list-style-type: none;
 }
 
-.cuadro_interno a:hover, .cuadro_interno button:hover,.navegador a:hover {
+.cuadro_interno a:hover, .cuadro_interno button:hover,.paginas a:hover {
 	color: #7a70b3;
 	background-color: #d0d0d4;
 	
@@ -295,7 +319,9 @@ footer{
 	}
 }
 @media (max-width: 470px){
-	.info
+	#buscador input{
+		display: none;
+	}
 
 	.cuadro{
 		margin:40px 10px;

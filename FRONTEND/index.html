@@ -40,10 +40,19 @@
         </section>    
         <section>
             <nav class="navegador">
+                <div class="paginas">
                 <a href="index.html">Home</a>
                 <a href="Series.html">Series</a>
                 <a href="Peliculas.html">Peliculas</a>
+                </div>
+
+                <section id="buscador">
+                    <input type="text" id="limpiarInput" placeholder="Buscar una película o serie">
+                    <span id="buscar">&#128269</span>
+                    <div id="resultados"></div>
+                </section>
             </nav>
+
         </section>
   
     </header>
@@ -59,6 +68,7 @@
         </div>
     </footer>
     <script src="../BACKEND/app.js"></script>
+    <script src="../frontend/scripts.js"></script>
     <script>
         function desplegar() {
             const menu = document.querySelector('#navegador_interno .cuadro_interno');
