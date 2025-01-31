@@ -47,9 +47,8 @@
                 </div>
 
                 <section id="buscador">
-                    <input type="text" id="limpiarInput" placeholder="Buscar una película o serie">
-                    <span id="buscar">&#128269</span>
-                    <div id="resultados"></div>
+                    <input type="text" id="search" placeholder="Buscar una película o serie">
+                    <span id="buscar" onclick="">&#128269</span>
                 </section>
             </nav>
 
@@ -68,42 +67,8 @@
         </div>
     </footer>
     <script src="../BACKEND/app.js"></script>
-    <script src="../frontend/scripts.js"></script>
+    <script src="./js/navegacion.js"></script>
     <script>
-        function desplegar() {
-            const menu = document.querySelector('#navegador_interno .cuadro_interno');
-            const icono = document.querySelector('.icono_menu');
-            if (menu.style.display === 'none' || menu.style.display === '') {
-                menu.style.display = 'block' ;
-                icono.innerHTML='x';
-            } 
-            else {
-                menu.style.display = 'none';
-                icono.innerHTML = '☰';
-            }
-        }
-        function desplega_biblio(){
-            const menu= document.getElementById('menu');
-            const signo =document.getElementById('signo');
-            menu.hidden=!menu.hidden;
-            if(menu.hidden)
-                signo.innerHTML = '&lt;';
-            else 
-                signo.innerHTML = 'v';
-        }
-        function iniciado(){
-            const navegador=document.querySelector('#navegador_interno');
-            const boton_registro=document.querySelector('#ingresar');
-            if(navegador.style.display=== 'none' || navegador.style.display==''){
-                navegador.style.display = 'block';
-                boton_registro.style.display='none';
-            }
-            else{
-                navegador.style.display = 'none';
-                boton_registro.style.display='block';
-            }
-
-        }
 
         fetch('http://localhost:3000/')
         .then(respuesta => respuesta.json())

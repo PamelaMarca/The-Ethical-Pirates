@@ -38,10 +38,10 @@ section{
 }
 
 #titulo{
-	font-size: 50px;
+	font-size: 40px;
 	font-family:Arial, Helvetica, sans-serif;
-	text-shadow: -1px -1px 0 #abd2ff;
-	color:#226332;
+	text-shadow: -2px -3px 0 #155f72;
+	color:#ace0e4;
 }
 
 .boton{
@@ -73,7 +73,6 @@ section{
 .paginas{
 	width: 100%;
 	text-align: center;
-	position: relative;
 	display: flex;
 	
 }
@@ -83,6 +82,7 @@ section{
 	position: relative;
 	left: 15%;
 }
+
 #buscador input{
 	width: 300px;
 	padding: 6px;
@@ -94,7 +94,9 @@ section{
 	cursor: pointer;
 	margin: 0 8px;
 }
-
+#buscador span:active{
+	background-color: #155f72;
+}
 .paginas a{
 	padding: 3% 5%;
 	text-decoration: none;
@@ -105,7 +107,7 @@ section{
 #navegador_interno{
 	position: relative;
 	margin-left:2em ;
-	display:none;
+	display:block;
 }
 
 .icono_menu{
@@ -122,7 +124,6 @@ section{
 	position: absolute;
 	background-color:#333661 ;
 	z-index: 1000;
-	
 }
 
 .cuadro_interno li{
@@ -156,6 +157,11 @@ section{
 	background-color: #181e3f;
 	font-family: Georgia, 'Times New Roman', Times, serif;
 	color: #bcc9cc;
+}
+
+.bienvenida p{
+	margin-top:8px;
+	font-size: 18px;
 }
 
 .fichas{
@@ -209,6 +215,7 @@ section{
 	padding: 20px;
 	display: flex;
 	justify-content: center;
+
 }
 .cuadro_pregunta div{
 	margin:120px 60px;
@@ -232,12 +239,13 @@ section{
 	align-items: center;
 	max-width: 50%;
 	position: relative;
-	top: -200px;
+	top: -220px;
+	transition: all 0.6s;
 }
 
 .formularios form{
 	width: 100%;
-	background: #6776ca;
+	background: hsla(231, 73%, 72%, 0.418);
 	position: absolute;
 	padding: 20px 90px;
 }
@@ -253,7 +261,7 @@ section{
 	width: 100%;
 	margin-top: 8px;
 	border: none;
-	background: #d2e2e6;
+	background: #d7e7eb;
 	padding: 3px;
 	font-size: 12px;
 	outline: none;
@@ -262,7 +270,7 @@ section{
 .formularios form .button{
 	width: 150px;
 	padding: 10px;
-	background: #8199bd;
+	background: #8ca2c2;
 	border-radius: 15px;
 	font-size: 16px;
 	color: rgb(7, 11, 41);
@@ -272,8 +280,6 @@ section{
 .formulario-inicio{
 	opacity: 1;
 	display: block;
-
-
 }
 
 .formulario-registro{
@@ -295,6 +301,17 @@ footer{
 }
 
 @media (max-width: 890px){
+	.navegador{
+		padding: 0 8%;
+	}
+	.paginas{
+		width: 60%;
+	}
+	#buscador{
+		width: 25%;
+		left: 0;
+		
+	}
 	.items{
 		width: 49%;
 		margin: 10px auto;
@@ -319,6 +336,9 @@ footer{
 	}
 }
 @media (max-width: 470px){
+	#buscador{
+		left: 25%;
+	}
 	#buscador input{
 		display: none;
 	}
@@ -342,4 +362,8 @@ footer{
 	.cuadro h2, .cuadro h4{
 		margin: 15px 10px;
 	}
+	.formularios{
+		top: -252px;
+	}
+	
 }

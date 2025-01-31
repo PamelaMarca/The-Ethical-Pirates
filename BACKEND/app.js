@@ -90,12 +90,14 @@ let series = [
 let usuario=[] //pensando en dejar esta seccion en otro file.
 
 app.get("/", (req,res)=>{
-    texto=`<h2>Bienvenido</h2>
-            <h4>Esta es una pagina para guardar, buscar, puedes hasta reseñar y recomendar peliculas o series.<br>
-                Puedes tambien publicar o ver publicaciones de otros usuarios!<br>
-                Seremos tu lista de peliculas que quieras ver! <br><br>
-                Registrate o Inicia Sesion y comiensa a guardar la ubicacion de tus peliculas y series favoritas o que quieras ver mas tarde </h4>
-                <a href="registro.html" class="boton" >Iniciar Sesion/ Registrarse</a>`
+    texto=`<div class="bienvenida">
+                <h2>¡Bienvenido!</h2>
+                <p>Esta es una pagina para guardar, buscar, puedes hasta reseñar y recomendar peliculas o series.</p>
+                <p>Puedes tambien publicar o ver publicaciones de otros usuarios!</p>
+                <p>Seremos tu lista de peliculas que quieras ver, te ayudaremos a guardar las direcciones de esta peliculas o mostrarte donde puedas verlas </p><br>
+                <p>Registrate o Inicia Sesion y empieza a guardar la ubicacion de tus peliculas y series que quieras ver mas tarde o tener guardado el lugar donde ver nuevamente tu pelicula favorita!</p>
+                <a href="registro.html" class="boton" >Iniciar Sesion/ Registrarse</a>
+                </div>`
     res.json({ mensaje: texto })
 
 })
@@ -108,7 +110,6 @@ app.get("/api/v1/Biblioteca/:tipo",(req,res)=>{
     }else if(tipo == "Series"){
         coleccion=series
     }else{
-        res.status(404).send("Pagina no encontrada xC")
         return 
     }
     const privado = coleccion.filter((elemento)=> elemento.acceso === "PRIVADO")
