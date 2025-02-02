@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piratas del cine</title>
+    <link rel="icono" href="./imagenes/pngwing.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="Home">
@@ -41,7 +42,7 @@
         <section>
             <nav class="navegador">
                 <div class="paginas">
-                <a href="index.html">Home</a>
+                <a id="index" href="index.html">Home</a>
                 <a href="Series.html">Series</a>
                 <a href="Peliculas.html">Peliculas</a>
                 </div>
@@ -56,7 +57,7 @@
   
     </header>
     <main>
-        <div class="cuadro resultados" id="cuadro">
+        <div class="cuadro" id="cuadro">
             
         </div>
     </main>
@@ -66,17 +67,15 @@
             <p>&copy; 2024 The Ethical Pirates</p>
         </div>
     </footer>
-    <script src="../BACKEND/app.js"></script>
-    <script src="./js/interacciones.js"></script>
+    <script type="module" src="../BACKEND/app.js"></script>
+    <script type="module" src="./js/interacciones.js"></script>
+    <script src="./js/series_peliculas.js"></script>
     <script>
-        function bienvenida(){
-            fetch('http://localhost:3001/')
-            .then(respuesta => respuesta.json())
-            .then(json=>{
-                document.getElementById('cuadro').innerHTML = json.mensaje;
-            })               
-        }
-        bienvenida();
+        fetch('http://localhost:3001/')
+        .then(respuesta => respuesta.json())
+        .then(json=>{
+            document.getElementById('cuadro').innerHTML = json.mensaje;
+        })               
     </script>
 </body>
 </html>

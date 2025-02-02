@@ -20,6 +20,7 @@ function desplega_biblio(){
 	else 
 		signo.innerHTML = 'v';
 }
+
 function iniciado(){
 	const navegador=document.querySelector('#navegador_interno');
 	const boton_registro=document.querySelector('#ingresar');
@@ -27,23 +28,7 @@ function iniciado(){
 	boton_registro.style.display = 'none';
 }
 
-function buscar(){
-	const clave= document.getElementById('search').value;
-	console.log(clave);
-	const cuadro= document.querySelector('.retultados');
-	fetch(`http://localhost:3000/busqueda/buscar?q=${clave}`)
-	.then(respuesta => respuesta.json())
-	.then(json =>{
-		cuadro.innerHTML = 'Resultados';
-		const lista = document.createElement('ul');
-		lista.classList.add('fichas');
-		json.mensaje.forEach(respuesta =>{
-		items(respuesta,lista);
-	})
-	})
-}
-
-export function registro_inicio(){
+function registro_inicio(){
 	const registro= document.querySelector('.formularios .formulario-registro');
 	const inicio= document.querySelector('.formularios .formulario-inicio');
 	const contenedor = document.querySelector('.formularios');

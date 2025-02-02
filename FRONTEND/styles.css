@@ -198,11 +198,13 @@ main{
 	background-color: #171738;
 	word-wrap: break-word;
 	hyphens: auto;
+	cursor: pointer;
 }
-.items:hover {
+.items:active {
 	backdrop-filter: #50c9eb;
+	opacity: 80%;
 	border-color: #a5e9fc;
-	transition: 1s;
+	color: #ffffff;
 }
 
 .info{
