@@ -1,9 +1,11 @@
+/* Estableciendo valores generales para todos los elementos*/
 *{
 	margin:0;
 	padding:0;
 	box-sizing: border-box;
 	font-family: Arial;
 }
+
 .Home {
 	width: 100%;
 	min-height: 100%;
@@ -63,6 +65,7 @@ section{
 	transition: 1s;
 }
 
+/* Navegador */
 .navegador{
 	width: 100%;
 	margin: 0;
@@ -97,6 +100,7 @@ section{
 #buscador span:active{
 	background-color: #155f72;
 }
+
 .paginas a{
 	padding: 3% 5%;
 	text-decoration: none;
@@ -104,10 +108,11 @@ section{
 	font-size: large;
 }
 
+/* Navegador del usuario registrado */
 #navegador_interno{
 	position: relative;
 	margin-left:2em ;
-	display:block;
+	display:none;
 }
 
 .icono_menu{
@@ -151,6 +156,11 @@ section{
 	font-size: 14px;
 }
 
+/* Esto me ayuda a que el footer de la pagina aunque el cuadro sea mas  pequeño pueda quedarse abajo */
+main{
+	min-height: 340px;
+}
+
 .cuadro{
 	margin: 2%;
 	padding: 3%;
@@ -159,11 +169,18 @@ section{
 	color: #bcc9cc;
 }
 
-.bienvenida p{
-	margin-top:8px;
-	font-size: 18px;
+.css_mensaje{
+	min-height: 100%;
+	margin: 12px 8px;
 }
 
+.css_mensaje p{
+	margin-top:5px;
+	font-size: 18px;
+	align-content: center;
+}
+
+/* diseño para las peliculas y series agrupados */
 .fichas{
 	width: 100%;
 	list-style-type: none;
@@ -207,6 +224,7 @@ section{
 	margin: auto;
 }
 
+/* diseño para la pagina de registro */
 .cuadro_pregunta{
 	width: 100%;
 	max-width: 800px;
@@ -280,14 +298,15 @@ section{
 .formulario-inicio{
 	opacity: 1;
 	display: block;
+	transition: all 0.5s;
 }
 
 .formulario-registro{
 	display: none;
+	transition: all 0.5s;
 }
 
-
-
+/* pie de pagina */
 footer{
 	height: 50px;
 	width: 100%;
@@ -300,6 +319,7 @@ footer{
 	bottom: 0;
 }
 
+/* Adaptacion a los dispositivos */
 @media (max-width: 890px){
 	.navegador{
 		padding: 0 8%;

@@ -15,7 +15,7 @@
             </div>
 
             <div class ="ingresar" id="ingresar">
-                <a href="registro.html" class="boton">Iniciar Sesion</a>
+                <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
             </div>
             
             <nav id="navegador_interno">
@@ -48,7 +48,7 @@
 
                 <section id="buscador">
                     <input type="text" id="search" placeholder="Buscar una película o serie">
-                    <span id="buscar" onclick="">&#128269</span>
+                    <span id="buscar" onclick="buscar()">&#128269</span>
                 </section>
             </nav>
 
@@ -56,7 +56,7 @@
   
     </header>
     <main>
-        <div class="cuadro" id="cuadro">
+        <div class="cuadro resultados" id="cuadro">
             
         </div>
     </main>
@@ -67,15 +67,16 @@
         </div>
     </footer>
     <script src="../BACKEND/app.js"></script>
-    <script src="./js/navegacion.js"></script>
+    <script src="./js/interacciones.js"></script>
     <script>
-
-        fetch('http://localhost:3000/')
-        .then(respuesta => respuesta.json())
-        .then(json=>{
-            document.getElementById('cuadro').innerHTML = json.mensaje;
-        })   
-
+        function bienvenida(){
+            fetch('http://localhost:3001/')
+            .then(respuesta => respuesta.json())
+            .then(json=>{
+                document.getElementById('cuadro').innerHTML = json.mensaje;
+            })               
+        }
+        bienvenida();
     </script>
 </body>
 </html>

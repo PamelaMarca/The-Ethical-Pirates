@@ -15,7 +15,7 @@
             </div>
 
             <div class ="ingresar" id="ingresar">
-                <a href="registro.html" class="boton">Iniciar Sesion</a>
+                <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
             </div>
             
             <nav id="navegador_interno">
@@ -63,37 +63,31 @@
         <p>&copy; 2024 The Ethical Pirates</p>
     </footer>
     <script src="../BACKEND/app.js"></script>
-    <script src="./js/navegacion.js"></script>
+    <script src="./js/interacciones.js"></script>
+    <script src="./js/series_peliculas.js"></script>
 
     <script>
 
-        fetch('http://localhost:3000/api/v1/Peliculas')
+        fetch('http://localhost:3001/api/v1/Peliculas')
         .then(respuesta => respuesta.json())
         .then(json=>{
             const cuadro = document.getElementById('cuadro');
-            
             cuadro.innerHTML =`<h3>Peliculas</h3>`
-
-            const lista = document.createElement('ul');
-            lista.classList.add('fichas')
-            json.mensaje.forEach(pelicula =>{
-                const fila = document.createElement('li');
-                fila.classList.add('items');
-
-                fila.innerHTML= `
-                <div class="info">
-                    <p>Pelicula: <strong>${pelicula.nombre}</strong></p>
-                    <p>Lanzamiento: ${pelicula.fecha_de_lanzamiento}</p>
-                    <p>Genero: ${pelicula.genero}</p>
-                    <p>Sinopsis: ${pelicula.sinopsis}</p>
-                </div>
-                <img class="imagen" src="${pelicula.portada}">
-                ` ;
-                lista.appendChild(fila);
-
-            })
-            cuadro.appendChild(lista);
-        })   
+            if(json.respuesta){
+                const lista = document.createElement('ul');
+                lista.classList.add('fichas')
+                json.respuesta.forEach(pelicula =>{
+                    items(pelicula,lista);
+                })
+                cuadro.appendChild(lista);            
+            }
+            else if(json.mensaje){
+                const aviso = document.createElement('div');
+                aviso.classList.add('css_mensaje');
+                aviso.innerHTML = json.mensaje;
+                cuadro.appendChild(aviso)
+            }
+        })
         .catch (error => console.error("No se pudieron cargar Peliculas: ",error));
     </script>
 </body>
