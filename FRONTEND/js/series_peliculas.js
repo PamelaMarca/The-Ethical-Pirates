@@ -1,6 +1,10 @@
+const navegador = document.querySelector('.navegador');
+const contenedor_buscador = document.getElementById('buscador');
+const barra_busqueda = document.getElementById('search');
+
 function items(variable, lista){
 		const fila = document.createElement('li');
-		const url_imagen = variable.URL_POSTER? variable.URL_POSTER : './imagenes/sin_imagen.jpg';
+		const url_imagen = variable.URL_POSTER? variable.URL_POSTER : '../imagenes/sin_imagen.jpg';
 		fila.classList.add('items');
 		fila.innerHTML= `
 		<div class="info"><p>Nombre: <strong>${variable.NOMBRE_COMPLETO}</strong></p>
@@ -17,6 +21,7 @@ function items(variable, lista){
 function buscar(){
 	const valor = document.getElementById('search').value;
 	const cuadro= document.querySelector('.cuadro');
+
 	if (valor){
 		fetch(`http://localhost:3000/busqueda/buscar?q=${valor}`)
 		.then(respuesta => respuesta.json())
@@ -66,3 +71,28 @@ function buscar(){
 	}
 
 }
+function posicion_original(){
+	if(window.innerWidth < 470){
+		navegador.style.display="flex";
+		barra_busqueda.classList.remove('extendido');
+		barra_busqueda.style.display = "none";
+		contenedor_buscador.style.width ='';
+	}
+}
+
+document.getElementById('buscar').addEventListener('click',()=>{
+	let expandido = barra_busqueda.classList.contains('extendido');
+	if(window.innerWidth < 470 && !expandido){
+		barra_busqueda.classList.add('extendido');
+		navegador.style.display ="block"
+		barra_busqueda.style.display = "block";
+		contenedor_buscador.style.width ='100%';
+		barra_busqueda.focus();
+	}else{
+		buscar();
+		posicion_original();
+	}
+})
+
+//cuando se hace lick en otro elemento el input vuelve a posiscion original
+document.getElementById('search').addEventListener('blur', posicion_original);

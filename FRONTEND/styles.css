@@ -49,20 +49,20 @@ section{
 .boton{
 	display: inline-block;
 	padding: 10px;
-	background-color: #579bac;
+	background-color: #181e3f;
 	margin: 2%;
-	color: rgb(21, 16, 78);
+	color: #50c9eb;
 	text-align: center;
 	text-decoration: none;
 	border-radius: 1em;
-	border: 0.2em solid #7f2991;
+	border: 0.2em solid #20606e;
 	cursor: pointer;
 }
 .boton:hover{
-	background-color: #181e3f;
-	color: #50c9eb;
-	border-color:#20606e ;
-	transition: 1s;
+	background-color: #226ca8;
+	color: #0a0942;
+	border-color:#32d9ff ;
+	transition: 2;
 }
 
 /* Navegador */
@@ -83,6 +83,8 @@ section{
 #buscador{
 	width: 30%;
 	position: relative;
+	display: flex;
+	align-items: center;
 	left: 15%;
 }
 
@@ -92,13 +94,17 @@ section{
 	font-size: 16px;
 	border-radius: 15px;
 }
-#buscador span{
+#buscador #buscar{
 	font-size: large;
 	cursor: pointer;
 	margin: 0 8px;
 }
-#buscador span:active{
+#buscador #buscar:active{
 	background-color: #155f72;
+}
+#search{
+	width: 100px;
+	transition: width 0.4s ease-in-out;
 }
 
 .paginas a{
@@ -161,6 +167,7 @@ main{
 	min-height: 340px;
 }
 
+/* Donde suele acabar toda la informacion */
 .cuadro{
 	margin: 2%;
 	padding: 3%;
@@ -198,13 +205,11 @@ main{
 	background-color: #171738;
 	word-wrap: break-word;
 	hyphens: auto;
-	cursor: pointer;
 }
-.items:active {
+.items:hover {
+	background-color: #0d0d24;
 	backdrop-filter: #50c9eb;
-	opacity: 80%;
 	border-color: #a5e9fc;
-	color: #ffffff;
 }
 
 .info{
@@ -217,9 +222,11 @@ main{
 	color: #c9cccf;
 	overflow: auto; /*Muy util, sin cambiar el tamaño del cuadro admitio toda la informacion*/
 }
+
 .info p{
 	margin-bottom: 8px;
 }
+
 .imagen{
 	width: 38%;
 	height: 96%;
@@ -307,6 +314,11 @@ main{
 	display: none;
 	transition: all 0.5s;
 }
+#mensaje_error_inicio p, #mensaje_error_registro p{
+	color: red;
+	font-size: 8px;
+	font-family: 'Franklin Gothic Medium';
+}
 
 /* pie de pagina */
 footer{
@@ -358,13 +370,12 @@ footer{
 	}
 }
 @media (max-width: 470px){
-	#buscador{
-		left: 25%;
+	#titulo{
+		font-size: 25px;
 	}
-	#buscador input{
-		display: none;
+	p{
+		font-size: 14px;
 	}
-
 	.cuadro{
 		margin:40px 10px;
 	}
@@ -381,11 +392,32 @@ footer{
 	.navegador {
 		padding: 8px;
 	}
+	.paginas{
+		width: 80%;
+	}
+	#buscador{
+		left: 0px;
+		display: flex;
+	}
+	#buscador input{
+		display: none;
+	}
+
 	.cuadro h2, .cuadro h4{
 		margin: 15px 10px;
 	}
+	.cuadro_pregunta{
+		padding-top: 10px;
+		position: relative;
+	}
+	.pregunta-inicio{
+		display: none;
+	}
 	.formularios{
 		top: -252px;
+		display: block;
+		position: relative;
+		
 	}
-	
+		
 }

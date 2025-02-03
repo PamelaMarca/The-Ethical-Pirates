@@ -21,12 +21,6 @@ function desplega_biblio(){
 		signo.innerHTML = 'v';
 }
 
-function iniciado(){
-	const navegador=document.querySelector('#navegador_interno');
-	const boton_registro=document.querySelector('#ingresar');
-	navegador.style.display = 'block';
-	boton_registro.style.display = 'none';
-}
 
 function registro_inicio(){
 	const registro= document.querySelector('.formularios .formulario-registro');
