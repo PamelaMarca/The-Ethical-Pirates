@@ -7,11 +7,16 @@ services:
     volumes:
       - ./backend:/usr/src/app
     command: ["npm", "start"]
-
-  frontend:
-    build: ./frontend
+  backend_2:
+    build: ./BACKEND
     ports:
-      - "8080:80"
+      - 3001:3001
+    command: [ "npm", "run", "dev"]
+  frontend:
+    build: ./FRONTEND
+    ports:
+      - "5500:80"
     volumes:
-      - ./frontend:/usr/share/nginx/html
+      - ./FRONTEND:/usr/share/nginx/html
     image: nginx:alpine
+  

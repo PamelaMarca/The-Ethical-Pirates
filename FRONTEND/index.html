@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piratas del cine</title>
-    <link rel="icono" href="./imagenes/pngwing.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="Home">
@@ -19,7 +18,7 @@
                 <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
             </div>
             
-            <nav id="navegador_interno">
+            <nav id="navegador_interno" data-iniciado="false">
                 <div class="icono_menu" onclick="desplegar()">☰</div>
                 <div class="cuadro_interno" id="cuadro_interno">
                     <ul>
@@ -47,10 +46,10 @@
                 <a href="Peliculas.html">Peliculas</a>
                 </div>
 
-                <section id="buscador">
+                <div id="buscador">
                     <input type="text" id="search" placeholder="Buscar una película o serie">
-                    <span id="buscar" onclick="buscar()">&#128269</span>
-                </section>
+                    <span id="buscar">&#128269</span>
+                </div>
             </nav>
 
         </section>
@@ -67,15 +66,19 @@
             <p>&copy; 2024 The Ethical Pirates</p>
         </div>
     </footer>
-    <script type="module" src="../BACKEND/app.js"></script>
-    <script type="module" src="./js/interacciones.js"></script>
+    <script src="../BACKEND/app.js"></script>
+    <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
     <script>
+        const sesion= document.querySelector('#navegador_interno [data-iniciado]'); 
         fetch('http://localhost:3001/')
         .then(respuesta => respuesta.json())
         .then(json=>{
             document.getElementById('cuadro').innerHTML = json.mensaje;
-        })               
+        })
+        if(sesion.value = true){
+            iniciado();
+        }
     </script>
 </body>
 </html>

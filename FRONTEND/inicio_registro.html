@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piratas del cine</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="Home">
+    <header class="cabezal">
+        <section>
+			<div class="presentacion">
+                <img src="./imagenes/cine.png" alt="imagen" width="200px">
+                <h1 id="titulo">Piratas del cine</h1>                
+            </div>          
+        </section>    
+        <section>
+            <nav class="navegador">
+                <div class="paginas">
+                <a href="index.html">Home</a>
+                <a href="Series.html">Series</a>
+                <a href="Peliculas.html">Peliculas</a>
+                </div>
+                <div id="buscador">
+                    <input type="text" id="search" placeholder="Buscar una película o serie">
+                    <span id="buscar">&#128269</span>
+                </div>
+            </nav>
+
+        </section>
+  
+    </header>
+    <main>
+		<div class="cuadro">
+            <div class="cuadro_pregunta">
+                <div class="pregunta-inicio">
+                    <h3>¿Tienes una cuenta?</h3>
+                    <p>Entonce entra apretando</p>
+                    <button class="boton" onclick="registro_inicio()">Iniciar Sesion</button>
+                </div>
+                <div class="pregunta-registro">
+                    <h3>¿Aun no tienes una cuenta?</h3>
+                    <p>Entonce create una apretando</p>
+                    <button class="boton" onclick="registro_inicio()">Registrarse</button>
+                </div>
+            </div>
+            <div class="formularios">
+                <form class="formulario-inicio">
+                    <h2>Inicio de Sesion</h2>
+                    <div class="usuario">
+                        <input type="text"  id="Usuario" placeholder="Nombre de Usuario" required>
+                        <input type="password" autocomplete="current-password" id="Contraseña" placeholder="Contraseña" required>
+                    </div>
+                    <div id="mensaje_error_inicio">
+                    </div>
+                    <button class="button" onclick="solicitud_entrar()">Entra</button>
+                </form>
+    			<form class="formulario-registro">
+                    <h2>Registro</h2>
+				    <div id="Personal">
+                        <h4>Datos Personales</h4>
+                        <input type="text" id="apellido" placeholder="Apellido" required>
+                        <input type="text" id="nombre" placeholder="Nombre" required>
+                        <p>Fecha de Nacimiento</p>
+                        <input type="date" id="nacimiento" required>
+                        <p>Genero:
+                        <select id="genero" id="1">
+                            <option value="1">Femenino</option>
+                            <option value="2">Masculino</option>
+                            <option value="3">Otro</option>
+                        </select></p>
+                        <input type="email" id="correo" placeholder="Email">
+                        <input type="tel" id="telefono" placeholder="Telefono">
+                    </div>
+                    <div class="usuario">
+                        <h4>Usuario</h4>
+                        <input type="text" placeholder="Nombre de usuario" id="usuario" required>
+                        <input type="password" autocomplete="new-password" id="contra" placeholder="Contraseña" required >
+                    </div>
+                    <div id="mensaje_error_registro">
+                    </div>
+                    <button class="button" onclick="solicitud_registro()">Crear Cuenta</button>
+                </form>         
+
+            </div>
+
+		</div>
+
+
+    </main>
+    <footer>
+        <p>&copy; 2024 The Ethical Pirates</p>
+    </footer>
+    <script src="../BACKEND/app.js"></script>
+    <script src="./js/interacciones.js"></script>
+    <script src="./js/series_peliculas.js"></script>
+    <script src="./js/cuenta.js"></script>
+</body>
+</html>
