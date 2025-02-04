@@ -107,39 +107,70 @@ document.getElementById('search').addEventListener('blur', posicion_original);
 
 
 //pagina individual
-function diseño (dato, tipo){
+function diseño (dato){
+	//creando elementos
+	const cuadro = document.getElementById('contenido_item');
 	const contenedor = document.getElementById('item_informacion');
-            const imagen= document.createElement('img');
-            imagen.style.maxWidth="350px";
-            const datos_serie= document.createElement('div');
-            datos_serie.classList.add('datos_items');
-            const titulo= document.createElement('h2');
-            const calificacion = document.createElement('p');
-            const estreno = document.createElement('p');
-            const recomendado_para= document.createElement('p');
-            const temporadas = document.createElement('p');
-            const generos = document.createElement('p');
-            const idioma = document.createElement('p');
-            const plataforma = document.createElement('p');
-			const cuadro_sinopsis =document.createElement('div');
-			
-            //compretando con informacion
-            imagen.src= dato.URL_POSTER;
-            titulo.innerText=dato.NOMBRE_COMPLETO;
-            calificacion.innerText= `Calificacion: ${dato.CALIFICACION}`;
-            estreno.innerText=`Fecha de estreno: ${dato.FECHA_ESTRENO}`;
-            recomendado_para.innerText=`Apto para ${dato.EDAD_RECOMENDADA? dato.EDAD_RECOMENDADA : " todo publico"}`;
-            temporadas.innerText= `Cantidad de Temporadas: ${dato.TOTAL_TEMPORADAS}`;
-            generos.innerHTML=`Genero: ${dato.GENERO}`;
-            //insertandolos
-			
-            datos_serie.appendChild(calificacion);
-            datos_serie.appendChild(estreno);
-            datos_serie.appendChild(recomendado_para);
-            datos_serie.appendChild(temporadas);
-            datos_serie.appendChild(generos);
+	const imagen= document.createElement('img');
+	imagen.style.maxWidth="350px";
+	const datos_serie= document.createElement('div');
+	datos_serie.classList.add('datos_items');
+	const titulo= document.getElementById('titulo_item');
+	const calificacion = document.createElement('p');
+	const estreno = document.createElement('p');
+	const recomendado_para= document.createElement('p');
+	const temporadas = document.createElement('p');
+	const duracion = document.createElement('p');
+	const generos = document.createElement('p');
+	const idioma = document.createElement('p');
+	const plataforma = document.createElement('p');
+	const cuadro_sinopsis =document.createElement('div');
+	cuadro_sinopsis.classList.add('caja_sinopsis');
+	
+	//compretando con informacion
+	imagen.src= dato.URL_POSTER;
+	titulo.innerText=dato.NOMBRE_COMPLETO;
 
-            contenedor.appendChild(titulo);
-            contenedor.appendChild(imagen);
-            contenedor.appendChild(datos_serie);
+	calificacion.innerText= `Calificacion: ${dato.CALIFICACION}`;
+	datos_serie.appendChild(calificacion);
+
+	estreno.innerText=`Fecha de estreno: ${dato.FECHA_ESTRENO=='undefine'? dato.FECHA_ESTRENO: "xx-xx-xxxx"}`;
+	datos_serie.appendChild(estreno);
+
+	recomendado_para.innerText=`Apto para ${dato.EDAD_RECOMENDADA=='undefine'? dato.EDAD_RECOMENDADA : " todo publico"}`;
+	datos_serie.appendChild(recomendado_para);
+
+	if(dato.TOTAL_TEMPORADAS != undefined && dato.TOTAL_TEMPORADAS != null){
+		temporadas.innerText= `Cantidad de Temporadas: ${dato.TOTAL_TEMPORADAS=='undefine'? dato.TOTAL_TEMPORADAS: "sin dato"}`;
+		datos_serie.appendChild(temporadas);
+	}else if(dato.TOTAL_DURACION != undefined){
+		duracion.innerText= `Tiempo de duracion: ${dato.TOTAL_DURACION=='undefine'? dato.TOTAL_DURACION: "sin dato"}`;
+		datos_serie.appendChild(duracion);
+	}
+	generos.innerHTML=`Genero: ${dato.GENERO}`;
+	idioma.innerHTML=`Idioma original: ${dato.IDIOMA_ORIGINAL}`;
+	plataforma.innerHTML=`Plataforma: ${dato.PLATAFORMA=='undefine'? dato.PLATAFORMA: "sin dato"}`;
+
+	cuadro_sinopsis.innerHTML=`<h3>Descripcion</h3>`
+	const sinopsis= document.createElement('div');
+	sinopsis.classList.add('sinopsis');
+	//separo por parrafos la sinopsis
+	const parrafos_sinopsis =  [];
+	dato.SINOPSIS.split('\n').map(parrafo => {
+		const p = document.createElement('p');
+		p.innerText=parrafo;
+		parrafos_sinopsis.push(p);
+	})
+	parrafos_sinopsis.forEach(p=> sinopsis.appendChild(p));
+	cuadro_sinopsis.appendChild(sinopsis);
+	
+	datos_serie.appendChild(generos);
+	datos_serie.appendChild(idioma);
+	datos_serie.appendChild(plataforma);
+
+	contenedor.appendChild(imagen);
+	contenedor.appendChild(datos_serie);
+	
+	cuadro.appendChild(contenedor);
+	cuadro.appendChild(cuadro_sinopsis);
 }

@@ -337,7 +337,35 @@ main{
 #nacimiento {
 	width: 50%;
 }
+/* para la pagina individual de cada pelicula o serie */
+.cuadro #titulo_item{
+	padding: 10px 15px;
+	background-color: #252a4e;
+	border-top: 5px solid #7077ad;
+	box-shadow: -3px 0 #7077ad ;
+}
+#contenido_item{
+	align-items: flex-start;
+	border: 5px solid #252a4e;
+	box-shadow:-3px 0 #7077ad ;
+}
+#contenido_item #item_informacion, #contenido_item .caja_sinopsis, .datos_items{
+	margin: 10px 30px;
+	
+}
+
+.caja_sinopsis{
+	padding-top: 15px;
+	width: 50%;
+}
+.sinopsis{
+	padding-top: 10px;
+}
+
+
+
 /* pie de pagina */
+
 footer{
 	height: 50px;
 	width: 100%;
