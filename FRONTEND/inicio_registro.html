@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piratas del cine</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="Home">
     <header class="cabezal">
         <section>
 			<div class="presentacion">
-                <img src="../imagenes/cine.png" alt="imagen" width="200px">
+                <img src="./imagenes/cine.png" alt="imagen" width="200px">
                 <h1 id="titulo">Piratas del cine</h1>                
             </div>          
         </section>    
         <section>
             <nav class="navegador">
                 <div class="paginas">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="Series.html">Series</a>
                 <a href="Peliculas.html">Peliculas</a>
                 </div>
@@ -31,7 +31,7 @@
   
     </header>
     <main>
-		<div class="cuadro ">
+		<div class="cuadro">
             <div class="cuadro_pregunta">
                 <div class="pregunta-inicio">
                     <h3>¿Tienes una cuenta?</h3>
@@ -53,7 +53,7 @@
                     </div>
                     <div id="mensaje_error_inicio">
                     </div>
-                    <input class="button" type="submit" value="Entrar">
+                    <button class="button" onclick="solicitud_entrar()">Entra</button>
                 </form>
     			<form class="formulario-registro">
                     <h2>Registro</h2>
@@ -79,7 +79,7 @@
                     </div>
                     <div id="mensaje_error_registro">
                     </div>
-                    <input class="button" type="submit" value="Crear Cuenta">
+                    <button class="button" onclick="solicitud_registro()">Crear Cuenta</button>
                 </form>         
 
             </div>
@@ -91,9 +91,9 @@
     <footer>
         <p>&copy; 2024 The Ethical Pirates</p>
     </footer>
-    <script src="..../BACKEND/app.js"></script>
-    <script src="../js/interacciones.js"></script>
-    <script src="../js/series_peliculas.js"></script>
-    <script src="../js/cuenta.js"></script>
+    <script src="../BACKEND/app.js"></script>
+    <script src="./js/interacciones.js"></script>
+    <script src="./js/series_peliculas.js"></script>
+    <script src="./js/cuenta.js"></script>
 </body>
 </html>

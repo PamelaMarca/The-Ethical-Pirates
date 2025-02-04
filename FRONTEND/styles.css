@@ -32,11 +32,15 @@ section{
 
 .presentacion{
 	width: 80%;
+	max-width: 1000px;
 	display: flex;
 	padding: 2%;
 	gap: 1%;
 	align-items: center;
 
+}
+.presentacion img{
+	width: 120px;
 }
 
 #titulo{
@@ -44,6 +48,9 @@ section{
 	font-family:Arial, Helvetica, sans-serif;
 	text-shadow: -2px -3px 0 #155f72;
 	color:#ace0e4;
+}
+.ingresar{
+	width: 18%;
 }
 
 .boton{
@@ -209,7 +216,11 @@ main{
 .items:hover {
 	background-color: #0d0d24;
 	backdrop-filter: #50c9eb;
-	border-color: #a5e9fc;
+	border-color: #fca5a5;
+}
+.nombre_item:hover{
+	color: #f55a5a;
+	cursor: pointer;
 }
 
 .info{
@@ -288,7 +299,7 @@ main{
 	width: 100%;
 	margin-top: 8px;
 	border: none;
-	background: #d7e7eb;
+	background: #e0e6e9;
 	padding: 3px;
 	font-size: 12px;
 	outline: none;
@@ -296,11 +307,14 @@ main{
 
 .formularios form .button{
 	width: 150px;
+	margin-top:10px;
 	padding: 10px;
 	background: #8ca2c2;
+	border: none;
 	border-radius: 15px;
 	font-size: 16px;
 	color: rgb(7, 11, 41);
+	text-decoration: none;
 	cursor: pointer;
 }
 
@@ -314,12 +328,15 @@ main{
 	display: none;
 	transition: all 0.5s;
 }
+
 #mensaje_error_inicio p, #mensaje_error_registro p{
 	color: red;
 	font-size: 8px;
 	font-family: 'Franklin Gothic Medium';
 }
-
+#nacimiento {
+	width: 50%;
+}
 /* pie de pagina */
 footer{
 	height: 50px;
@@ -369,6 +386,8 @@ footer{
 		padding: 20px;
 	}
 }
+
+
 @media (max-width: 470px){
 	#titulo{
 		font-size: 25px;
@@ -410,14 +429,24 @@ footer{
 		padding-top: 10px;
 		position: relative;
 	}
+	.cuadro_pregunta div{
+		margin: 0%;
+	}
 	.pregunta-inicio{
 		display: none;
 	}
 	.formularios{
-		top: -252px;
+		min-width:100%;	
+		top: 0;
 		display: block;
-		position: relative;
-		
 	}
+	.formularios form{
+		position: relative;
+		left: 0;
+	}
+	.formulario-registro{
+		left: 0px;
+	}
+
 		
 }
