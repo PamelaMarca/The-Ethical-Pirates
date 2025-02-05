@@ -1,13 +1,14 @@
 function iniciado(){
-	const navegador=document.querySelector('#navegador_interno');
-	const boton_registro=document.querySelector('#ingresar');
-	const index = document.querySelector('#index')
+	const navegador=document.getElementById('navegador_interno');
+	const boton_registro=document.getElementById('ingresar');
+	const index = document.getElementById('index');
 	navegador.style.display = 'block';
+	//alparecer esto ayudara a que 
 	boton_registro.style.display = 'none';
-	index.style.display= "none"
+	index.style.visibility= 'hidden';
 }
 function limpiar_formulario(){
-	const inputs = document.querySelectorAll(`input`);
+	const inputs = document.querySelectorAll("input");
 	inputs.forEach( input =>
 		input.value =''
 	);
@@ -19,99 +20,80 @@ function solicitud_registro(event){
 	const apellido = document.getElementById('apellido');
 	const nacimiento = document.getElementById('nacimiento');
 	const genero = document.getElementById('genero');
-	const correo = document.getElementById('email');
+	const correo = document.getElementById('correo');
 	const contacto = document.getElementById('telefono');
-	const usuario_nombre = document.getElementById('usuario');
-	const clave = document.getElementById('contraseña');
-
-	fetch(`http://localhost:3001/api/v1/cuentas/${usuario_nombre}`)
-	.then(respuesta => respuesta.json)
-	.then(user =>{
-		//vemos si existe el nombre
-		if(user.cuenta){
-			alert('El Nombre de usuario ya existe');
-		}else{
-			fetch('http://localhost:3001/api/v1/registro',{
-				method: "POST",
-				headers:{
-					'Content-Type':'application/json'
-				},
-				//adjuntar los datos para una nueva cuenta
-				body: JSON.stringify({
-					DATOS: {
-						NOMBRE: nombre.value,
-						APELLIDO: apellido.value,
-						FECHA_NACIMIENTO: nacimiento.value,
-						GERERO: genero.value,
-						EMAIL: correo.value,
-						TEL: contacto.value
-					},
-					NOMBRE_USUARIO:usuario_nombre.value,
-					CLAVE:clave.value
-				})
+	const usuario = document.getElementById('usuario');
+	const clave = document.getElementById('contra');
+	const mensaje = document.getElementById('mensaje_error_inicio');
+	if(nombre.value==null || apellido.value==null || usuario.value==null || clave.value==null ){
+		mensaje.innerHTML=`<p>Conplete el campo faltante</p>`
+	}
+	else{
+		fetch('http://localhost:3001/api/v1/registro',{
+			method: "POST",
+			headers:{
+				'Content-Type':'application/json'
+			},
+			//adjuntar los datos para una nueva cuenta
+			body: JSON.stringify({
+				nombre: nombre.value,
+				apellido: apellido.value,
+				nacimiento: nacimiento.value,
+				genero: genero.value,
+				email: correo.value,
+				contacto: contacto.value,
+				usuario_nombre: usuario.value,
+				clave: clave.value
 			})
-			.then( res => {
-				if(res.ok){
-					return res.json();
-				}else{
-					return res.json().then(e =>{
-						new Error(e.mensaje);
-					});
-				}
-			})
-			.then( json =>{
-				const index = document.getElementById('index');
-				index.style.display='none';
+		})
+		.then( res => res.json())
+		.then( json => {
+			if(json.mensaje ==undefined){
 				alert("Registro exitoso");
-				limpiar_formulario();
-				iniciado();
-			})
-			.catch(error => {
-				console.log('Error al registrarse');
-
-			})
-		}		
-	});
+				window.location.href=`perfil.html?cuenta=${usuario.value}`
+			}else{
+				mensaje.innerHTML=`<p>${json.mensaje}</p>`;
+			}
+		})
+		.catch( error => {
+			console.error('Error: ', error);
+		})	
+	}
 }
 
 
 function solicitud_entrar(event){
 	event.preventDefault();
-	const nombre = document.getElementById('Usuario');
-	const clave = document.getElementById('Contraseña');
+	const usuario_nombre = document.getElementById('Usuario').value;
+	const clave = document.getElementById('Contraseña').value;
 	const mensaje = document.getElementById('mensaje_error_inicio');
-
-	fetch('http://localhost:3001/api/v1/inicio',{
+	fetch(`http://localhost:3001/api/v1/inicio`,{
 		method: "POST",
 		headers:{
 			'Content-Type':'application/json'
 		},
-		body:JSON.stringify({
-			NOMBRE_USUARIO: nombre.value,
-			CLAVE: clave.value
+		//adjuntar los datos para una nueva cuenta
+		body: JSON.stringify({
+			us: usuario_nombre,
+			clave: clave
 		})
 	})
-	.then(res => res.json)
-	.then(json=>{
-		//si existe:
-		console.log(json)
-		if(json.usuario){
+	.then(res => res.json())
+	.then(json =>{
+		if(json.mensaje ==undefined){
 			
-			if(json.CLAVE == clave.value){
-				const index = document.getElementById('index');
-				index.style.display='none';
-				alert("Exito");
-				iniciado();
-	
-			}else{
-				mensaje.innerHTML=`<p>Contraseña incorrecta o Nombre de usuario incorrecta</p>`
-			}
+			alert("Registro exitoso");
+			window.location.href=`perfil.html?cuenta=${usuario.value}`
+		}else{
+			mensaje.innerHTML=`<p>${json.mensaje}</p>`;
 		}
-		//No existe: la cuenta si no existe no hago nada, que intente denuevo o se registre
+		navegador.setAttribute("data-iniciado","true");
+		alert("Registro exitoso. Aprete 'aceptar' para ser redirigido");
+		window.location.href=`perfil.html?cuenta=${usuario_nombre}`;
 
 	})
 	.catch(error =>{
-		alert("Algo salio mal al Iniciar Secion");
+		mensaje.innerHTML=`<p>Ocurrio un error al entrar. Intente ams tarde</p>`
 	})
 
 }

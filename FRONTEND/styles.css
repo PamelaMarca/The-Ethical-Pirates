@@ -237,6 +237,10 @@ main{
 .info p{
 	margin-bottom: 8px;
 }
+.info a{
+	text-decoration: none;
+	color:#e6e6e6 ;
+}
 
 .imagen{
 	width: 38%;
@@ -330,9 +334,9 @@ main{
 }
 
 #mensaje_error_inicio p, #mensaje_error_registro p{
-	color: red;
-	font-size: 8px;
-	font-family: 'Franklin Gothic Medium';
+	color: rgb(224, 105, 8);
+	font-size: 12px;
+	font-family:'Trebuchet MS','Lucida Sans';
 }
 #nacimiento {
 	width: 50%;
@@ -390,6 +394,10 @@ footer{
 		width: 25%;
 		left: 0;
 		
+	}
+	#buscador input{
+		width: 150px;
+		font-size: 12px;
 	}
 	.items{
 		width: 49%;

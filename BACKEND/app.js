@@ -72,6 +72,7 @@ let series = [
         URL_POSTER: "https://tse3.mm.bing.net/th?id=OIP.9VqVkN3onE94I1C2NxRp-wHaJQ&rs=1&pid=ImgDetMain",
         GENERO: ["Crimen", " Drama", " Suspenso"],
         SINOPSIS: "Ocho ladrones toman rehenes en la Fábrica Nacional de Moneda y Timbre de España, mientras el líder de la banda manipula a la policía para cumplir con su plan.",
+        TOTAL_TEMPORADAS: 5,
         ACCESO: "PUBLICO"
     },
     {
@@ -94,7 +95,17 @@ let series = [
     }
 ];
 
-let Usuarios=[] //pensando en dejar esta seccion en otro file.
+let Usuarios=[{
+    id: 1,
+    DATOS:{
+        NOMBRE: "pamela",
+        APELLIDO: "Marca quispe",
+        FECHA_NACIMIENTO: "09/10/2004",
+        GENERO:"Femenino"
+    },
+    NOMBRE_USUARIO:"pamela110",
+    CLAVE: "112211"
+}] //pensando en dejar esta seccion en otro file.
 
 app.get("/", (req,res)=>{
     texto=`<div class="css_mensaje">
@@ -149,7 +160,7 @@ app.get("/api/v1/Peliculas/:nombre",(req,res)=>{
         pelicula.SINOPSIS='Sin Descripcion';
     }
     if(!pelicula){
-        res.status(404);
+        res.sendStatus(404);
         return;
     }
     res.status(200).json(pelicula);
@@ -174,7 +185,7 @@ app.get("/api/v1/Series/:nombre",(req,res)=>{
         serie.SINOPSIS='Sin Descripcion';
     }
     if(!serie){
-        res.status(404);
+        res.sendStatus(404);
         return;
     }
     res.status(200).send(serie);
@@ -182,13 +193,15 @@ app.get("/api/v1/Series/:nombre",(req,res)=>{
 
 //obtendra los datos de una cuenta
 app.get("/api/v1/cuentas/:usuario",(req,res)=>{
-    const cuenta = Usuarios.find(user => user.NOMBRE == req.params.usuario);
+    const cuenta = Usuarios.find(us => us.NOMBRE_USUARIO === req.params.usuario);
     //sino existe la cuenta
-    if(!cuenta){
-        res.status(400).json(req, res);
+
+    if(cuenta == undefined || cuenta == null ){
+        res.status(400).send('Cuenta inexistente');
         return;
     }    
-    res.status(200).json({cuenta});
+
+    res.status(200).json(cuenta);
 })
 
 app.post("/api/v1/registro", (req,res)=>{
@@ -200,14 +213,20 @@ app.post("/api/v1/registro", (req,res)=>{
         EMAIL: req.body.email ?? undefined,
         TEL: req.body.contacto ?? undefined
     };
-    const usuario={
+    const cuenta={
         ID_UNICO: Usuarios.length +1,
         DATOS: datos,
-        NOMBRE_USUARIO: req.body.nombre,
+        NOMBRE_USUARIO: req.body.usuario_nombre,
         CLAVE: req.body.clave
     };
-    Usuarios.push(usuario);
-    res.status(201).json(usuario);
+    const cuenta_existente= Usuarios.find(us => us.NOMBRE_USUARIO === cuenta.NOMBRE_USUARIO);
+        
+    if(cuenta_existente !=undefined ){
+        res.status(400).json({mensaje: 'El nombre de usuario ya existe'});
+        return;
+    }
+    Usuarios.push(cuenta);
+    res.status(201).json(cuenta);
 })
 
 app.post("/api/v1/inicio", (req,res)=> {
@@ -217,11 +236,15 @@ app.post("/api/v1/inicio", (req,res)=> {
     };
 
     const cuenta = Usuarios.find(u => u.NOMBRE_USUARIO === usuario.NOMBRE_USUARIO);
-    if(!cuenta){
-        res.status(400).json(usuario);
+    if(cuenta == undefined){
+        res.status(400).json({mensaje:'No existe el usuario'});
         return;
     }
-    res.status(200).json(usuario);
+    if(usuario.CLAVE != cuenta.CLAVE){
+        res.status(400).json({mensaje:'Contraseña incorrecta'})
+        return;
+    }
+    res.status(200).json({usuario});
 })
 
 app.listen(port,()=>{

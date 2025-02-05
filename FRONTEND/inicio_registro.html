@@ -17,12 +17,12 @@
         <section>
             <nav class="navegador">
                 <div class="paginas">
-                <a href="index.html">Home</a>
+                <a id="index"href="index.html">Home</a>
                 <a href="Series.html">Series</a>
                 <a href="Peliculas.html">Peliculas</a>
                 </div>
                 <div id="buscador">
-                    <input type="text" id="search" placeholder="Buscar una película o serie">
+                    <input type="text" id="search" placeholder="Buscar ...">
                     <span id="buscar">&#128269</span>
                 </div>
             </nav>
@@ -36,50 +36,51 @@
                 <div class="pregunta-inicio">
                     <h3>¿Tienes una cuenta?</h3>
                     <p>Entonce entra apretando</p>
-                    <button class="boton" onclick="registro_inicio()">Iniciar Sesion</button>
+                    <button class="boton" onclick="boton_inicio()">Iniciar Sesion</button>
                 </div>
                 <div class="pregunta-registro">
                     <h3>¿Aun no tienes una cuenta?</h3>
                     <p>Entonce create una apretando</p>
-                    <button class="boton" onclick="registro_inicio()">Registrarse</button>
+                    <button class="boton" onclick="boton_registro()">Registrarse</button>
                 </div>
             </div>
             <div class="formularios">
                 <form class="formulario-inicio">
                     <h2>Inicio de Sesion</h2>
                     <div class="usuario">
-                        <input type="text"  id="Usuario" placeholder="Nombre de Usuario" required>
-                        <input type="password" autocomplete="current-password" id="Contraseña" placeholder="Contraseña" required>
+                        <input type="text"  id="Usuario" placeholder="Nombre de Usuario" >
+                        <input type="password" id="Contraseña" placeholder="Contraseña" >
                     </div>
                     <div id="mensaje_error_inicio">
                     </div>
-                    <button class="button" onclick="solicitud_entrar()">Entra</button>
+                    <button id="entrar" class="button" >Entra</button>
                 </form>
-    			<form class="formulario-registro">
+    			<form class="formulario-registro" >
                     <h2>Registro</h2>
 				    <div id="Personal">
                         <h4>Datos Personales</h4>
-                        <input type="text" id="apellido" placeholder="Apellido" required>
-                        <input type="text" id="nombre" placeholder="Nombre" required>
+                        <input type="text" id="apellido" placeholder="Apellido" >
+                        <input type="text" id="nombre" placeholder="Nombre" >
                         <p>Fecha de Nacimiento</p>
-                        <input type="date" id="nacimiento" required>
+                        <input type="date" id="nacimiento" >
                         <p>Genero:
-                        <select id="genero" id="1">
-                            <option value="1">Femenino</option>
-                            <option value="2">Masculino</option>
-                            <option value="3">Otro</option>
+                        <select id="genero">
+                            <option>Selecione</option>
+                            <option value="Otro">Otro</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Masculino">Masculino</option>
                         </select></p>
                         <input type="email" id="correo" placeholder="Email">
                         <input type="tel" id="telefono" placeholder="Telefono">
                     </div>
                     <div class="usuario">
                         <h4>Usuario</h4>
-                        <input type="text" placeholder="Nombre de usuario" id="usuario" required>
-                        <input type="password" autocomplete="new-password" id="contra" placeholder="Contraseña" required >
+                        <input type="text" placeholder="Nombre de usuario" id="usuario">
+                        <input type="password" id="contra" placeholder="Contraseña">
                     </div>
                     <div id="mensaje_error_registro">
                     </div>
-                    <button class="button" onclick="solicitud_registro()">Crear Cuenta</button>
+                    <button id="registrar" class="button" >Crear Cuenta</button>
                 </form>         
 
             </div>
@@ -95,5 +96,18 @@
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
     <script src="./js/cuenta.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const formulario_registro=document.getElementById('registrar');
+            const formulario_inicio=document.getElementById('entrar');
+            formulario_inicio.addEventListener('click',(event)=>{
+                solicitud_entrar(event);
+            } )
+            formulario_registro.addEventListener('click',(event)=>{
+                solicitud_registro(event);
+            } )
+        })
+    </script>
+
 </body>
 </html>

@@ -78,7 +78,7 @@ function buscar(){
 }
 
 function posicion_original(){
-	if(window.innerWidth < 470){
+	if(window.innerWidth < 610){
 		navegador.style.display="flex";
 		barra_busqueda.classList.remove('extendido');
 		barra_busqueda.style.display = "none";
@@ -90,7 +90,7 @@ function posicion_original(){
 document.getElementById('buscar').addEventListener('click',()=>{
 	let expandido = barra_busqueda.classList.contains('extendido');
 	//para dispositivos que sean pequeños el input se extendera
-	if(window.innerWidth < 470 && !expandido){
+	if(window.innerWidth < 610 && !expandido){
 		barra_busqueda.classList.add('extendido');
 		navegador.style.display ="block"
 		barra_busqueda.style.display = "block";
@@ -140,11 +140,11 @@ function diseño (dato){
 	recomendado_para.innerText=`Apto para ${dato.EDAD_RECOMENDADA=='undefine'? dato.EDAD_RECOMENDADA : " todo publico"}`;
 	datos_serie.appendChild(recomendado_para);
 
-	if(dato.TOTAL_TEMPORADAS != undefined && dato.TOTAL_TEMPORADAS != null){
-		temporadas.innerText= `Cantidad de Temporadas: ${dato.TOTAL_TEMPORADAS=='undefine'? dato.TOTAL_TEMPORADAS: "sin dato"}`;
+	if((dato.TOTAL_TEMPORADAS) != undefined && dato.TOTAL_TEMPORADAS != null){
+		temporadas.innerText= `Cantidad de Temporadas: ${dato.TOTAL_TEMPORADAS}`;
 		datos_serie.appendChild(temporadas);
 	}else if(dato.TOTAL_DURACION != undefined){
-		duracion.innerText= `Tiempo de duracion: ${dato.TOTAL_DURACION=='undefine'? dato.TOTAL_DURACION: "sin dato"}`;
+		duracion.innerText= `Tiempo de duracion: ${dato.TOTAL_DURACION}`;
 		datos_serie.appendChild(duracion);
 	}
 	generos.innerHTML=`Genero: ${dato.GENERO}`;
