@@ -1,10 +1,11 @@
-# Imagen de Node.js
+# Imagen Nodejs
 FROM node:18
 
+# Directorio
 WORKDIR /app
 
-COPY package*.json ./
-COPY . .
+COPY backend/package*.json ./
+COPY backend .
 
 # Dependencias
 RUN npm install
@@ -12,5 +13,5 @@ RUN npm install
 # Puerto
 EXPOSE 3000
 
-# Ejecutar la app
+# Ejecucion
 CMD ["node", "server.js"]
