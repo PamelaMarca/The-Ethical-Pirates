@@ -3,33 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ethical Pirates</title>
+    <title>Piratas del cine</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <header>
-        <h1>The Ethical Pirates</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/busqueda.html">Búsqueda</a></li>
-                <li><a href="/favoritos.html">Favoritos</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="Home">
+    <header class="cabezal">
+        <section>
+            <div class="presentacion">
+                <img src="imagenes/cine.png" alt="imagen" width="200px">
+                <h1 id="titulo">Piratas del cine</h1>                
+            </div>
 
-    <main>
-        <section id="contenido">
-            <h2>Bienvenido al buscador de películas y series</h2>
-            <input type="text" id="search" placeholder="Buscar una película o serie">
-            <div id="results"></div> 
+            <div class ="ingresar" id="ingresar">
+                <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
+            </div>
+            
+            <nav id="navegador_interno" data-iniciado="false">
+                <div class="icono_menu" onclick="desplegar()">☰</div>
+                <div class="cuadro_interno" id="cuadro_interno">
+                    <ul>
+                        <li><a href="">Perfil</a></li>
+                        <li>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong> </button>
+                            <ul id="menu" hidden>
+                                <li><a href="">Mis Series</a></li>
+                                <li><a href="">MIs Peliculas</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="">Comentarios</a></li>
+                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
+                    </ul>
+                </div>
+
+            </nav> 
+        </section>    
+        <section>
+            <nav class="navegador">
+                <div class="paginas">
+                <a id="index" href="index.html">Inicio</a>
+                <a href="Series.html">Series</a>
+                <a href="Peliculas.html">Peliculas</a>
+                </div>
+
+                <div id="buscador">
+                    <input type="text" id="search" placeholder="Buscar una película o serie">
+                    <span id="buscar">&#128269</span>
+                </div>
+            </nav>
+
         </section>
+  
+    </header>
+    <main>
+        <div class="cuadro" id="cuadro">
+            
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2024 The Ethical Pirates</p>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>&copy; 2024 The Ethical Pirates</p>
+        </div>
     </footer>
-
-    <script src="scripts.js"></script> 
+    <script src="../backend/server.js"></script>
+    <script src="./js/interacciones.js"></script>
+    <script src="./js/series_peliculas.js"></script>
+    <script>
+        const sesion= document.querySelector('#navegador_interno [data-iniciado]'); 
+        fetch('http://localhost:3001/')
+        .then(respuesta => respuesta.json())
+        .then(json=>{
+            document.getElementById('cuadro').innerHTML = json.mensaje;
+        })
+        if(sesion.value = true){
+            iniciado();
+        }
+    </script>
 </body>
 </html>
