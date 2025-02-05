@@ -171,7 +171,7 @@ section{
 
 /* Esto me ayuda a que el footer de la pagina aunque el cuadro sea mas  pequeño pueda quedarse abajo */
 main{
-	min-height: 340px;
+	min-height: 383px;
 }
 
 /* Donde suele acabar toda la informacion */

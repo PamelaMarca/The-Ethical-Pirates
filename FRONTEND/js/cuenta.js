@@ -81,15 +81,13 @@ function solicitud_entrar(event){
 	.then(res => res.json())
 	.then(json =>{
 		if(json.mensaje ==undefined){
-			
-			alert("Registro exitoso");
-			window.location.href=`perfil.html?cuenta=${usuario.value}`
+			navegador.setAttribute("data-iniciado","true");
+			alert(`Inicio de sesion exitoso.Aprete 'aceptar' para ser redirigido`);
+			window.location.href=`perfil.html?cuenta=${usuario_nombre}`;
 		}else{
 			mensaje.innerHTML=`<p>${json.mensaje}</p>`;
 		}
-		navegador.setAttribute("data-iniciado","true");
-		alert("Registro exitoso. Aprete 'aceptar' para ser redirigido");
-		window.location.href=`perfil.html?cuenta=${usuario_nombre}`;
+		
 
 	})
 	.catch(error =>{
