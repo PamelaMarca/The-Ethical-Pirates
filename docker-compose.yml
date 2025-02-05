@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_PATH=/data/database.sqlite
+
+  db:
+    image: nouchka/sqlite3
+    volumes:
+      - ./data:/data
+    environment:
+      - SQLITE_DATABASE_PATH=/data/database.sqlite
+    restart: always

@@ -1,0 +1,17 @@
+# Imagen Nodejs
+FROM node:18
+
+# Directorio
+WORKDIR /app
+
+COPY backend/package*.json ./
+COPY backend .
+
+# Dependencias
+RUN npm install
+
+# Puerto
+EXPOSE 3000
+
+# Ejecucion
+CMD ["node", "server.js"]
