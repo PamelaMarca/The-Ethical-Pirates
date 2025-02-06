@@ -8,11 +8,19 @@
 </head>
 <body class="Home">
     <header class="cabezal">
+        <!-- Sección del logo y título centrado -->
+        <section class="presentacion">
+            <img src="imagenes/cine.png" alt="imagen" width="300px"> <!-- Aumenté el tamaño -->
+            <h1 id="titulo">Piratas del cine</h1>                
+        </section>
+
+        <!-- Sección del buscador centrado -->
         <section>
-            <div class="presentacion">
-                <img src="./imagenes/cine.png" alt="imagen" width="200px">
-                <h1 id="titulo">Piratas del cine</h1>                
+            <div id="buscador">
+                <input type="text" id="search" placeholder="Buscar una serie">
+                <button id="buscar">&#128269;</button>
             </div>
+        </section>
 
             <div class ="ingresar" id="ingresar">
                 <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
@@ -38,23 +46,16 @@
 
             </nav> 
         </section>    
-        <section>
-            <nav class="navegador">
-                <div class="paginas">
-                <a id="index" href="index.html">Home</a>
-                <a href="Series.html">Series</a>
-                <a href="Peliculas.html">Peliculas</a>
-                </div>
-
-                <div id="buscador">
-                    <input type="text" id="search" placeholder="Buscar una película o serie">
-                    <span id="buscar">&#128269</span>
-                </div>
-            </nav>
-
-        </section>
   
     </header>
+        <!-- Navegación principal -->
+            <nav class="navegador">
+                <div class="paginas">
+                    <a id="index" href="index.html">Inicio</a>
+                    <a href="Series.html">Series</a>
+                    <a href="Peliculas.html">Peliculas</a>
+                </div>
+            </nav>
     <main>
         <div class="cuadro resultados" id="cuadro">
         </div>
@@ -63,7 +64,7 @@
     <footer>
         <p>&copy; 2024 The Ethical Pirates</p>
     </footer>
-    <script src="../BACKEND/app.js"></script>
+    <script src="../backend/server.js"></script>
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
 
