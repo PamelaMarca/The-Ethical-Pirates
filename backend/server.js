@@ -1,13 +1,16 @@
 const express = require('express');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
 const { sequelize, Pelicula, Serie, Usuario } = require('./models');
 
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
+const registroRoutes = require('./routes/registro');
 
 app.use(cors());
 app.use(express.json());
 app.use('/busqueda', busquedaRoutes);
+app.use('/api/v1', registroRoutes);
 
 const PORT = 3000;
 
@@ -73,22 +76,47 @@ app.get('/api/v1/cuentas/:usuario', async (req, res) => {
     res.json({ cuenta });
 });
 
-// Registro de usuario
+// Registro de usuario con cifrado de contraseña
 app.post('/api/v1/registro', async (req, res) => {
-    const usuario = await Usuario.create({
-        NOMBRE_USUARIO: req.body.nombre,
-        CLAVE: req.body.clave,
-        EMAIL: req.body.email,
-        TEL: req.body.contacto
-    });
-    res.status(201).json(usuario);
+    const { nombre, clave, email, contacto } = req.body;
+
+    // Comprobar si ya existe el usuario
+    const usuarioExistente = await Usuario.findOne({ where: { NOMBRE_USUARIO: nombre } });
+    if (usuarioExistente) {
+        return res.status(400).json({ mensaje: "El nombre de usuario ya está en uso." });
+    }
+
+    // Cifrar la contraseña
+    const hashedPassword = await bcrypt.hash(clave, 10);
+
+    try {
+        // Crear el usuario en la base de datos
+        const usuario = await Usuario.create({
+            NOMBRE_USUARIO: nombre,
+            CLAVE: hashedPassword,
+            EMAIL: email,
+            TEL: contacto
+        });
+
+        res.status(201).json({ mensaje: "Usuario registrado exitosamente", usuario });
+    } catch (error) {
+        res.status(500).json({ mensaje: "Error al registrar el usuario", error });
+    }
 });
 
-// Inicio de sesión
+// Inicio de sesión con verificación de contraseña
 app.post('/api/v1/inicio', async (req, res) => {
-    const cuenta = await Usuario.findOne({ where: { NOMBRE_USUARIO: req.body.us } });
+    const { us, clave } = req.body;
+
+    // Buscar el usuario por nombre de usuario
+    const cuenta = await Usuario.findOne({ where: { NOMBRE_USUARIO: us } });
     if (!cuenta) return res.status(400).json({ mensaje: "Usuario no encontrado" });
-    res.status(200).json(cuenta);
+
+    // Comparar la contraseña con la almacenada
+    const validPassword = await bcrypt.compare(clave, cuenta.CLAVE);
+    if (!validPassword) return res.status(400).json({ mensaje: "Contraseña incorrecta" });
+
+    res.status(200).json({ mensaje: "Inicio de sesión exitoso", cuenta });
 });
 
 // Sincronizar base de datos y arrancar servidor

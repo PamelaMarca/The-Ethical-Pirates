@@ -8,39 +8,40 @@
 </head>
 <body class="Home">
     <header class="cabezal">
-        <section>
-			<div class="presentacion">
-                <img src="./imagenes/cine.png" alt="imagen" width="200px">
-                <h1 id="titulo">Piratas del cine</h1>                
-            </div>          
-        </section>    
-        <section>
-            <nav class="navegador">
-                <div class="paginas">
-                <a href="index.html">Home</a>
-                <a href="Series.html">Series</a>
-                <a href="Peliculas.html">Peliculas</a>
-                </div>
-                <div id="buscador">
-                    <input type="text" id="search" placeholder="Buscar una película o serie">
-                    <span id="buscar">&#128269</span>
-                </div>
-            </nav>
+        <!-- Sección del logo y título centrado -->
+        <section class="presentacion">
+            <img src="imagenes/cine.png" alt="imagen" width="300px"> <!-- Aumenté el tamaño -->
+            <h1 id="titulo">Piratas del cine</h1>                
+        </section>
 
+        <!-- Sección del buscador centrado -->
+        <section>
+            <div id="buscador">
+                <input type="text" id="search" placeholder="Buscar una serie">
+                <button id="buscar">&#128269;</button>
+            </div>
         </section>
   
     </header>
+    <!-- Navegación principal -->
+    <nav class="navegador">
+        <div class="paginas">
+            <a id="index" href="index.html">Inicio</a>
+            <a href="Series.html">Series</a>
+            <a href="Peliculas.html">Peliculas</a>
+        </div>
+    </nav>
     <main>
 		<div class="cuadro">
             <div class="cuadro_pregunta">
                 <div class="pregunta-inicio">
-                    <h3>¿Tienes una cuenta?</h3>
-                    <p>Entonce entra apretando</p>
+                    <h3>¿Te encontras registrado?</h3>
+                    <p>Ingresa con tu cuenta</p>
                     <button class="boton" onclick="registro_inicio()">Iniciar Sesion</button>
                 </div>
                 <div class="pregunta-registro">
-                    <h3>¿Aun no tienes una cuenta?</h3>
-                    <p>Entonce create una apretando</p>
+                    <h3>¿Aun no estas registrado?</h3>
+                    <p>Crea tu cuenta</p>
                     <button class="boton" onclick="registro_inicio()">Registrarse</button>
                 </div>
             </div>
@@ -91,7 +92,7 @@
     <footer>
         <p>&copy; 2024 The Ethical Pirates</p>
     </footer>
-    <script src="../BACKEND/app.js"></script>
+    <script src="../backend/server.js"></script>
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
     <script src="./js/cuenta.js"></script>

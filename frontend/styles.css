@@ -1,25 +1,32 @@
-/* Estableciendo valores generales para todos los elementos*/
-*{
-	margin:0;
-	padding:0;
-	box-sizing: border-box;
-	font-family: Arial;
+/* Estableciendo valores generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial;
 }
 
+/* Página principal */
 .Home {
-	width: 100%;
-	min-height: 100%;
-	background-color: #0d0d24;
-	
+    width: 100%;
+    min-height: 100vh;
+    background-color: #0d0d24;
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    flex-direction: column;
+    text-align: left;  
 }
 
+/* Cabezal que contiene logo y buscador */
 .cabezal {
-	background-color:#06061d;
-	padding: 0;
-	display: flex;
+    padding: 0;
+    display: flex;
     flex-flow: nowrap;
-	flex-wrap: wrap;
-	flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: column;
+    position: relative;
+	margin-top: 10vh;
 }
 
 section{
@@ -30,77 +37,118 @@ section{
 
 }
 
-.presentacion{
-	width: 80%;
-	max-width: 1000px;
-	display: flex;
-	padding: 2%;
-	gap: 1%;
-	align-items: center;
-
-}
-.presentacion img{
-	width: 120px;
+/* Estilo para el logo y título */
+.presentacion {
+    text-align: center;
+    margin-bottom: 30px; 
 }
 
-#titulo{
-	font-size: 40px;
-	font-family:Arial, Helvetica, sans-serif;
-	text-shadow: -2px -3px 0 #155f72;
-	color:#ace0e4;
-}
-.ingresar{
-	width: 18%;
+.presentacion img {
+    width: 300px; 
+    margin-bottom: 20px; 
 }
 
-.boton{
-	display: inline-block;
-	padding: 10px;
-	background-color: #181e3f;
-	margin: 2%;
-	color: #50c9eb;
-	text-align: center;
-	text-decoration: none;
-	border-radius: 1em;
-	border: 0.2em solid #20606e;
-	cursor: pointer;
+#titulo {
+    font-size: 60px; 
+    color: #ace0e4;
+    text-shadow: -2px -3px 0 #155f72;
 }
-.boton:hover{
-	background-color: #226ca8;
-	color: #0d09e4;
-	border-color:#32d9ff ;
-	transition: 2;
+
+/* Botón de iniciar sesión */
+.ingresar {
+    position: absolute;
+    top: 20px; 
+    right: 20px; 
+}
+
+.boton {
+    display: inline-block;
+    padding: 10px;
+    background-color: #181e3f;
+    color: #50c9eb;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 1em;
+    border: 0.2em solid #20606e;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.boton:hover {
+    background-color: #226ca8;
+    color: #0d09e4;
+    border-color: #32d9ff;
+    transition: 0.3s;
 }
 
 /* Navegador */
-.navegador{
-	width: 100%;
-	margin: 0;
-	padding: 0% 20%;
-	background-color: #0e1030;
-	display: flex;
-}
-.paginas{
-	width: 100%;
-	text-align: center;
-	display: flex;
-	
+.navegador {
+    width: 100%;
+    margin: 0;
+	margin-top: 30px;
+    padding: 0% 10%;
+    background-color: #0e1030;
+    display: flex;
 }
 
-#buscador{
-	width: 30%;
-	position: relative;
-	display: flex;
-	align-items: center;
-	left: 15%;
+.paginas {
+    width: 100%;
+    text-align: center;
+    display: flex;
+	gap: 20px;
+	justify-content: center;
 }
 
-#buscador input{
-	width: 300px;
-	padding: 6px;
-	font-size: 16px;
-	border-radius: 15px;
+.paginas a {
+    padding: 3% 5%;
+    text-decoration: none;
+    color: #9ba8bb;
+    font-size: large;
 }
+
+/* Estilo para el buscador */
+#buscador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+#buscador input {
+    width: 900px;
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    text-align: left;
+}
+
+#buscador input {
+    width: 900px;
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    text-align: left;
+}
+
+#buscador button {
+    background-color: #226ca8;
+    color: white;
+    font-size: 25px;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+#buscador button:hover {
+    background-color: #50c9eb;
+}
+
 #buscador #buscar{
 	font-size: large;
 	cursor: pointer;
@@ -252,7 +300,7 @@ main{
 	position: relative;
 	padding: 20px;
 	display: flex;
-	justify-content: center;
+	justify-content: left;
 
 }
 .cuadro_pregunta div{
@@ -260,13 +308,16 @@ main{
 	color: white;
 	font-family: Arial, sans-serif;
 	transition: all 0.5s;
+	text-align: center;
 }
 .cuadro_pregunta div p, .cuadro_pregunta div button{
 	margin-top: 20px;
+	text-align: center;
 }
 .cuadro_pregunta div h3{
 	font-weight: 400;
 	font-size: 24px;
+	text-align:center ;
 }
 .pregunta-inicio{
 	opacity:0;
@@ -337,17 +388,18 @@ main{
 #nacimiento {
 	width: 50%;
 }
-/* pie de pagina */
-footer{
-	height: 50px;
-	width: 100%;
-	line-height: 50px;
-	color: rgb(233, 246, 255);
-	text-align: center;
-	background: #1b224d;
-	margin-top: 45px;
-	position: relative;
-	bottom: 0;
+
+/* Footer */
+footer {
+    height: 50px;
+    width: 100%;
+    line-height: 50px;
+    color: rgb(233, 246, 255);
+    text-align: center;
+    background: #1b224d;
+    margin-top: 45px;
+    position: relative;
+    bottom: 0;
 }
 
 /* Adaptacion a los dispositivos */
@@ -375,7 +427,7 @@ footer{
 		width: 50%;
 	}
 	.cuadro_pregunta div{
-		max-width: 350px;
+		max-width: 400px;
 		padding: 20px;
 		margin:  90px 40px;
 	}
@@ -447,6 +499,5 @@ footer{
 	.formulario-registro{
 		left: 0px;
 	}
-
 		
 }

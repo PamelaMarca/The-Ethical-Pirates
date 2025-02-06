@@ -8,56 +8,37 @@
 </head>
 <body class="Home">
     <header class="cabezal">
-        <section>
-            <div class="presentacion">
-                <img src="imagenes/cine.png" alt="imagen" width="200px">
-                <h1 id="titulo">Piratas del cine</h1>                
-            </div>
-
-            <div class ="ingresar" id="ingresar">
-                <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
-            </div>
-            
-            <nav id="navegador_interno" data-iniciado="false">
-                <div class="icono_menu" onclick="desplegar()">☰</div>
-                <div class="cuadro_interno" id="cuadro_interno">
-                    <ul>
-                        <li><a href="">Perfil</a></li>
-                        <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong> </button>
-                            <ul id="menu" hidden>
-                                <li><a href="">Mis Series</a></li>
-                                <li><a href="">MIs Peliculas</a></li>
-                            </ul>
-                        </li>
-    
-                        <li><a href="">Comentarios</a></li>
-                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
-                    </ul>
-                </div>
-
-            </nav> 
-        </section>    
-        <section>
-            <nav class="navegador">
-                <div class="paginas">
-                <a id="index" href="index.html">Inicio</a>
-                <a href="Series.html">Series</a>
-                <a href="Peliculas.html">Peliculas</a>
-                </div>
-
-                <div id="buscador">
-                    <input type="text" id="search" placeholder="Buscar una película o serie">
-                    <span id="buscar">&#128269</span>
-                </div>
-            </nav>
-
+        <!-- Sección del logo y título centrado -->
+        <section class="presentacion">
+            <img src="imagenes/cine.png" alt="imagen" width="300px"> <!-- Aumenté el tamaño -->
+            <h1 id="titulo">Piratas del cine</h1>                
         </section>
-  
+
+        <!-- Sección del buscador centrado -->
+        <section>
+            <div id="buscador">
+                <input type="text" id="search" placeholder="Buscar una película o serie">
+                <button id="buscar">&#128269;</button>
+            </div>
+        </section>
+
+        <!-- Botón de iniciar sesión -->
+        <div class="ingresar" id="ingresar">
+            <a href="inicio_registro.html" class="boton">Iniciar Sesión</a>
+        </div>
     </header>
+
+    <!-- Navegación principal -->
+    <nav class="navegador">
+        <div class="paginas">
+            <a id="index" href="index.html">Inicio</a>
+            <a href="Series.html">Series</a>
+            <a href="Peliculas.html">Peliculas</a>
+        </div>
+    </nav>
+  
     <main>
         <div class="cuadro" id="cuadro">
-            
         </div>
     </main>
 
@@ -66,6 +47,7 @@
             <p>&copy; 2024 The Ethical Pirates</p>
         </div>
     </footer>
+
     <script src="../backend/server.js"></script>
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
@@ -73,7 +55,7 @@
         const sesion= document.querySelector('#navegador_interno [data-iniciado]'); 
         fetch('http://localhost:3001/')
         .then(respuesta => respuesta.json())
-        .then(json=>{
+        .then(json => {
             document.getElementById('cuadro').innerHTML = json.mensaje;
         })
         if(sesion.value = true){
