@@ -76,52 +76,17 @@ app.get('/api/v1/cuentas/:usuario', async (req, res) => {
     res.json({ cuenta });
 });
 
-// Registro de usuario con cifrado de contraseña
-// app.post('/api/v1/registro', async (req, res) => {
-//     const { nombre, apellido, nacimiento, genero, correo, contacto, usuario,clave} = req.body;
-
-//     if (!usuario || !clave ) {
-//         return res.status(400).json({ mensaje: "Nombre de usuario, clave son obligatorios" });
-//     }
-
-//     // Comprobar si ya existe el usuario
-//     const usuarioExistente = await Usuario.findOne({ where: { nombre_usuario: usuario } });
-//     if (usuarioExistente) {
-//         return res.status(400).json({ mensaje: 'El nombre de usuario ya está en uso.' });
-//     }
-
-//     // Cifrar la contraseña
-//     const hashedPassword = await bcrypt.hash(clave, 10);
-
-//     try {
-//         const usuario = await Usuario.create({
-//             nombre,
-//             apellido,
-//             fecha_nacimiento: nacimiento,
-//             genero: genero,
-//             email: correo,
-//             telefono: contacto,
-//             nombre_usuario: usuario,
-//             clave: hashedPassword,
-//         });
-
-//         console.log("Nuevo usuario insertado:", nuevoUsuario);
-//         res.status(201).json({ mensaje: "Usuario registrado exitosamente", usuario });
-//     } catch (error) {
-//         res.status(500).json({ mensaje: "Error al registrar el usuario", error });
-//     }
-// });
 
 // Inicio de sesión con verificación de contraseña
 app.post('/api/v1/inicio', async (req, res) => {
     const { us, clave } = req.body;
 
     // Buscar el usuario por nombre de usuario
-    const cuenta = await Usuario.findOne({ where: { nombre_usuario: us } });
+    const cuenta = await Usuario.findOne({ where: { NOMBRE_USUARIO: us } });
     if (!cuenta) return res.status(400).json({ mensaje: "Usuario no encontrado" });
 
     // Comparar la contraseña con la almacenada
-    const validPassword = await bcrypt.compare(clave, cuenta.clave);
+    const validPassword = await bcrypt.compare(clave, cuenta.CLAVE);
     if (!validPassword) return res.status(400).json({ mensaje: "Contraseña incorrecta" });
 
     res.status(200).json({ mensaje: "Inicio de sesión exitoso", cuenta });

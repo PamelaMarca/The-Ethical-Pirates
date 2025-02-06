@@ -37,14 +37,14 @@ function solicitud_registro(event){
 			},
 			//adjuntar los datos para una nueva cuenta
 			body: JSON.stringify({
-				nombre: nombre.value,
-				apellido: apellido.value,
-				nacimiento: nacimiento.value,
-				genero: genero.value,
-				correo: correo.value,
-				contacto: contacto.value,
-				usuario: usuario.value,
-				clave: clave.value
+				NOMBRE: nombre.value,
+				APELLIDO: apellido.value,
+				FECHA_NACIMIENTO: nacimiento.value,
+				GENERO: genero.value,
+				CORREO: correo.value,
+				CONTACTO: contacto.value,
+				NOMBRE_USUARIO: usuario.value,
+				CLAVE: clave.value
 			})
 		})
 		.then( res => res.json())
@@ -66,9 +66,9 @@ function solicitud_registro(event){
 function solicitud_entrar(event){
 	event.preventDefault();
 	const usuario_nombre = document.getElementById('Usuario').value;
-	const clave = document.getElementById('Contraseña').value;
+	const contraseña = document.getElementById('Contraseña').value;
 	const mensaje = document.getElementById('mensaje_error_inicio');
-	if(usuario_nombre=='' || clave==''){
+	if(usuario_nombre=='' || contraseña==''){
         mensaje.innerHTML=`<p>Conplete el campo faltante</p>`
 
     }else{
@@ -80,7 +80,7 @@ function solicitud_entrar(event){
             //adjuntar los datos para una nueva cuenta
             body: JSON.stringify({
                 us: usuario_nombre,
-                clave: clave
+                clave: contraseña
             })
         })
         .then(res => res.json())
