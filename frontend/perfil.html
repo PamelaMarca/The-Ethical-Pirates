@@ -10,7 +10,7 @@
     <header class="cabezal">
         <section>
             <div class="presentacion">
-                <img src="imagenes/cine.png" alt="imagen" width="200px">
+                <img src="./imagenes/cine.png" alt="imagen" width="200px">
                 <h1 id="titulo">Piratas del cine</h1>                
             </div>
 
@@ -18,13 +18,13 @@
                 <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
             </div>
             
-            <nav id="navegador_interno" data-iniciado="false">
+            <nav id="navegador_interno">
                 <div class="icono_menu" onclick="desplegar()">☰</div>
                 <div class="cuadro_interno" id="cuadro_interno">
                     <ul>
-                        <li><a href="">Perfil</a></li>
+                        <li><a href="perfil.html">Perfil</a></li>
                         <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong> </button>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt</strong></button>
                             <ul id="menu" hidden>
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
@@ -41,41 +41,57 @@
         <section>
             <nav class="navegador">
                 <div class="paginas">
-                    <a id="index" href="index.html">Home</a>
-                    <a href="Series.html">Series</a>
-                    <a href="Peliculas.html">Peliculas</a>
+                <a id="index" href="index.html">Home</a>
+                <a href="Series.html">Series</a>
+                <a href="Peliculas.html">Peliculas</a>
                 </div>
+
                 <div id="buscador">
                     <input type="text" id="search" placeholder="Buscar ...">
                     <span id="buscar">&#128269</span>
                 </div>
             </nav>
-            
+
         </section>
   
     </header>
-    <main>
-        <div class="cuadro" id="cuadro">
-            
+	<main>
+        <div class="cuadro resultados" id="cuadro">
+            <h2 id="titulo_item">Nombre Usuario</h2>
+            <section id="contenido_item">
+                <section id="perfil_detalles">
+                    <img src="" alt="foto-perfil" class="foto_pefil">
+                    <div>
+                        <h3>Datos Personales</h3>
+                        <div id="datos">
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                        <buttom class="editar_datos">Editar</buttom>
+                    </div>
+                    <div>
+                        
+                    </div>
+                </section>
+            </section>
         </div>
-    </main>
-
+	</main>
     <footer class="footer">
             <p>&copy; 2024 The Ethical Pirates</p>
     </footer>
-    <script src="../backend/server.js"></script>
+    <script src="../BACKEND/app.js"></script>
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
+    <script src="./js/cuenta.js"></script>
     <script>
-        const sesion= document.querySelector('#navegador_interno [data-iniciado]'); 
-        fetch('http://localhost:3000/')
-        .then(respuesta => respuesta.json())
-        .then(json=>{
-            document.getElementById('cuadro').innerHTML = json.mensaje;
-        })
-        if(sesion.value = true){
-            iniciado();
-        }
+        const parametro = new URLSearchParams(window.location.search);
+        const nombre = parametro.get('cuenta');
+        // codificacion por los espacios en el nombre
+        iniciado()
+        fetch("http://localhost:3000/api/v1/cuentas/" + nombre)
+        .then(res => res.json())
+
     </script>
 </body>
 </html>

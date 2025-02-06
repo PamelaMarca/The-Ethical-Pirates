@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         URL_POSTER: {
             type: DataTypes.STRING
+        },
+        ACCESO: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     }, {
         tableName: 'peliculas',

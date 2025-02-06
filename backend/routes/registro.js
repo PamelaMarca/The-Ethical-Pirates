@@ -6,35 +6,35 @@ const { Usuario } = require('../models'); // Usar la destructuración para impor
 router.post('/registro', async (req, res) => {
     console.log("Datos recibidos en el backend:", req.body);
 
-    const { NOMBRE_USUARIO, CLAVE, DATOS } = req.body;
-
+    const { nombre, apellido, nacimiento, genero, correo, contacto, usuario,clave} = req.body;
     // Validar si se reciben los datos obligatorios
-    if (!NOMBRE_USUARIO || !CLAVE || !DATOS) {
-        return res.status(400).json({ mensaje: "Nombre de usuario, clave y datos son obligatorios" });
+    if (!usuario || !clave ) {
+        return res.status(400).json({ mensaje: "Nombre de usuario, clave son obligatorios" });
     }
 
     try {
         // Verificar si el nombre de usuario ya existe en la base de datos
-        const usuarioExistente = await Usuario.findOne({ where: { nombre_usuario: NOMBRE_USUARIO } });
-
+        const usuarioExistente = await Usuario.findOne({ where: { nombre_usuario: usuario } });
         if (usuarioExistente) {
-            return res.status(400).json({ mensaje: "El nombre de usuario ya existe" });
+            return res.status(400).json({ mensaje: 'El nombre de usuario ya está en uso.' });
         }
 
+        // Cifrar la contraseña
+        const hashedPassword = await bcrypt.hash(clave, 10);
         // Crear el usuario con los datos recibidos
-// Cuando se crea el nuevo usuario, asegúrate de que los campos coincidan
-        const nuevoUsuario = await Usuario.create({
-        nombre_usuario: NOMBRE_USUARIO,
-        clave: CLAVE,
-        nombre: DATOS.NOMBRE,
-        apellido: DATOS.APELLIDO,
-        fecha_nacimiento: DATOS.FECHA_NACIMIENTO,
-        genero: DATOS.GENERO,
-        email: DATOS.EMAIL,
-        telefono: DATOS.TEL 
-    });
-    console.log("Nuevo usuario insertado:", nuevoUsuario);
-
+        // Cuando se crea el nuevo usuario, asegúrate de que los campos coincidan
+        const usuario = await Usuario.create({
+            nombre: nombre,
+            apellido: apellido,
+            fecha_nacimiento: nacimiento,
+            genero: genero,
+            email: correo,
+            telefono: contacto,
+            nombre_usuario: usuario,
+            clave: hashedPassword,
+        });
+        console.log("Nuevo usuario insertado:", nuevoUsuario);
+        Usuario.push(usuario);
         res.json({ mensaje: "Usuario registrado exitosamente", usuario: nuevoUsuario });
     } catch (error) {
         console.error("Error en el registro:", error);
