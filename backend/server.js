@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const bcrypt = require('bcryptjs');
 const { sequelize, Pelicula, Serie, Usuario } = require('./models');
 
 const app = express();
@@ -18,8 +17,8 @@ const PORT = 3000;
 app.get('/', (req, res) => {
     const mensaje = `<div class="css_mensaje">
                         <h2>¡Bienvenido!</h2>
-                        <p>Guarda, busca, reseña y recomienda películas o series.</p>
-                        <p>Regístrate o inicia sesión para guardar tus favoritas.</p>
+                        <p>Buscá, guardá o subí tus peliculas y series favoritas</p>
+                        <p>Regístrate o inicia sesión para empezar</p>
                         <a href="inicio_registro.html" class="boton">Iniciar Sesión/ Registrarse</a>
                     </div>`;
     res.json({ mensaje });
@@ -38,7 +37,7 @@ app.get('/api/v1/Biblioteca/:tipo', async (req, res) => {
     }
 
     const privado = coleccion.filter(item => item.ACCESO === "PRIVADO");
-    res.json(privado.length ? privado : { mensaje: "Crea tu propia lista!" });
+    res.json(privado.length ? privado : { mensaje: "Crea tu propia lista" });
 });
 
 // Obtener todas las películas públicas

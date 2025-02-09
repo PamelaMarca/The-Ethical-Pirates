@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Usuario } = require('../models'); // Usar la destructuración para importar el modelo
-
+const { Usuario } = require('../models'); 
 // Ruta para registrar usuario
 router.post('/registro', async (req, res) => {
     console.log("Datos recibidos en el backend:", req.body);
@@ -22,16 +21,16 @@ router.post('/registro', async (req, res) => {
         }
 
         // Crear el usuario con los datos recibidos
-// Cuando se crea el nuevo usuario, asegúrate de que los campos coincidan
+
         const nuevoUsuario = await Usuario.create({
-            nombre_usuario: NOMBRE_USUARIO,
-            clave: CLAVE,
             nombre: NOMBRE,
             apellido: APELLIDO,
             fecha_nacimiento: FECHA_NACIMIENTO,
             genero: GENERO,
             email: CORREO,
             telefono: CONTACTO,
+            nombre_usuario: NOMBRE_USUARIO,
+            clave: CLAVE,
 
         });
     console.log("Nuevo usuario insertado:", nuevoUsuario);

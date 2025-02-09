@@ -39,7 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         ACCESO: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        LINK: {
+            type: DataTypes.STRING
         }
+        
     }, {
         tableName: 'peliculas',
         timestamps: false
