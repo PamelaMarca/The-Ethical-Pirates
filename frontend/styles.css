@@ -1,32 +1,25 @@
-/* Estableciendo valores generales */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial;
+/* Estableciendo valores generales para todos los elementos*/
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+	font-family: Arial;
 }
 
-/* Página principal */
 .Home {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #0d0d24;
-    display: flex;
-    justify-content: center; 
-    align-items: center;     
-    flex-direction: column;
-    text-align: left;  
+	width: 100%;
+	min-height: 100%;
+	background-color: #0d0d24;
+	
 }
 
-/* Cabezal que contiene logo y buscador */
 .cabezal {
-    padding: 0;
-    display: flex;
+	background-color:#06061d;
+	padding: 0;
+	display: flex;
     flex-flow: nowrap;
-    flex-wrap: wrap;
-    flex-direction: column;
-    position: relative;
-	margin-top: 10vh;
+	flex-wrap: wrap;
+	flex-direction: column;
 }
 
 section{
@@ -37,123 +30,88 @@ section{
 
 }
 
-/* Estilo para el logo y título */
-.presentacion {
-    text-align: center;
-    margin-bottom: 30px; 
+.presentacion{
+	width: 80%;
+	max-width: 1000px;
+	display: flex;
+	padding: 2%;
+	gap: 1%;
+	align-items: center;
+
+}
+.presentacion img{
+	width: 120px;
 }
 
-.presentacion img {
-    width: 300px; 
-    margin-bottom: 20px; 
+#titulo{
+	font-size: 40px;
+	font-family:Arial, Helvetica, sans-serif;
+	text-shadow: -2px -3px 0 #155f72;
+	color:#ace0e4;
+}
+.ingresar{
+	width: 18%;
 }
 
-#titulo {
-    font-size: 60px; 
-    color: #ace0e4;
-    text-shadow: -2px -3px 0 #155f72;
+.boton{
+	display: inline-block;
+	padding: 10px;
+	background-color: #181e3f;
+	margin: 2%;
+	color: #50c9eb;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 1em;
+	border: 0.2em solid #20606e;
+	cursor: pointer;
 }
-
-/* Botón de iniciar sesión */
-.ingresar {
-    position: absolute;
-    top: 20px; 
-    right: 20px; 
-}
-
-.boton {
-    display: inline-block;
-    padding: 10px;
-    background-color: #181e3f;
-    color: #50c9eb;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 1em;
-    border: 0.2em solid #20606e;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.boton:hover {
-    background-color: #226ca8;
-    color: #0d09e4;
-    border-color: #32d9ff;
-    transition: 0.3s;
+.boton:hover{
+	background-color: #226ca8;
+	color: #0a0942;
+	border-color:#32d9ff ;
+	transition: 2;
 }
 
 /* Navegador */
-.navegador {
-    width: 100%;
-    margin: 0;
-	margin-top: 30px;
-    padding: 0% 10%;
-    background-color: #0e1030;
-    display: flex;
+.navegador{
+	width: 100%;
+	margin: 0;
+	padding: 0% 20%;
+	background-color: #0e1030;
+	display: flex;
+}
+.paginas{
+	width: 100%;
+	text-align: center;
+	display: flex;
+	
 }
 
-.paginas {
-    width: 100%;
-    text-align: center;
-    display: flex;
-	gap: 20px;
-	justify-content: center;
+#buscador{
+	width: 30%;
+	position: relative;
+	display: flex;
+	align-items: center;
+	left: 15%;
 }
 
-.paginas a {
-    padding: 3% 5%;
-    text-decoration: none;
-    color: #9ba8bb;
-    font-size: large;
+#buscador input{
+	width: 300px;
+	padding: 6px;
+	font-size: 16px;
+	border-radius: 15px;
 }
 
-/* Estilo para el buscador */
-#buscador {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-#buscador input {
-    width: 900px;
-    padding: 15px;
-    font-size: 20px;
-    border-radius: 30px;
-    border: none;
-    outline: none;
-    text-align: left;
-}
-
-#buscador input {
-    width: 900px;
-    padding: 15px;
-    font-size: 20px;
-    border-radius: 30px;
-    border: none;
-    outline: none;
-    text-align: left;
-}
-
-#buscador button {
+#buscador #buscar {
     background-color: #226ca8;
     color: white;
-    font-size: 25px;
-    padding: 15px;
+    font-size: 15px;
+    padding: 5px;
     border-radius: 50%;
     cursor: pointer;
     border: none;
 }
 
-#buscador button:hover {
-    background-color: #50c9eb;
-}
-
-#buscador #buscar{
-	font-size: large;
-	cursor: pointer;
-	margin: 0 8px;
-}
 #buscador #buscar:active{
 	background-color: #155f72;
 }
@@ -219,7 +177,7 @@ section{
 
 /* Esto me ayuda a que el footer de la pagina aunque el cuadro sea mas  pequeño pueda quedarse abajo */
 main{
-	min-height: 340px;
+	min-height: 383px;
 }
 
 /* Donde suele acabar toda la informacion */
@@ -257,7 +215,7 @@ main{
 	display: flex;
 	flex-wrap: wrap;
 	border: 0.3em solid #6f79af;
-	background-color: #6f79af;
+	background-color: #171738;
 	word-wrap: break-word;
 	hyphens: auto;
 }
@@ -267,7 +225,7 @@ main{
 	border-color: #fca5a5;
 }
 .nombre_item:hover{
-	color: #e2e2e2;
+	color: #f55a5a;
 	cursor: pointer;
 }
 
@@ -285,6 +243,10 @@ main{
 .info p{
 	margin-bottom: 8px;
 }
+.info a{
+	text-decoration: none;
+	color:#e6e6e6 ;
+}
 
 .imagen{
 	width: 38%;
@@ -300,7 +262,7 @@ main{
 	position: relative;
 	padding: 20px;
 	display: flex;
-	justify-content: left;
+	justify-content: center;
 
 }
 .cuadro_pregunta div{
@@ -308,16 +270,13 @@ main{
 	color: white;
 	font-family: Arial, sans-serif;
 	transition: all 0.5s;
-	text-align: center;
 }
 .cuadro_pregunta div p, .cuadro_pregunta div button{
 	margin-top: 20px;
-	text-align: center;
 }
 .cuadro_pregunta div h3{
 	font-weight: 400;
 	font-size: 24px;
-	text-align:center ;
 }
 .pregunta-inicio{
 	opacity:0;
@@ -381,25 +340,62 @@ main{
 }
 
 #mensaje_error_inicio p, #mensaje_error_registro p{
-	color: red;
-	font-size: 8px;
-	font-family: 'Franklin Gothic Medium';
+	color: rgb(224, 105, 8);
+	font-size: 12px;
+	font-family:'Trebuchet MS','Lucida Sans';
 }
 #nacimiento {
 	width: 50%;
 }
+/* para la pagina individual de cada pelicula o serie */
+.cuadro #titulo_item{
+	padding: 10px 15px;
+	background-color: #252a4e;
+	border-top: 5px solid #7077ad;
+	box-shadow: -3px 0 #7077ad ;
+}
+#contenido_item{
+	align-items: flex-start;
+	border: 5px solid #252a4e;
+	box-shadow:-3px 0 #7077ad ;
+}
+#contenido_item #item_informacion, #contenido_item .caja_sinopsis, .datos_items{
+	margin: 10px 30px;
+	
+}
 
-/* Footer */
-footer {
-    height: 50px;
-    width: 100%;
-    line-height: 50px;
-    color: rgb(233, 246, 255);
-    text-align: center;
-    background: #1b224d;
-    margin-top: 45px;
-    position: relative;
-    bottom: 0;
+.caja_sinopsis{
+	padding-top: 15px;
+	width: 50%;
+}
+.sinopsis{
+	padding-top: 10px;
+}
+
+#perfil_detalles div{
+	width: 100%;
+	margin: 30px;
+	
+}
+
+.editar_datos{
+	padding: 10px;
+	background-color: rgb(66, 81, 102);
+	cursor: pointer;
+}
+
+/* pie de pagina */
+
+footer{
+	height: 50px;
+	width: 100%;
+	line-height: 50px;
+	color: rgb(233, 246, 255);
+	text-align: center;
+	background: #1b224d;
+	margin-top: 45px;
+	position: relative;
+	bottom: 0;
 }
 
 /* Adaptacion a los dispositivos */
@@ -415,6 +411,10 @@ footer {
 		left: 0;
 		
 	}
+	#buscador input{
+		width: 150px;
+		font-size: 12px;
+	}
 	.items{
 		width: 49%;
 		margin: 10px auto;
@@ -427,7 +427,7 @@ footer {
 		width: 50%;
 	}
 	.cuadro_pregunta div{
-		max-width: 400px;
+		max-width: 350px;
 		padding: 20px;
 		margin:  90px 40px;
 	}
@@ -499,5 +499,6 @@ footer {
 	.formulario-registro{
 		left: 0px;
 	}
+
 		
 }

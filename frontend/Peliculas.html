@@ -3,26 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piratas del cine</title>
+    <title>Piratas del Cine</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="Home">
     <header class="cabezal">
-        <!-- Sección del logo y título centrado -->
-        <section class="presentacion">
-            <img src="imagenes/cine.png" alt="imagen" width="300px"> <!-- Aumenté el tamaño -->
-            <h1 id="titulo">Piratas del cine</h1>                
-        </section>
-
-        <!-- Sección del buscador centrado -->
         <section>
-            <div id="buscador">
-                <input type="text" id="search" placeholder="Buscar una película">
-                <button id="buscar">&#128269;</button>
+            <div class="presentacion">
+                <img src="./imagenes/cine.png" alt="imagen" width="200px">
+                <h1 id="titulo">Piratas del Cine</h1>                
             </div>
-        </section>
-        
-        <section>
+
             <div class ="ingresar" id="ingresar">
                 <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
             </div>
@@ -39,24 +30,29 @@
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
                         </li>
-    
-                        <li><a href="">Comentarios</a></li>
-                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
+                            <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
 
             </nav> 
         </section>    
-  
-    </header>
-        <!-- Navegación principal -->
-        <nav class="navegador">
-            <div class="paginas">
-                <a id="index" href="index.html">Inicio</a>
+        <section>
+            <nav class="navegador">
+                <div class="paginas">
+                <a id="index"href="index.html">Home</a>
                 <a href="Series.html">Series</a>
                 <a href="Peliculas.html">Peliculas</a>
-            </div>
-        </nav>
+                </div>
+
+                <div id="buscador">
+                    <input type="text" id="search" placeholder="Buscar una película">
+                    <span id="buscar">&#128269</span>
+                </div>
+            </nav>
+
+        </section>
+  
+    </header>
     <main>
         <div class="cuadro resultados" id="cuadro">
         </div>
@@ -69,7 +65,7 @@
     <script src="./js/series_peliculas.js"></script>
 
     <script>
-        fetch('http://localhost:3001/api/v1/Peliculas')
+        fetch('http://localhost:3000/api/v1/Peliculas')
         .then(respuesta => respuesta.json())
         .then(json=>{
             const cuadro = document.getElementById('cuadro');
