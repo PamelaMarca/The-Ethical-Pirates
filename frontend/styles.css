@@ -359,11 +359,20 @@ main{
 	border: 5px solid #252a4e;
 	box-shadow:-3px 0 #7077ad ;
 }
-#contenido_item div, .datos_items{
+#contenido_item div{
 	margin: 10px 30px;
 	
 }
-
+.cuadro_informacion p{
+	padding-bottom:6px;
+}
+.cuadro_informacion span:hover{
+	color: #50c9eb;
+	cursor: pointer;
+}
+.cuadro_informacion a{
+	color: #50c9eb;
+}
 .caja_sinopsis{
 	padding-top: 15px;
 	width: 50%;

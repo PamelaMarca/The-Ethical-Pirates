@@ -4,63 +4,61 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true, // Asegura que no esté vacío
+        notEmpty: true, 
       }
     },
     apellido: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true, // Asegura que no esté vacío
+        notEmpty: true, 
       }
     },
     fecha_nacimiento: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true, // Asegura que no esté vacío
+        notEmpty: true, 
       }
     },
     genero: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true, // Asegura que no esté vacío
+        notEmpty: true, 
       }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: true,
-      unique: true, // Evita que se repita el correo electrónico
-      validate: {
-        isEmail: true, // Valida que el formato sea de correo electrónico
-      }
+      unique: true, 
+        isEmail: true, 
     },
-    telefono: {  // Debe coincidir con la base de datos (minúsculas)
+    telefono: {  
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
-        is: /^[0-9]+$/, // Asegura que solo contenga números
+        is: /^[0-9]+$/
       }
     },
     nombre_usuario: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true, // Evita que se repita el nombre de usuario
+      unique: true, 
       validate: {
-        notEmpty: true, // Asegura que no esté vacío
+        notEmpty: true, 
       }
     },
     clave: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true, // Asegura que la contraseña no esté vacía
+        notEmpty: true, 
       }
     }
   }, {
-    // Opciones adicionales, por ejemplo, si quieres que Sequelize cree las tablas automáticamente
-    timestamps: false, // Si no quieres que se creen las columnas createdAt y updatedAt
+    tableName: "Usuarios", 
+    timestamps: false
   });
 
   return Usuario;

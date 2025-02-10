@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const bcrypt = require('bcryptjs');
 const { sequelize, Pelicula, Serie, Usuario } = require('./models');
 
 const app = express();
@@ -18,8 +17,8 @@ const PORT = 3000;
 app.get('/', (req, res) => {
     const mensaje = `<div class="css_mensaje">
                         <h2>¡Bienvenido!</h2>
-                        <p>Guarda, busca, reseña y recomienda películas o series.</p>
-                        <p>Regístrate o inicia sesión para guardar tus favoritas.</p>
+                        <p>Buscá, guardá o subí tus peliculas y series favoritas</p>
+                        <p>Regístrate o inicia sesión para empezar</p>
                         <a href="inicio_registro.html" class="boton">Iniciar Sesión/ Registrarse</a>
                     </div>`;
     res.json({ mensaje });
@@ -38,7 +37,7 @@ app.get('/api/v1/Biblioteca/:tipo', async (req, res) => {
     }
 
     const privado = coleccion.filter(item => item.ACCESO === "PRIVADO");
-    res.json(privado.length ? privado : { mensaje: "Crea tu propia lista!" });
+    res.json(privado.length ? privado : { mensaje: "Crea tu propia lista" });
 });
 
 // Obtener todas las películas públicas
@@ -71,7 +70,7 @@ app.get('/api/v1/Series/:nombre', async (req, res) => {
 
 // Obtener datos de usuario
 app.get('/api/v1/cuentas/:usuario', async (req, res) => {
-    const cuenta = await Usuario.findOne({ where: { NOMBRE_USUARIO: req.params.usuario } });
+    const cuenta = await Usuario.findOne({ where: { nombre_usuario: req.params.usuario } });
     if (!cuenta) return res.status(400).json({ mensaje: "Usuario no encontrado" });
     res.json({ cuenta });
 });
@@ -82,14 +81,14 @@ app.post('/api/v1/inicio', async (req, res) => {
     const { us, clave } = req.body;
 
     // Buscar el usuario por nombre de usuario
-    const cuenta = await Usuario.findOne({ where: { NOMBRE_USUARIO: us } });
+    const cuenta = await Usuario.findOne({ where: { nombre_usuario: us } });
     if (!cuenta) return res.status(400).json({ mensaje: "Usuario no encontrado" });
 
     // Comparar la contraseña con la almacenada
-    const validPassword = await bcrypt.compare(clave, cuenta.CLAVE);
-    if (!validPassword) return res.status(400).json({ mensaje: "Contraseña incorrecta" });
+    // const validPassword = await bcrypt.compare(clave, cuenta.CLAVE);
+    if (cuenta == cuenta.CLAVE) return res.status(400).json({ mensaje: "Contraseña incorrecta" });
 
-    res.status(200).json({ mensaje: "Inicio de sesión exitoso", cuenta });
+    res.status(200).json(cuenta);
 });
 
 // Sincronizar base de datos y arrancar servidor

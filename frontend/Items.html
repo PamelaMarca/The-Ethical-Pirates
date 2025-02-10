@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piratas del cine</title>
+    <title>Piratas del Cine</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="Home">
@@ -11,7 +11,7 @@
         <section>
             <div class="presentacion">
                 <img src="./imagenes/cine.png" alt="imagen" width="200px">
-                <h1 id="titulo">Piratas del cine</h1>                
+                <h1 id="titulo">Piratas del Cine</h1>                
             </div>
 
             <div class ="ingresar" id="ingresar">
@@ -78,9 +78,8 @@
         fetch("http://localhost:3000/api/v1/Peliculas/" + nombreCodificado)
         .then(res => res.json())
         .then(dato =>{
+            console.log(dato);
             diseño(dato);
-
-
         })
         fetch("http://localhost:3000/api/v1/Series/" + nombreCodificado)
         .then(res => res.json())

@@ -57,3 +57,8 @@ function boton_inicio(){
 		pregunta_inicio.style.opacity='0';
 	}
 }
+
+document.getElementById('plataforma').addEventListener('click', ()=>{
+	const direccion = document.getElementById('plataforma').innerText;
+	window.location.href=`plataformas.html?p=${encodeURIComponent(direccion)}`;
+})
