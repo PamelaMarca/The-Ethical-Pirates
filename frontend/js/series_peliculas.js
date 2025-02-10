@@ -118,8 +118,8 @@ function diseño (dato){
 	const contenedor = document.getElementById('item_informacion');
 	const imagen= document.createElement('img');
 	imagen.style.maxWidth="350px";
-	const datos_serie= document.createElement('div');
-	datos_serie.classList.add('datos_items');
+	const datos_entretenimiento= document.createElement('div');
+	datos_entretenimiento.classList.add('datos_items');
 	const titulo= document.getElementById('titulo_item');
 	const calificacion = document.createElement('p');
 	const estreno = document.createElement('p');
@@ -130,26 +130,28 @@ function diseño (dato){
 	const idioma = document.createElement('p');
 	const plataforma = document.createElement('p');
 	const cuadro_sinopsis =document.createElement('div');
+	const cuadro_link =document.createElement('section');
 	cuadro_sinopsis.classList.add('caja_sinopsis');
 	
-	imagen.src= dato.URL_POSTER;
+	imagen.src= dato.URL_POSTER? dato.URL_POSTER : './imagenes/sin_imagen.jpg';
+	imagen.style.width="300px"
 	titulo.innerText=dato.NOMBRE_COMPLETO;
 
 	calificacion.innerText= `Calificacion: ${dato.CALIFICACION}`;
-	datos_serie.appendChild(calificacion);
+	datos_entretenimiento.appendChild(calificacion);
 
 	estreno.innerText=`Fecha de estreno: ${dato.FECHA_ESTRENO=='undefine'? dato.FECHA_ESTRENO: "xx-xx-xxxx"}`;
-	datos_serie.appendChild(estreno);
+	datos_entretenimiento.appendChild(estreno);
 
 	recomendado_para.innerText=`Apto para ${dato.EDAD_RECOMENDADA=='undefine'? dato.EDAD_RECOMENDADA : " todo publico"}`;
-	datos_serie.appendChild(recomendado_para);
+	datos_entretenimiento.appendChild(recomendado_para);
 
 	if((dato.TOTAL_TEMPORADAS) != undefined && dato.TOTAL_TEMPORADAS != null){
 		temporadas.innerText= `Cantidad de Temporadas: ${dato.TOTAL_TEMPORADAS}`;
-		datos_serie.appendChild(temporadas);
+		datos_entretenimiento.appendChild(temporadas);
 	}else if(dato.TOTAL_DURACION != undefined){
 		duracion.innerText= `Tiempo de duracion: ${dato.TOTAL_DURACION}`;
-		datos_serie.appendChild(duracion);
+		datos_entretenimiento.appendChild(duracion);
 	}
 	generos.innerHTML=`Genero: ${dato.GENERO}`;
 	idioma.innerHTML=`Idioma original: ${dato.IDIOMA_ORIGINAL}`;
@@ -159,23 +161,24 @@ function diseño (dato){
 	const sinopsis= document.createElement('div');
 	sinopsis.classList.add('sinopsis');
 
-
     const parrafos_sinopsis =  [];
 	dato.SINOPSIS.split('\n').map(parrafo => {
 		const p = document.createElement('p');
 		p.innerText=parrafo;
 		parrafos_sinopsis.push(p);
 	})
+
 	parrafos_sinopsis.forEach(p=> sinopsis.appendChild(p));
 	cuadro_sinopsis.appendChild(sinopsis);
-	
-	datos_serie.appendChild(generos);
-	datos_serie.appendChild(idioma);
-	datos_serie.appendChild(plataforma);
+	cuadro_link.innerHTML=`<h3>Rediccion: <a href="${dato.LINK}">ver</a></h3>`
+
+	datos_entretenimiento.appendChild(generos);
+	datos_entretenimiento.appendChild(idioma);
+	datos_entretenimiento.appendChild(plataforma);
 
 	contenedor.appendChild(imagen);
-	contenedor.appendChild(datos_serie);
-	
+	contenedor.appendChild(datos_entretenimiento);
+	cuadro_sinopsis.appendChild(cuadro_link);
 	cuadro.appendChild(contenedor);
 	cuadro.appendChild(cuadro_sinopsis);
 }
