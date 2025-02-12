@@ -39,6 +39,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
       validate: {
         is: /^[0-9]+$/
+      },
+      set(value) {
+        this.setDataValue("telefono", value === "" ? null : value);
       }
     },
     nombre_usuario: {

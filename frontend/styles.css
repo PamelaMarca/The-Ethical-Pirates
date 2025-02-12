@@ -131,7 +131,7 @@ section{
 #navegador_interno{
 	position: relative;
 	margin-left:2em ;
-	display:none;
+	visibility: hidden;
 }
 
 .icono_menu{

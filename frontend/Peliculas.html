@@ -66,28 +66,34 @@
     <script src="./js/sesion_verificar.js"></script>
 
     <script>
+        window.onload= function(){
+            pelis();
+            verificar_sesion();
+        }
+        function pelis(){
+            fetch('http://localhost:3000/api/v1/Peliculas')
+            .then(respuesta => respuesta.json())
+            .then(json=>{
+                const cuadro = document.getElementById('cuadro');
+                cuadro.innerHTML =`<h3>Peliculas</h3>`
+                if(json.respuesta){
+                    const lista = document.createElement('ul');
+                    lista.classList.add('fichas')
+                    json.respuesta.forEach(pelicula =>{
+                        items(pelicula,lista);
+                    })
+                    cuadro.appendChild(lista);            
+                }
+                else if(json.mensaje){
+                    const aviso = document.createElement('div');
+                    aviso.classList.add('css_mensaje');
+                    aviso.innerHTML = json.mensaje;
+                    cuadro.appendChild(aviso);
+                }
+            })
+            .catch (error => console.error("No se pudieron cargar Peliculas: ",error));
+        }
         
-        fetch('http://localhost:3000/api/v1/Peliculas')
-        .then(respuesta => respuesta.json())
-        .then(json=>{
-            const cuadro = document.getElementById('cuadro');
-            cuadro.innerHTML =`<h3>Peliculas</h3>`
-            if(json.respuesta){
-                const lista = document.createElement('ul');
-                lista.classList.add('fichas')
-                json.respuesta.forEach(pelicula =>{
-                    items(pelicula,lista);
-                })
-                cuadro.appendChild(lista);            
-            }
-            else if(json.mensaje){
-                const aviso = document.createElement('div');
-                aviso.classList.add('css_mensaje');
-                aviso.innerHTML = json.mensaje;
-                cuadro.appendChild(aviso);
-            }
-        })
-        .catch (error => console.error("No se pudieron cargar Peliculas: ",error));
 
     </script>
 </body>

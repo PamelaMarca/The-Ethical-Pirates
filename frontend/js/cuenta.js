@@ -1,3 +1,11 @@
+function iniciado(){
+	let navegador=document.getElementById('navegador_interno');
+	const boton_registro=document.getElementById('ingresar');
+	const index = document.getElementById('index');
+	navegador.style.visibility = 'visible';
+	boton_registro.style.visibility = 'hidden';
+	index.style.visibility= 'hidden';
+}
 
 function limpiar_formulario(){
 	const inputs = document.querySelectorAll("input");
@@ -19,11 +27,11 @@ function solicitud_registro(event){
 	const mensaje = document.getElementById('mensaje_error_registro');
 
 	if(nombre.value=='' || apellido.value=='' || usuario.value=='' || clave.value=='' || genero.value=='' || nacimiento.value==''){
-		mensaje.innerHTML=`<p>Conplete el campo faltante</p>`
+		mensaje.innerHTML="<p>Conplete el campo faltante</p>"
 
 	}
 	else{
-		fetch('http://localhost:3000/api/v1/registro',{
+		fetch("http://localhost:3000/api/v1/registro",{
 			method: "POST",
 			headers:{
 				'Content-Type':'application/json'
@@ -50,7 +58,7 @@ function solicitud_registro(event){
 			}
 		})
         .catch(error =>{
-            mensaje.innerHTML=`<p>Ocurrio un error al registrarse. Intente mas tarde</p>`
+            mensaje.innerHTML="<p>Ocurrio un error al registrarse. Intente mas tarde</p>"
 			limpiar_formulario();
         })
 	}
@@ -63,10 +71,10 @@ function solicitud_entrar(event){
 	const contraseña = document.getElementById('Contraseña').value;
 	const mensaje = document.getElementById('mensaje_error_inicio');
 	if(usuario_nombre=='' || contraseña==''){
-        mensaje.innerHTML=`<p>Conplete el campo faltante</p>`
+        mensaje.innerHTML="<p>Conplete el campo faltante</p>"
 
     }else{
-        fetch(`http://localhost:3000/api/v1/inicio`,{
+        fetch("http://localhost:3000/api/v1/inicio",{
             method: "POST",
             headers:{
                 'Content-Type':'application/json'
@@ -81,7 +89,7 @@ function solicitud_entrar(event){
         .then(json =>{
             if(!json.mensaje){
                 navegador.setAttribute("data-iniciado","true");
-                alert(`Inicio de sesion exitoso. Aprete 'aceptar' para ser redirigido`);
+                alert("Inicio de sesion exitoso. Aprete 'aceptar' para ser redirigido");
                 window.location.href=`perfil.html?cuenta=${usuario_nombre}`;
             }else{
                 mensaje.innerHTML=`<p>${json.mensaje}</p>`;
@@ -89,7 +97,7 @@ function solicitud_entrar(event){
     
         })
         .catch(error =>{
-            mensaje.innerHTML=`<p>Ocurrio un error al entrar. Intente mas tarde</p>`
+            mensaje.innerHTML="<p>Ocurrio un error al entrar. Intente mas tarde</p>"
         })
     }
     

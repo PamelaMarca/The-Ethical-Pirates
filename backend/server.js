@@ -6,16 +6,11 @@ const { sequelize, Pelicula, Serie, Usuario } = require('./models');
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
 const registroRoutes = require('./routes/registro');
+const { where } = require('sequelize');
 
 app.use(cors());
 app.use(express.json());
-app.use(session({
-    secret: 'llave_sesion',
-    reserve: false,
-    saveUninitialized: true, 
-    //si desplegamos hay que configurar esto a { segure: true }
-    cockie: { secure: false }
-}))
+
 app.use('/busqueda', busquedaRoutes);
 app.use('/api/v1', registroRoutes);
 
@@ -92,33 +87,34 @@ app.post('/api/v1/inicio', async (req, res) => {
     const cuenta = await Usuario.findOne({ where: { nombre_usuario: us } });
     if (!cuenta) return res.status(400).json({ mensaje: "Usuario no encontrado" });
 
-    // Comparar la contraseña con la almacenada
-    console.log(clave);
-    console.log(cuenta.clave);
-
     if (clave != cuenta.clave) return res.status(400).json({ mensaje: "Contraseña incorrecta" });
 
-    //Guarda la sesion
-    req.session.user= cuenta;
     req.session.success='Authenticated as ' + req.session.user.nombre_usuario;
 
     res.status(200).json(cuenta);
 });
 
-app.get('api/v1/sesion_verificar', (req,res)=>{
-    if(req.session.user)
-        res.json({sessionActiva: true, usuario: req.session.user});
-    else
-        res.json({sessionActiva: false});
 
-});
+app.put('/api/v1/cuenta/:us',async (req,res)=>{
+    const { CLAVE , NUEVA_CLAVE, NOMBRE, APELLIDO, GENERO, CORREO, TEL } = req.body;
+    let cuenta = await Usuario.findOne({ where: { nombre_usuario: req.params.us }});
+    if(!cuenta) return res.status(404).json({ mensaje: "Error. No se pudo encontrar la cuenta" });
+    if(CLAVE && NUEVA_CLAVE){
+        if(cuenta.clave === CLAVE && NUEVA_CLAVE.trim()!==''){
+            cuenta.clave = NUEVA_CLAVE;
+        }else{
+           return res.status(400).json({mensaje: "Contraseña y/o Nueva contraseña invalida"});
+        }
+    }
 
-app.get('api/v1/cerrar', (req, res)=>{
-    req.session.destroy((err)=>{
-        if(err)
-            return res.status(500).json({ mensaje : 'Error, no se pudo cerrar sesion'});
-        res.redirect('/');
-    })
+    cuenta.nombre=NOMBRE.trim()==''? cuenta.nombre: NOMBRE;
+    cuenta.apellido=APELLIDO.trim()==''?cuenta.apellido:APELLIDO;
+    cuenta.genero=GENERO.trim()==''? cuenta.genero: GENERO;
+    cuenta.email=CORREO.trim()==''? cuenta.email:CORREO;
+    cuenta.telefono= TEL.trim()==''? cuenta.telefono:TEL;
+
+    await cuenta.save();
+    res.status(200).json(cuenta);
 })
 
 // Sincronizar base de datos y arrancar servidor

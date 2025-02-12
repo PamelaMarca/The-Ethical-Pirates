@@ -3,11 +3,11 @@ function desplegar() {
 	const icono = document.querySelector('.icono_menu');
 	if (menu.style.display === 'none' || menu.style.display === '') {
 		menu.style.display = 'block' ;
-		icono.innerHTML='x';
+		icono.innerHTML="x";
 	} 
 	else {
 		menu.style.display = 'none';
-		icono.innerHTML = '☰';
+		icono.innerHTML = "☰";
 	}
 }
 

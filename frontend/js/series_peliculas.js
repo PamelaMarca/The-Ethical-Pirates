@@ -82,10 +82,10 @@ function buscar() {
             })
             .catch(error => {
                 console.error("Error en la búsqueda:", error);
-                cuadro.innerHTML = `<h2>Hubo un error en la búsqueda</h2>`;
+                cuadro.innerHTML = "<h2>Hubo un error en la búsqueda</h2>";
             });
     } else {
-        cuadro.innerHTML = `<h2>No se ingresó nada</h2>`;
+        cuadro.innerHTML ="<h2>No se ingresó nada</h2>";
     }
 }
 
@@ -134,7 +134,7 @@ function diseño(dato) {
 
     const cuadro_sinopsis = document.createElement('div');
     cuadro_sinopsis.classList.add('caja_sinopsis');
-    cuadro_sinopsis.innerHTML = `<h3>Descripción</h3>`;
+    cuadro_sinopsis.innerHTML = "<h3>Descripción</h3>";
 
     const sinopsis = document.createElement('div');
     sinopsis.classList.add('sinopsis');
@@ -193,7 +193,7 @@ function diseño(dato) {
         boton_plataforma.innerText = `Ver en ${dato.PLATAFORMA}`;
         boton_plataforma.href = dato.LINK;
     } else {
-        boton_plataforma.innerText = 'Enlace no disponible';
+        boton_plataforma.innerText = "Enlace no disponible";
         boton_plataforma.href = '#'; // No hay enlace disponible
     }
 	informacion.appendChild(boton_plataforma);

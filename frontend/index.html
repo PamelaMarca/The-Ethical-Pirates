@@ -69,15 +69,20 @@
     <script src="./js/sesion_verificar.js"></script>
 
     <script>
-        const sesion= document.querySelector('#navegador_interno [data-iniciado]'); 
-        fetch('http://localhost:3000/')
-        .then(respuesta => respuesta.json())
-        .then(json=>{
-            document.getElementById('cuadro').innerHTML = json.mensaje;
-        })
-        if(sesion.value = true){
-            iniciado();
+        window.onload=function() {
+            index();
+            verificar_sesion();
         }
+
+        function index(){
+            const sesion= document.querySelector('#navegador_interno [data-iniciado]'); 
+            fetch('http://localhost:3000/')
+            .then(respuesta => respuesta.json())
+            .then(json=>{
+                document.getElementById('cuadro').innerHTML = json.mensaje;
+            })
+        }
+        
     </script>
 </body>
 </html>

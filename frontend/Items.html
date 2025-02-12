@@ -72,22 +72,28 @@
     <script src="./js/series_peliculas.js"></script>
     <script src="./js/sesion_verificar.js"></script>
     <script>
-        const parametro = new URLSearchParams(window.location.search);
-        const nombre = parametro.get('nombre');
-        // codificacion por los espacios en el nombre
-        const nombreCodificado = encodeURIComponent(nombre);
-        fetch("http://localhost:3000/api/v1/Peliculas/" + nombreCodificado)
-        .then(res => res.json())
-        .then(dato =>{
-            console.log(dato);
-            diseño(dato);
-        })
-        fetch("http://localhost:3000/api/v1/Series/" + nombreCodificado)
-        .then(res => res.json())
-        .then(dato =>{
-            console.log(dato);
-            diseño(dato);
-        })
+        window.onload= function(){
+            items();
+            verificar_sesion();
+        }
+        function items(){
+            const parametro = new URLSearchParams(window.location.search);
+            const nombre = parametro.get('nombre');
+            // codificacion por los espacios en el nombre
+            const nombreCodificado = encodeURIComponent(nombre);
+            fetch("http://localhost:3000/api/v1/Peliculas/" + nombreCodificado)
+            .then(res => res.json())
+            .then(dato =>{
+                console.log(dato);
+                diseño(dato);
+            })
+            fetch("http://localhost:3000/api/v1/Series/" + nombreCodificado)
+            .then(res => res.json())
+            .then(dato =>{
+                console.log(dato);
+                diseño(dato);
+            })
+        }
     </script>
 </body>
 </html>
