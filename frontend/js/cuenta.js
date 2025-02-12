@@ -79,7 +79,6 @@ function solicitud_entrar(event){
             headers:{
                 'Content-Type':'application/json'
             },
-            //adjuntar los datos para una nueva cuenta
             body: JSON.stringify({
                 us: usuario_nombre,
                 clave: contraseña

@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const session = require('express-session');
 const { sequelize, Pelicula, Serie, Usuario } = require('./models');
 
 const app = express();
@@ -82,18 +81,13 @@ app.get('/api/v1/cuentas/:usuario', async (req, res) => {
 // Inicio de sesión con verificación de contraseña
 app.post('/api/v1/inicio', async (req, res) => {
     const { us, clave } = req.body;
-
     // Buscar el usuario por nombre de usuario
     const cuenta = await Usuario.findOne({ where: { nombre_usuario: us } });
     if (!cuenta) return res.status(400).json({ mensaje: "Usuario no encontrado" });
 
     if (clave != cuenta.clave) return res.status(400).json({ mensaje: "Contraseña incorrecta" });
-
-    req.session.success='Authenticated as ' + req.session.user.nombre_usuario;
-
     res.status(200).json(cuenta);
 });
-
 
 app.put('/api/v1/cuenta/:us',async (req,res)=>{
     const { CLAVE , NUEVA_CLAVE, NOMBRE, APELLIDO, GENERO, CORREO, TEL } = req.body;
@@ -115,6 +109,20 @@ app.put('/api/v1/cuenta/:us',async (req,res)=>{
 
     await cuenta.save();
     res.status(200).json(cuenta);
+})
+
+app.delete('/api/v1/cuenta/:usuario', async (req,res)=>{
+    try{
+        const cuenta = await Usuario.findOne({ where: { nombre_usuario: req.params.usuario } });
+        if(!cuenta) 
+            return res.status(404).json({mensaje: "Error. No se pudo encontro la cuenta"});
+        await cuenta.destroy(); 
+        res.status(200);
+    }catch (error) {
+        console.error("Error al eliminar la cuenta:", error);
+        res.status(500).json({ mensaje: "Error al eliminar la cuenta" });
+    }
+
 })
 
 // Sincronizar base de datos y arrancar servidor

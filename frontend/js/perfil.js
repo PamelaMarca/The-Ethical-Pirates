@@ -5,10 +5,14 @@ const us = document.getElementById('nombre_usuario');
 const datos_pers = document.getElementById('datos_persona');
 const datos_us = document.getElementById('datos_usuario');
 
-function perfil_usuario(){
+async function perfil_usuario(){
 	fetch(`http://localhost:3000/api/v1/cuentas/` + nombre)
 	.then(res => res.json())
 	.then(user =>{
+		datos_pers.innerHTML="";
+		datos_us.innerHTML="";
+		const botones= document.getElementById('botones');
+		botones.innerHTML="";
 		us.innerText = user.nombre_usuario;
 		const nombre_real= document.createElement('p'); 
 		nombre_real.innerText= `Nombre/s: ${user.nombre}`;
@@ -35,6 +39,23 @@ function perfil_usuario(){
 		const contra = document.createElement('p');
 		contra.innerText = `Contraseña: ************`;
 		datos_us.appendChild(contra);
+		
+		//botones
+		const boton_cambios = document.createElement('button');
+		boton_cambios.id="editar_cuenta";
+		boton_cambios.classList.add('editar_datos');
+		boton_cambios.innerText="Editar Perfil";
+		boton_cambios.onclick=editar_cuenta;
+		botones.appendChild(boton_cambios);
+
+		const boton_cancelar = document.createElement('button');
+		boton_cancelar.id="borrar_cuenta";
+		boton_cancelar.classList.add('borrar');
+		boton_cancelar.innerText="Eliminar cuenta";
+		boton_cancelar.onclick=borrando_cuenta;
+		botones.appendChild(boton_cancelar);
+
+
 	});
 }
 
@@ -191,9 +212,32 @@ function enviar_cambios(){
 	})
 	.then(res => res.json())
 	.then(json =>{
-		console.log("HOLA");
+		if(json.ok){
+			alert("Cambios guardados");
+			perfil_usuario();
+		}
 	})
 }
 
-document.getElementById('editar_cuenta').addEventListener('click', editar_cuenta);
-// document.getElementById('borrar_cuenta').addEventListener('click', Borrar_cuenta);
+async function borrando_cuenta() {
+	const desicion= await mostrar_confirmacion("Eliminar permanentemente");
+	if(desicion){
+		fetch("http://localhost:3000/api/v1/cuenta/"+ nombre,{
+			method: "DELETE",
+			headers:{
+				'Content-Type':'application/json'
+			}
+		})
+		.then(res=> res.json())
+		.then(json => {
+			if(json.ok){
+				alert("Eliminacion de cuenta exitosa");
+				window.location.href = './inicio_registro.html';
+			}
+			else{
+				alert("Error al eliminar cuenta");
+			}
+		})
+		.catch(error=> console.error("Error al eliminar cuenta: ",error));
+	}
+}
