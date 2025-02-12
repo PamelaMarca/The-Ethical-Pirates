@@ -58,7 +58,7 @@ function boton_inicio(){
 	}
 }
 
-document.getElementById('plataforma').addEventListener('click', ()=>{
-	const direccion = document.getElementById('plataforma').innerText;
-	window.location.href=`plataformas.html?p=${encodeURIComponent(direccion)}`;
-})
+// document.getElementById('plataforma').addEventListener('click', ()=>{
+// 	const direccion = document.getElementById('plataforma').innerText;
+// 	window.location.href=`plataformas.html?p=${encodeURIComponent(direccion)}`;
+// })

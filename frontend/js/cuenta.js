@@ -1,11 +1,4 @@
-function iniciado(){
-	const navegador=document.getElementById('navegador_interno');
-	const boton_registro=document.getElementById('ingresar');
-	const index = document.getElementById('index');
-	navegador.style.display = 'block';
-	boton_registro.style.display = 'none';
-	index.style.visibility= 'hidden';
-}
+
 function limpiar_formulario(){
 	const inputs = document.querySelectorAll("input");
 	inputs.forEach( input =>
@@ -86,7 +79,7 @@ function solicitud_entrar(event){
         })
         .then(res => res.json())
         .then(json =>{
-            if(json.mensaje == undefined){
+            if(!json.mensaje){
                 navegador.setAttribute("data-iniciado","true");
                 alert(`Inicio de sesion exitoso. Aprete 'aceptar' para ser redirigido`);
                 window.location.href=`perfil.html?cuenta=${usuario_nombre}`;
