@@ -100,13 +100,11 @@ app.put('/api/v1/cuenta/:us',async (req,res)=>{
            return res.status(400).json({mensaje: "Contraseña y/o Nueva contraseña invalida"});
         }
     }
-
     cuenta.nombre=NOMBRE.trim()==''? cuenta.nombre: NOMBRE;
     cuenta.apellido=APELLIDO.trim()==''?cuenta.apellido:APELLIDO;
     cuenta.genero=GENERO.trim()==''? cuenta.genero: GENERO;
     cuenta.email=CORREO.trim()==''? cuenta.email:CORREO;
     cuenta.telefono= TEL.trim()==''? cuenta.telefono:TEL;
-
     await cuenta.save();
     res.status(200).json(cuenta);
 })
@@ -117,7 +115,7 @@ app.delete('/api/v1/cuenta/:usuario', async (req,res)=>{
         if(!cuenta) 
             return res.status(404).json({mensaje: "Error. No se pudo encontro la cuenta"});
         await cuenta.destroy(); 
-        res.status(200);
+        res.status(200).json(cuenta);
     }catch (error) {
         console.error("Error al eliminar la cuenta:", error);
         res.status(500).json({ mensaje: "Error al eliminar la cuenta" });

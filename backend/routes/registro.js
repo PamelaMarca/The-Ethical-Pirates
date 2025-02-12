@@ -12,11 +12,11 @@ router.post('/registro', async (req, res) => {
             GENERO,
             CORREO,
             CONTACTO,
-            NOMBRE_USUARIO,
+            USUARIO_NOMBRE,
             CLAVE
         } = req.body;
     
-        if (!NOMBRE || !APELLIDO || !NOMBRE_USUARIO || !CLAVE) {
+        if (NOMBRE.trim()=='' || APELLIDO.trim()=='' || USUARIO_NOMBRE.trim()=='' || CLAVE.trim()=='') {
             return res.status(400).json({ mensaje: "Complete los campos obligatorios" });
         }
         // Verificar si el nombre de usuario ya existe en la base de datos

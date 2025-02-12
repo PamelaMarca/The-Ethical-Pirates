@@ -27,8 +27,37 @@ function solicitud_registro(event){
 	const mensaje = document.getElementById('mensaje_error_registro');
 
 	if(nombre.value=='' || apellido.value=='' || usuario.value=='' || clave.value=='' || genero.value=='' || nacimiento.value==''){
-		mensaje.innerHTML="<p>Conplete el campo faltante</p>"
-
+		mensaje.innerHTML="<p>Conplete el campo faltante</p>";
+		if(nombre.value =='')
+			nombre.style.background= "rgba(252, 158, 158, 0.911)";
+		else{
+			nombre.style.background="#e0e6e9";
+		}
+		if(apellido.value =='')
+			apellido.style.background= "rgba(252, 158, 158, 0.911)";
+		else{
+			apellido.style.background="#e0e6e9";
+		}
+		if(usuario.value =='')
+			usuario.style.background= "rgba(252, 158, 158, 0.911)";
+		else{
+			usuario.style.background="#e0e6e9";
+		}
+		if(clave.value =='')
+			clave.style.background= "rgba(252, 158, 158, 0.911)";
+		else{
+			clave.style.background="#e0e6e9";
+		}
+		if(genero.value =='')
+			genero.style.background= "rgba(252, 158, 158, 0.911)";
+		else{
+			genero.style.background="#e0e6e9";
+		}
+		if(nacimiento.value =='')
+			nacimiento.style.background= "rgba(252, 158, 158, 0.911)";
+		else{
+			nacimiento.style.background="#e0e6e9";
+		}
 	}
 	else{
 		fetch("http://localhost:3000/api/v1/registro",{
@@ -50,11 +79,11 @@ function solicitud_registro(event){
 		})
 		.then( res => res.json())
 		.then( json => {
-			if(json.mensaje == undefined ){
+			if(json.mensaje){
+				mensaje.innerHTML=`<p>${json.mensaje}</p>`;
+			}else{
 				alert("Registro exitoso. Aprete 'aceptar' para ser redireccionado");
 				window.location.href=`perfil.html?cuenta=${usuario.value}`;
-			}else{
-				mensaje.innerHTML=`<p>${json.mensaje}</p>`;
 			}
 		})
         .catch(error =>{
@@ -87,7 +116,6 @@ function solicitud_entrar(event){
         .then(res => res.json())
         .then(json =>{
             if(!json.mensaje){
-                navegador.setAttribute("data-iniciado","true");
                 alert("Inicio de sesion exitoso. Aprete 'aceptar' para ser redirigido");
                 window.location.href=`perfil.html?cuenta=${usuario_nombre}`;
             }else{

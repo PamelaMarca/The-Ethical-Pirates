@@ -9,52 +9,56 @@ async function perfil_usuario(){
 	fetch(`http://localhost:3000/api/v1/cuentas/` + nombre)
 	.then(res => res.json())
 	.then(user =>{
-		datos_pers.innerHTML="";
-		datos_us.innerHTML="";
-		const botones= document.getElementById('botones');
-		botones.innerHTML="";
-		us.innerText = user.nombre_usuario;
-		const nombre_real= document.createElement('p'); 
-		nombre_real.innerText= `Nombre/s: ${user.nombre}`;
-		datos_pers.appendChild(nombre_real);
-		const apellido= document.createElement('p'); 
-		apellido.innerText= `Apellido/s: ${user.apellido}`;
-		datos_pers.appendChild(apellido);
-		const fecha= document.createElement('p'); 
-		fecha.innerText= `Fecha de nacimeinto: ${user.fecha_nacimiento}`;
-		datos_pers.appendChild(fecha);
-		const genero= document.createElement('p'); 
-		genero.innerText= `Genero: ${user.genero}`;
-		datos_pers.appendChild(genero);
-		const email= document.createElement('p'); 
-		email.innerText= `Correo electronico: ${user.email? user.email:"agregar correo"}`;
-		datos_pers.appendChild(email);
-		const tel= document.createElement('p'); 
-		tel.innerText= `Telefono: ${user.telefono? user.telefono: "agregar numero"}`;
-		datos_pers.appendChild(tel);
-		
-		const usuario = document.createElement('p');
-		usuario.innerText = `Nombre de Usuario: ${user.nombre_usuario}`;
-		datos_us.appendChild(usuario);
-		const contra = document.createElement('p');
-		contra.innerText = `Contraseña: ************`;
-		datos_us.appendChild(contra);
-		
-		//botones
-		const boton_cambios = document.createElement('button');
-		boton_cambios.id="editar_cuenta";
-		boton_cambios.classList.add('editar_datos');
-		boton_cambios.innerText="Editar Perfil";
-		boton_cambios.onclick=editar_cuenta;
-		botones.appendChild(boton_cambios);
+		if(!user.mensaje){
+			datos_pers.innerHTML="";
+			datos_us.innerHTML="";
+			const botones= document.getElementById('botones');
+			botones.innerHTML="";
+			us.innerText = user.nombre_usuario;
+			const nombre_real= document.createElement('p'); 
+			nombre_real.innerText= `Nombre/s: ${user.nombre}`;
+			datos_pers.appendChild(nombre_real);
+			const apellido= document.createElement('p'); 
+			apellido.innerText= `Apellido/s: ${user.apellido}`;
+			datos_pers.appendChild(apellido);
+			const fecha= document.createElement('p'); 
+			fecha.innerText= `Fecha de nacimeinto: ${user.fecha_nacimiento}`;
+			datos_pers.appendChild(fecha);
+			const genero= document.createElement('p'); 
+			genero.innerText= `Genero: ${user.genero}`;
+			datos_pers.appendChild(genero);
+			const email= document.createElement('p'); 
+			email.innerText= `Correo electronico: ${user.email? user.email:"agregar correo"}`;
+			datos_pers.appendChild(email);
+			const tel= document.createElement('p'); 
+			tel.innerText= `Telefono: ${user.telefono? user.telefono: "agregar numero"}`;
+			datos_pers.appendChild(tel);
+			
+			const usuario = document.createElement('p');
+			usuario.innerText = `Nombre de Usuario: ${user.nombre_usuario}`;
+			datos_us.appendChild(usuario);
+			const contra = document.createElement('p');
+			contra.innerText = `Contraseña: ************`;
+			datos_us.appendChild(contra);
+			
+			//botones
+			const boton_cambios = document.createElement('button');
+			boton_cambios.id="editar_cuenta";
+			boton_cambios.classList.add('editar_datos');
+			boton_cambios.innerText="Editar Perfil";
+			boton_cambios.onclick=editar_cuenta;
+			botones.appendChild(boton_cambios);
 
-		const boton_cancelar = document.createElement('button');
-		boton_cancelar.id="borrar_cuenta";
-		boton_cancelar.classList.add('borrar');
-		boton_cancelar.innerText="Eliminar cuenta";
-		boton_cancelar.onclick=borrando_cuenta;
-		botones.appendChild(boton_cancelar);
+			const boton_cancelar = document.createElement('button');
+			boton_cancelar.id="borrar_cuenta";
+			boton_cancelar.classList.add('borrar');
+			boton_cancelar.innerText="Eliminar cuenta";
+			boton_cancelar.onclick=borrando_cuenta;
+			botones.appendChild(boton_cancelar);
 
+		}else{
+			window.location.href="inicio_registro.html";
+		}
 
 	});
 }
@@ -112,6 +116,7 @@ async function editar_cuenta() {
 		const opcion2 = document.createElement('option');
 		const opcion3 = document.createElement('option');
 		no_opcion.innerText= "Seleccione su Genero";
+		no_opcion.value="";
 		genero.appendChild(no_opcion);
 		opcion1.value="Otro";
 		opcion1.innerText= "Otro";
@@ -190,12 +195,10 @@ function enviar_cambios(){
 	const contra_a = document.getElementById('clave_edit').value;
 	const contra_n = document.getElementById('claveNueva_edit').value;
 
-	if(nombre_real==''|| apellido==''|| genero=='' || email=='' || contacto==''){
+	if(nombre_real.trim()==''|| apellido.trim()==''|| genero.trim()=='' || email.trim()=='' || contacto.trim()==''){
 		alert("Campos vacios no seran modificados");
 	}
-
-
-	fetch("http://localhost:3000/api/v1/cuentas/" + nombre,{
+	fetch("http://localhost:3000/api/v1/cuenta/" + nombre,{
 		method: "PUT",
 		headers:{
 			'Content-Type':'application/json'
@@ -212,10 +215,8 @@ function enviar_cambios(){
 	})
 	.then(res => res.json())
 	.then(json =>{
-		if(json.ok){
-			alert("Cambios guardados");
-			perfil_usuario();
-		}
+		alert("Cambios guardados");
+		perfil_usuario();
 	})
 }
 
@@ -230,13 +231,7 @@ async function borrando_cuenta() {
 		})
 		.then(res=> res.json())
 		.then(json => {
-			if(json.ok){
-				alert("Eliminacion de cuenta exitosa");
-				window.location.href = './inicio_registro.html';
-			}
-			else{
-				alert("Error al eliminar cuenta");
-			}
+			alert("Eliminacion de cuenta exitosa");
 		})
 		.catch(error=> console.error("Error al eliminar cuenta: ",error));
 	}
