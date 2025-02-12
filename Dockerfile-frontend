@@ -1,0 +1,7 @@
+# Imagen nginx
+FROM nginx:alpine
+
+COPY frontend /usr/share/nginx/html
+
+# Puerto
+EXPOSE 80

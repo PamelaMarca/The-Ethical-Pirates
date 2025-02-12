@@ -8,6 +8,12 @@ const sequelize = new Sequelize({
 // Importa los modelos
 const Pelicula = require('./Pelicula')(sequelize, Sequelize.DataTypes);  
 const Serie = require('./Serie')(sequelize, Sequelize.DataTypes);  
+const Usuario = require('./Usuario')(sequelize, Sequelize.DataTypes);
 
 // Exporta la conexión y los modelos
-module.exports = { sequelize, Pelicula, Serie };
+module.exports = {
+    sequelize,
+    Usuario,
+    Pelicula,
+    Serie,
+  };

@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       EDAD_RECOMENDADA: {
         type: DataTypes.STRING
-    },
+      },
       SINOPSIS: {
           type: DataTypes.TEXT
       },
@@ -35,7 +35,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       URL_POSTER: {
           type: DataTypes.STRING
-      }
+      },
+      ACCESO: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      LINK: {
+        type: DataTypes.STRING
+    }
   }, {
       tableName: 'series',
       timestamps: false
