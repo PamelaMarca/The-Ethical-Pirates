@@ -73,21 +73,15 @@
     <script src="./js/sesion_verificar.js"></script>
     <script>
         window.onload= function(){
-            items();
+            item_indivisual();
             verificar_sesion();
         }
-        function items(){
+        function item_indivisual(){
             const parametro = new URLSearchParams(window.location.search);
             const nombre = parametro.get('nombre');
             // codificacion por los espacios en el nombre
             const nombreCodificado = encodeURIComponent(nombre);
-            fetch("http://localhost:3000/api/v1/Peliculas/" + nombreCodificado)
-            .then(res => res.json())
-            .then(dato =>{
-                console.log(dato);
-                diseño(dato);
-            })
-            fetch("http://localhost:3000/api/v1/Series/" + nombreCodificado)
+            fetch("http://localhost:3000/api/v1/Contenido/" + nombreCodificado)
             .then(res => res.json())
             .then(dato =>{
                 console.log(dato);

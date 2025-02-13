@@ -51,11 +51,16 @@ app.get('/api/v1/Peliculas', async (req, res) => {
 });
 
 // Obtener una película por nombre
-app.get('/api/v1/Peliculas/:nombre', async (req, res) => {
+app.get('/api/v1/Contenido/:nombre', async (req, res) => {
     const nombre = decodeURIComponent(req.params.nombre);
+    const serie = await Serie.findOne({ where: { NOMBRE_COMPLETO: nombre } });
     const pelicula = await Pelicula.findOne({ where: { NOMBRE_COMPLETO: nombre } });
-    if (!pelicula) return res.status(404).json({ mensaje: "Película no encontrada" });
-    res.json(pelicula);
+    if (!pelicula && !serie) 
+        return res.status(404).json({ mensaje: "Contenido no encontrada" });
+    if(!serie)
+        return res.json(pelicula);
+    if(!pelicula)
+        return res.json(serie);
 });
 
 // Obtener todas las series públicas
@@ -64,13 +69,6 @@ app.get('/api/v1/Series', async (req, res) => {
     res.status(201).json({ respuesta: series.length ? series : { mensaje: "No hay series disponibles" } });
 });
 
-// Obtener una serie por nombre
-app.get('/api/v1/Series/:nombre', async (req, res) => {
-    const nombre = decodeURIComponent(req.params.nombre);
-    const serie = await Serie.findOne({ where: { NOMBRE_COMPLETO: nombre } });
-    if (!serie) return res.status(404).json({ mensaje: "Serie no encontrada" });
-    res.json(serie);
-});
 
 // Obtener datos de usuario (sin devolver contraseña)
 app.get('/api/v1/cuentas/:us',verificarToken, async (req, res) => {
