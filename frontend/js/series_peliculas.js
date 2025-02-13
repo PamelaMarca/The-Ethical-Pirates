@@ -82,10 +82,10 @@ function buscar() {
             })
             .catch(error => {
                 console.error("Error en la búsqueda:", error);
-                cuadro.innerHTML = `<h2>Hubo un error en la búsqueda</h2>`;
+                cuadro.innerHTML = "<h2>Hubo un error en la búsqueda</h2>";
             });
     } else {
-        cuadro.innerHTML = `<h2>No se ingresó nada</h2>`;
+        cuadro.innerHTML ="<h2>No se ingresó nada</h2>";
     }
 }
 
@@ -128,13 +128,19 @@ function diseño(dato) {
 	imagen.style.width="300px";
     imagen.src = dato.URL_POSTER ? dato.URL_POSTER : './imagenes/sin_imagen.jpg';
 
-    const titulo = document.getElementById('titulo_item');
+    const encabezado = document.getElementById('encabezado_item');
+    const titulo= document.createElement('h2');
+    titulo.classList.add('titulo_item');
+    const boton_fav = document.createElement('button');
+    boton_fav.id='favorito';
+    boton_fav.onclick=()=> a_favorito(dato.ID_UNICO,dato.tipo);
+    boton_fav.innerText="Añadir a favoritos";
     titulo.innerText = dato.NOMBRE_COMPLETO;
-    console.log(dato.NOMBRE_COMPLETO);
-
+    encabezado.appendChild(titulo);
+    encabezado.appendChild(boton_fav);
     const cuadro_sinopsis = document.createElement('div');
     cuadro_sinopsis.classList.add('caja_sinopsis');
-    cuadro_sinopsis.innerHTML = `<h3>Descripción</h3>`;
+    cuadro_sinopsis.innerHTML = "<h3>Descripción</h3>";
 
     const sinopsis = document.createElement('div');
     sinopsis.classList.add('sinopsis');
@@ -193,7 +199,7 @@ function diseño(dato) {
         boton_plataforma.innerText = `Ver en ${dato.PLATAFORMA}`;
         boton_plataforma.href = dato.LINK;
     } else {
-        boton_plataforma.innerText = 'Enlace no disponible';
+        boton_plataforma.innerText = "Enlace no disponible";
         boton_plataforma.href = '#'; // No hay enlace disponible
     }
 	informacion.appendChild(boton_plataforma);

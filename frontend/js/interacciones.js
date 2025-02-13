@@ -3,22 +3,18 @@ function desplegar() {
 	const icono = document.querySelector('.icono_menu');
 	if (menu.style.display === 'none' || menu.style.display === '') {
 		menu.style.display = 'block' ;
-		icono.innerHTML='x';
-	} 
-	else {
+        icono.innerHTML = "✖";
+	}else {
 		menu.style.display = 'none';
-		icono.innerHTML = '☰';
+		icono.innerHTML = "☰";
 	}
 }
 
-function desplega_biblio(){
-	const menu= document.getElementById('menu');
-	const signo =document.getElementById('signo');
-	menu.hidden=!menu.hidden;
-	if(menu.hidden)
-		signo.innerHTML = '&lt;';
-	else 
-		signo.innerHTML = 'v';
+function desplega_biblio() {
+    const menu = document.getElementById('menu');
+    const signo = document.getElementById('signo');
+    menu.classList.toggle('oculto'); 
+    signo.innerHTML = menu.classList.contains('oculto') ? '&lt;' : 'v';
 }
 
 const registro= document.querySelector('.formularios .formulario-registro');
@@ -58,7 +54,7 @@ function boton_inicio(){
 	}
 }
 
-document.getElementById('plataforma').addEventListener('click', ()=>{
-	const direccion = document.getElementById('plataforma').innerText;
-	window.location.href=`plataformas.html?p=${encodeURIComponent(direccion)}`;
-})
+// document.getElementById('plataforma').addEventListener('click', ()=>{
+// 	const direccion = document.getElementById('plataforma').innerText;
+// 	window.location.href=`plataformas.html?p=${encodeURIComponent(direccion)}`;
+// })

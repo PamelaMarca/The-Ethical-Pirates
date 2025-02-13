@@ -131,7 +131,7 @@ section{
 #navegador_interno{
 	position: relative;
 	margin-left:2em ;
-	display:none;
+	visibility: hidden;
 }
 
 .icono_menu{
@@ -139,6 +139,8 @@ section{
 	color: #abd2ff;
 	font-size: xxx-large;
 	font-family: Arial, Helvetica, sans-serif;
+	padding: 0px 10px;
+	background: #6767a0;
 }
 
 .cuadro_interno {
@@ -148,11 +150,13 @@ section{
 	position: absolute;
 	background-color:#333661 ;
 	z-index: 1000;
+	border: 5px solid #6767a0;
 }
 
 .cuadro_interno li{
 	width: 100%;
 	list-style-type: none;
+	
 }
 
 .cuadro_interno a:hover, .cuadro_interno button:hover,.paginas a:hover {
@@ -174,7 +178,13 @@ section{
 	font-family:Arial, Helvetica, sans-serif ;
 	font-size: 14px;
 }
-
+.oculto{
+	display: none;
+}
+#menu{
+	padding-left: 8px;
+	background: #535385;
+}
 /* Esto me ayuda a que el footer de la pagina aunque el cuadro sea mas  pequeño pueda quedarse abajo */
 main{
 	min-height: 383px;
@@ -348,12 +358,15 @@ main{
 	width: 50%;
 }
 /* para la pagina individual de cada pelicula o serie */
-.cuadro #titulo_item{
+.cuadro #encabezado_item{
 	padding: 10px 15px;
 	background-color: #252a4e;
 	border-top: 5px solid #7077ad;
 	box-shadow: -3px 0 #7077ad ;
+	display: flex;
+	justify-content: space-between;
 }
+
 #contenido_item{
 	align-items: flex-start;
 	border: 5px solid #252a4e;
@@ -381,17 +394,69 @@ main{
 	padding-top: 10px;
 }
 
-#perfil_detalles div{
+.formato_perfil{
 	width: 100%;
-	margin: 30px;
-	
+	padding: 20px 30px;
+	border: 5px solid #252a4e;
+	box-shadow:-3px 0 #7077ad ;
+	display: flex;
+	justify-content:space-around;
 }
 
-.editar_datos{
+
+.datos p{
+	margin: 5px;
+	width: 300px;
+	background: #433e58;
+	border: 1px solid #998dad;
+	border-radius: 8px;
+	padding: 5px;
+
+}
+
+#botones button{
 	padding: 10px;
-	background-color: rgb(66, 81, 102);
+	color: #bbe2ec;
+	cursor: pointer;
+	text-decoration: none;
+}
+.editar_datos, .editar{
+	background-color: rgb(39, 57, 82);
+}
+
+#datos_persona input, #datos_usuario input{
+	width: 300px;
+	padding: 2px;
+	font-family:serif;
+	margin-bottom: 10px;
+}
+
+.borrar, .salir{
+	background-color: rgb(99, 42, 42);
+}
+
+#confirmar_accion{
+	position: fixed;
+	background-color: #37798ad8;
+	justify-items: center;
+	color: white;
+	padding: 30px 40px;
+	border-radius: 5px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: none;
+}
+#confirmar_accion h3 {
+	margin-bottom:20px;
+}
+#confirmar_accion button{
+	margin: 0px 10px;
+	padding: 5px;
 	cursor: pointer;
 }
+
+
 
 /* pie de pagina */
 
@@ -441,7 +506,7 @@ footer{
 		margin:  90px 40px;
 	}
 	.formularios{
-		top: -210px;
+		top: -200px;
 	}
 	.formularios form{
 		padding: 20px;

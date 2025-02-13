@@ -22,17 +22,17 @@
                 <div class="icono_menu" onclick="desplegar()">☰</div>
                 <div class="cuadro_interno" id="cuadro_interno">
                     <ul>
-                        <li><a href="">Perfil</a></li>
+                        <li><a id="perfil_usuario">Perfil</a></li>
                         <li>
                             <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt</strong></button>
-                            <ul id="menu" hidden>
+                            <ul id="menu" >
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
                         </li>
     
                         <li><a href="">Comentarios</a></li>
-                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
+                        <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
 
@@ -57,7 +57,7 @@
     </header>
 	<main>
         <div class="cuadro resultados" id="cuadro">
-            <h2 id="titulo_item"></h2>
+            <div id="encabezado_item"></div>
             <section id="contenido_item">
                 <div id="item_informacion">
                 </div>
@@ -70,23 +70,25 @@
     <script src="../backend/server.js"></script>
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
+    <script src="./js/sesion_verificar.js"></script>
+    <script src="./js/favorito.js"></script>
     <script>
-        const parametro = new URLSearchParams(window.location.search);
-        const nombre = parametro.get('nombre');
-        // codificacion por los espacios en el nombre
-        const nombreCodificado = encodeURIComponent(nombre);
-        fetch("http://localhost:3000/api/v1/Peliculas/" + nombreCodificado)
-        .then(res => res.json())
-        .then(dato =>{
-            console.log(dato);
-            diseño(dato);
-        })
-        fetch("http://localhost:3000/api/v1/Series/" + nombreCodificado)
-        .then(res => res.json())
-        .then(dato =>{
-            console.log(dato);
-            diseño(dato);
-        })
+        window.onload= function(){
+            item_indivisual();
+            verificar_sesion();
+
+        }
+        function item_indivisual(){
+            const parametro = new URLSearchParams(window.location.search);
+            const nombre = parametro.get('nombre');
+            // codificacion por los espacios en el nombre
+            const nombreCodificado = encodeURIComponent(nombre);
+            fetch("http://localhost:3000/api/v1/Contenido/" + nombreCodificado)
+            .then(res => res.json())
+            .then(dato =>{
+                diseño(dato);
+            })
+        }
     </script>
 </body>
 </html>

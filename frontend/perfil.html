@@ -6,7 +6,7 @@
     <title>Piratas del Cine</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="Home">
+<body id="Home"class="Home">
     <header class="cabezal">
         <section>
             <div class="presentacion">
@@ -22,17 +22,17 @@
                 <div class="icono_menu" onclick="desplegar()">☰</div>
                 <div class="cuadro_interno" id="cuadro_interno">
                     <ul>
-                        <li><a href="perfil.html">Perfil</a></li>
+                        <li><a id="perfil_usuario">Perfil</a></li>
                         <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt</strong></button>
-                            <ul id="menu" hidden>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt;</strong></button>
+                            <ul id="menu">
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
                         </li>
     
                         <li><a href="">Comentarios</a></li>
-                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
+                        <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
 
@@ -57,20 +57,26 @@
     </header>
 	<main>
         <div class="cuadro resultados" id="cuadro">
-            <h2 id="titulo_item">Usuario</h2>
-            <section id="contenido_item">
-                <section id="perfil_detalles">
-                    <div>
-                        <h3>Datos Personales</h3>
-                        <div id="datos">
-                        </div>
-                        <buttom class="editar_datos">Editar</buttom>
+            <h2 id="titulo_item">Perfil <span id="nombre_usuario"></span> </h2>
+            <div id="perfil_detalles" class="formato_perfil">
+                <div>
+                    <h3>Datos Personales</h3>
+                    <div id="datos_persona"class="datos">
                     </div>
-                    <div>
-                        
+                </div>
+                <div>
+                    <h3>Usuario</h3>
+                    <div id="datos_usuario" class="datos">
                     </div>
-                </section>
-            </section>
+                </div>
+            </div> 
+            <div id="botones" class="formato_perfil">
+            </div>
+        </div>
+        <div id="confirmar_accion">
+            <h3>Estas seguro de <span id="palabra"></span> la cuenta?</h3>
+            <button onclick="respuesta_resibida(true)">Aceptar</button>
+            <button onclick="respuesta_resibida(false)">Cancelar</button>
         </div>
 	</main>
     <footer class="footer">
@@ -79,15 +85,13 @@
     <script src="../backend/server.js"></script>
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
-    <script src="./js/cuenta.js"></script>
+    <script src="./js/sesion_verificar.js"></script>
+    <script src="./js/perfil.js"></script>
     <script>
-        const parametro = new URLSearchParams(window.location.search);
-        const nombre = parametro.get('cuenta');
-        // codificacion por los espacios en el nombre
-        iniciado()
-        fetch("http://localhost:3000/api/v1/cuentas/" + nombre)
-        .then(res => res.json())
-
-    </script>
+        window.onload = function(){
+            perfil_usuario();
+            verificar_sesion();
+        }
+      </script>
 </body>
 </html>
