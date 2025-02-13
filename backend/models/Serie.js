@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       EDAD_RECOMENDADA: {
         type: DataTypes.STRING
-    },
+      },
       SINOPSIS: {
           type: DataTypes.TEXT
       },

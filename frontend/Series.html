@@ -22,17 +22,17 @@
                 <div class="icono_menu" onclick="desplegar()">☰</div>
                 <div class="cuadro_interno" id="cuadro_interno">
                     <ul>
-                        <li><a href="">Perfil</a></li>
+                        <li><a id="perfil_usuario">Perfil</a></li>
                         <li>
                             <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong></button>
-                            <ul id="menu" hidden>
+                            <ul id="menu">
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
                         </li>
     
                         <li><a href="">Comentarios</a></li>
-                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
+                        <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
 
@@ -66,31 +66,38 @@
     <script src="../backend/server.js"></script>
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
-
+    <script src="./js/sesion_verificar.js"></script>
     <script>
+        window.onload = function(){
+            series();
+            verificar_sesion();
+        }
+        
+        function series(){
+            fetch('http://localhost:3000/api/v1/Series')
+            .then(respuesta => respuesta.json())
+            .then(json=>{
+                const cuadro = document.getElementById('cuadro');
+                
+                cuadro.innerHTML =`<h3>Series</h3>`
 
-        fetch('http://localhost:3000/api/v1/Series')
-        .then(respuesta => respuesta.json())
-        .then(json=>{
-            const cuadro = document.getElementById('cuadro');
-            
-            cuadro.innerHTML =`<h3>Series</h3>`
+                if(json.respuesta){
+                    const lista = document.createElement('ul');
+                    lista.classList.add('fichas')
+                    json.respuesta.forEach(serie =>{
+                        items(serie,lista);
+                    })
+                    cuadro.appendChild(lista);            
+                }
+                else if(json.mensaje){
+                    const aviso = document.createElement('div');
+                    aviso.classList.add('css_mensaje');
+                    aviso.innerHTML = json.mensaje;
+                    cuadro.appendChild(aviso)
+                }
+            })            
+        }
 
-            if(json.respuesta){
-                const lista = document.createElement('ul');
-                lista.classList.add('fichas')
-                json.respuesta.forEach(serie =>{
-                    items(serie,lista);
-                })
-                cuadro.appendChild(lista);            
-            }
-            else if(json.mensaje){
-                const aviso = document.createElement('div');
-                aviso.classList.add('css_mensaje');
-                aviso.innerHTML = json.mensaje;
-                cuadro.appendChild(aviso)
-            }
-        })
 
     </script>
 </body>

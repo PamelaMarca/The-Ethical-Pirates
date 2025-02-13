@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piratas del Cine</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="Home"class="Home">
+    <header class="cabezal">
+        <section>
+            <div class="presentacion">
+                <img src="./imagenes/cine.png" alt="imagen" width="200px">
+                <h1 id="titulo">Piratas del Cine</h1>                
+            </div>
+
+            <div class ="ingresar" id="ingresar">
+                <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
+            </div>
+            
+            <nav id="navegador_interno">
+                <div class="icono_menu" onclick="desplegar()">☰</div>
+                <div class="cuadro_interno" id="cuadro_interno">
+                    <ul>
+                        <li><a id="perfil_usuario">Perfil</a></li>
+                        <li>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt</strong></button>
+                            <ul id="menu">
+                                <li><a href="#">Mis Series</a></li>
+                                <li><a href="">MIs Peliculas</a></li>
+                            </ul>
+                        </li>
+    
+                        <li><a href="">Comentarios</a></li>
+                        <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
+                    </ul>
+                </div>
+
+            </nav> 
+        </section>    
+        <section>
+            <nav class="navegador">
+                <div class="paginas">
+                <a id="index" href="index.html">Home</a>
+                <a href="Series.html">Series</a>
+                <a href="Peliculas.html">Peliculas</a>
+                </div>
+
+                <div id="buscador">
+                    <input type="text" id="search" placeholder="Buscar ...">
+                    <span id="buscar">&#128269</span>
+                </div>
+            </nav>
+
+        </section>
+  
+    </header>
+	<main>
+        <div class="cuadro resultados" id="cuadro">
+            <h2 id="titulo_item">Perfil <span id="nombre_usuario"></span> </h2>
+            <div id="perfil_detalles" class="formato_perfil">
+                <div>
+                    <h3>Datos Personales</h3>
+                    <div id="datos_persona"class="datos">
+                    </div>
+                </div>
+                <div>
+                    <h3>Usuario</h3>
+                    <div id="datos_usuario" class="datos">
+                    </div>
+                </div>
+            </div> 
+            <div id="botones" class="formato_perfil">
+            </div>
+        </div>
+        <div id="confirmar_accion">
+            <h3>Estas seguro de <span id="palabra"></span> la cuenta?</h3>
+            <button onclick="respuesta_resibida(true)">Aceptar</button>
+            <button onclick="respuesta_resibida(false)">Cancelar</button>
+        </div>
+	</main>
+    <footer class="footer">
+            <p>&copy; 2024 The Ethical Pirates</p>
+    </footer>
+    <script src="../backend/server.js"></script>
+    <script src="./js/interacciones.js"></script>
+    <script src="./js/series_peliculas.js"></script>
+    <script src="./js/sesion_verificar.js"></script>
+    <script src="./js/perfil.js"></script>
+    <script>
+        window.onload = function(){
+            perfil_usuario();
+            verificar_sesion();
+        }
+      </script>
+</body>
+</html>

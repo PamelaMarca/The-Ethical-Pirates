@@ -131,7 +131,7 @@ section{
 #navegador_interno{
 	position: relative;
 	margin-left:2em ;
-	display:none;
+	visibility: hidden;
 }
 
 .icono_menu{
@@ -173,6 +173,9 @@ section{
 	cursor: pointer;
 	font-family:Arial, Helvetica, sans-serif ;
 	font-size: 14px;
+}
+.oculto{
+	display: none;
 }
 
 /* Esto me ayuda a que el footer de la pagina aunque el cuadro sea mas  pequeño pueda quedarse abajo */
@@ -359,11 +362,20 @@ main{
 	border: 5px solid #252a4e;
 	box-shadow:-3px 0 #7077ad ;
 }
-#contenido_item #item_informacion, #contenido_item .caja_sinopsis, .datos_items{
+#contenido_item div{
 	margin: 10px 30px;
 	
 }
-
+.cuadro_informacion p{
+	padding-bottom:6px;
+}
+.cuadro_informacion span:hover{
+	color: #50c9eb;
+	cursor: pointer;
+}
+.cuadro_informacion a{
+	color: #50c9eb;
+}
 .caja_sinopsis{
 	padding-top: 15px;
 	width: 50%;
@@ -372,17 +384,69 @@ main{
 	padding-top: 10px;
 }
 
-#perfil_detalles div{
+.formato_perfil{
 	width: 100%;
-	margin: 30px;
-	
+	padding: 20px 30px;
+	border: 5px solid #252a4e;
+	box-shadow:-3px 0 #7077ad ;
+	display: flex;
+	justify-content:space-around;
 }
 
-.editar_datos{
+
+.datos p{
+	margin: 5px;
+	width: 300px;
+	background: #433e58;
+	border: 1px solid #998dad;
+	border-radius: 8px;
+	padding: 5px;
+
+}
+
+#botones button{
 	padding: 10px;
-	background-color: rgb(66, 81, 102);
+	color: #bbe2ec;
+	cursor: pointer;
+	text-decoration: none;
+}
+.editar_datos, .editar{
+	background-color: rgb(39, 57, 82);
+}
+
+#datos_persona input, #datos_usuario input{
+	width: 300px;
+	padding: 2px;
+	font-family:serif;
+	margin-bottom: 10px;
+}
+
+.borrar, .salir{
+	background-color: rgb(99, 42, 42);
+}
+
+#confirmar_accion{
+	position: fixed;
+	background-color: #37798ad8;
+	justify-items: center;
+	color: white;
+	padding: 30px 40px;
+	border-radius: 5px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: none;
+}
+#confirmar_accion h3 {
+	margin-bottom:20px;
+}
+#confirmar_accion button{
+	margin: 0px 10px;
+	padding: 5px;
 	cursor: pointer;
 }
+
+
 
 /* pie de pagina */
 
@@ -432,7 +496,7 @@ footer{
 		margin:  90px 40px;
 	}
 	.formularios{
-		top: -210px;
+		top: -200px;
 	}
 	.formularios form{
 		padding: 20px;

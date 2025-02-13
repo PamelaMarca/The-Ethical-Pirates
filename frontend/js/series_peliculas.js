@@ -82,10 +82,10 @@ function buscar() {
             })
             .catch(error => {
                 console.error("Error en la búsqueda:", error);
-                cuadro.innerHTML = `<h2>Hubo un error en la búsqueda</h2>`;
+                cuadro.innerHTML = "<h2>Hubo un error en la búsqueda</h2>";
             });
     } else {
-        cuadro.innerHTML = `<h2>No se ingresó nada</h2>`;
+        cuadro.innerHTML ="<h2>No se ingresó nada</h2>";
     }
 }
 
@@ -124,15 +124,17 @@ function diseño(dato) {
     contenedor.innerHTML = ""; // Limpiar contenido previo
 
     const imagen = document.createElement('img');
-    imagen.style.maxWidth = "250px";
-    imagen.src = dato.URL_POSTER;
+    imagen.style.maxWidth = "300px";
+	imagen.style.width="300px";
+    imagen.src = dato.URL_POSTER ? dato.URL_POSTER : './imagenes/sin_imagen.jpg';
 
     const titulo = document.getElementById('titulo_item');
     titulo.innerText = dato.NOMBRE_COMPLETO;
+    console.log(dato.NOMBRE_COMPLETO);
 
     const cuadro_sinopsis = document.createElement('div');
     cuadro_sinopsis.classList.add('caja_sinopsis');
-    cuadro_sinopsis.innerHTML = `<h3>Descripción</h3>`;
+    cuadro_sinopsis.innerHTML = "<h3>Descripción</h3>";
 
     const sinopsis = document.createElement('div');
     sinopsis.classList.add('sinopsis');
@@ -144,42 +146,44 @@ function diseño(dato) {
 
     cuadro_sinopsis.appendChild(sinopsis);
 
-    const datos_serie = document.createElement('div');
-    datos_serie.classList.add('datos_items');
+    const cuadro_datos = document.createElement('div');
+    cuadro_datos.classList.add('datos_items');
+	const informacion =document.createElement('div');
+	informacion.classList.add('cuadro_informacion')
 
     const calificacion = document.createElement('p');
     calificacion.innerText = `Calificación: ${dato.CALIFICACION}`;
-    datos_serie.appendChild(calificacion);
+    informacion.appendChild(calificacion);
 
     const estreno = document.createElement('p');
     estreno.innerText = `Fecha de estreno: ${dato.FECHA_ESTRENO}`;
-    datos_serie.appendChild(estreno);
+    informacion.appendChild(estreno);
 
     const recomendado_para = document.createElement('p');
     recomendado_para.innerText = `Edad Recomendada: ${dato.EDAD_RECOMENDADA}`;
-    datos_serie.appendChild(recomendado_para);
+    informacion.appendChild(recomendado_para);
 
     if (dato.TOTAL_TEMPORADAS !== undefined && dato.TOTAL_TEMPORADAS !== null) {
         const temporadas = document.createElement('p');
         temporadas.innerText = `Cantidad de Temporadas: ${dato.TOTAL_TEMPORADAS}`;
-        datos_serie.appendChild(temporadas);
+        informacion.appendChild(temporadas);
     } else if (dato.TOTAL_DURACION !== undefined) {
         const duracion = document.createElement('p');
         duracion.innerText = `Tiempo de duración: ${dato.TOTAL_DURACION}`;
-        datos_serie.appendChild(duracion);
+        informacion.appendChild(duracion);
     }
 
     const generos = document.createElement('p');
     generos.innerText = `Género: ${dato.GENERO}`;
-    datos_serie.appendChild(generos);
+    informacion.appendChild(generos);
 
     const idioma = document.createElement('p');
     idioma.innerText = `Idioma original: ${dato.IDIOMA_ORIGINAL}`;
-    datos_serie.appendChild(idioma);
+    informacion.appendChild(idioma);
 
     const plataforma = document.createElement('p');
-    plataforma.innerText = `Plataforma: ${dato.PLATAFORMA}`;
-    datos_serie.appendChild(plataforma);
+    plataforma.innerHTML = `Plataforma: <span id="plataforma">${dato.PLATAFORMA}</span>`;
+    informacion.appendChild(plataforma);
 
     // Verifica si el valor de LINK está presente antes de crear el botón
     const boton_plataforma = document.createElement('a');
@@ -189,15 +193,17 @@ function diseño(dato) {
         boton_plataforma.innerText = `Ver en ${dato.PLATAFORMA}`;
         boton_plataforma.href = dato.LINK;
     } else {
-        boton_plataforma.innerText = 'Enlace no disponible';
+        boton_plataforma.innerText = "Enlace no disponible";
         boton_plataforma.href = '#'; // No hay enlace disponible
     }
+	informacion.appendChild(boton_plataforma);
 
     // Añadir el botón debajo de la plataforma
-    datos_serie.appendChild(boton_plataforma);
 
-    cuadro_sinopsis.appendChild(datos_serie); // Se añade debajo de la sinopsis
+	cuadro_datos.appendChild(informacion); // Se añade debajo de la sinopsis
+    cuadro_datos.appendChild(cuadro_sinopsis);
+
     contenedor.appendChild(imagen);
     cuadro.appendChild(contenedor);
-    cuadro.appendChild(cuadro_sinopsis);
+	cuadro.appendChild(cuadro_datos);
 }
