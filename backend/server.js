@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { sequelize, Pelicula, Serie, Usuario } = require('./models');
+const { sequelize, Pelicula, Serie, Usuario, Favoritos } = require('./models');
 
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
 const registroRoutes = require('./routes/registro');
+const { where } = require('sequelize');
 // const { where } = require('sequelize');
 
 app.use(cors());
@@ -28,20 +29,34 @@ app.get('/', (req, res) => {
 });
 
 // Obtener películas o series (solo públicas o privadas según el tipo)
-app.get('/api/v1/Biblioteca/:tipo', verificarToken, async (req, res) => {
+app.get('/api/v1/Favorito/:tipo', verificarToken, async (req, res) => {
     const tipo = req.params.tipo;
     let coleccion;
     if (tipo === "Peliculas") {
-        coleccion = await Pelicula.findAll();
+        coleccion = await Favoritos.findAll({ where : { contenido: "pelicula" }});
     } else if (tipo === "Series") {
-        coleccion = await Serie.findAll();
+        coleccion = await Favoritos.findAll({ where : { contenido: "serie" }});
     } else {
         return res.status(400).json({ error: "Tipo no válido" });
     }
 
-    const privado = coleccion.filter(item => item.ACCESO === "PRIVADO");
-    res.json(privado.length ? privado : { mensaje: "Crea tu propia lista" });
+    res.json(coleccion.length ? coleccion : { mensaje: "Crea tu propia lista de favoritos" });
 });
+
+app.post('/api/v1/Favorito', verificarToken, async(req,res)=>{
+    const { ID_USUARIO, CONTENIDO, ID_CONTENIDO } = req.body;
+    if(!ID_USUARIO || !CONTENIDO || !ID_CONTENIDO)
+        return res.status(400).json({ mensaje: "No se logro guardar en favoritos"});
+    const yaExiste= await Favoritos.findOne({ where :{ id_usuario:ID_USUARIO, contenido:CONTENIDO, id_contenido: ID_CONTENIDO }});
+    if(yaExiste)
+        return res.status(400).json({mensaje: "Ya esta en favoritos"});
+    const favorito= await Favoritos.create({
+        id_usuario: ID_USUARIO,
+        contenido: CONTENIDO,
+        id_contenido: ID_CONTENIDO,
+    });
+    res.json(favorito);
+})
 
 // Obtener todas las películas públicas
 app.get('/api/v1/Peliculas', async (req, res) => {
@@ -57,10 +72,12 @@ app.get('/api/v1/Contenido/:nombre', async (req, res) => {
     const pelicula = await Pelicula.findOne({ where: { NOMBRE_COMPLETO: nombre } });
     if (!pelicula && !serie) 
         return res.status(404).json({ mensaje: "Contenido no encontrada" });
-    if(!serie)
-        return res.json(pelicula);
-    if(!pelicula)
-        return res.json(serie);
+    if(!serie){
+        return res.json({ ...pelicula.toJSON(),tipo:"pelicula"});
+    }
+    if(!pelicula){
+        return res.json({ ...serie.toJSON(),tipo:"serie" });
+    }
 });
 
 // Obtener todas las series públicas
@@ -116,13 +133,13 @@ app.get('/api/v1/perfil', verificarToken, async (req, res) => {
     try {
         // Usar el 'req.usuario' que contiene el payload del token
         const usuario = await Usuario.findOne({ where: { nombre_usuario: req.usuario.nombre_usuario } });
-        res.status(200).json({ usuario });
+        res.status(200).json(usuario);
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al obtener perfil' });
     }
 });
 
-
+//modificar cuenta
 app.put('/api/v1/cuenta/:usuario',async (req,res)=>{
     const { CLAVE , NUEVA_CLAVE, NOMBRE, APELLIDO, GENERO, CORREO, TEL } = req.body;
     let cuenta = await Usuario.findOne({ where: { nombre_usuario: req.params.usuario }});

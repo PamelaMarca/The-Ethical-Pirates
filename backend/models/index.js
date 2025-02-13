@@ -9,11 +9,12 @@ const sequelize = new Sequelize({
 const Pelicula = require('./Pelicula')(sequelize, Sequelize.DataTypes);  
 const Serie = require('./Serie')(sequelize, Sequelize.DataTypes);  
 const Usuario = require('./Usuario')(sequelize, Sequelize.DataTypes);
-
+const Favoritos = require('./Favoritos')(sequelize, Sequelize.DataTypes);
 // Exporta la conexión y los modelos
 module.exports = {
     sequelize,
     Usuario,
     Pelicula,
     Serie,
+    Favoritos,
   };

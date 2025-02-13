@@ -30,7 +30,6 @@ function verificar_sesion(){
 
 document.getElementById('perfil_usuario').addEventListener('click', ()=>{
 	const token_nombre = localStorage.getItem("nombre");
-	const perfil = document.getElementById('perfil_usuario');
 	window.location.href= `perfil.html?cuenta=${token_nombre}`
 })
 

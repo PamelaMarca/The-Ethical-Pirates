@@ -139,6 +139,8 @@ section{
 	color: #abd2ff;
 	font-size: xxx-large;
 	font-family: Arial, Helvetica, sans-serif;
+	padding: 0px 10px;
+	background: #6767a0;
 }
 
 .cuadro_interno {
@@ -148,11 +150,13 @@ section{
 	position: absolute;
 	background-color:#333661 ;
 	z-index: 1000;
+	border: 5px solid #6767a0;
 }
 
 .cuadro_interno li{
 	width: 100%;
 	list-style-type: none;
+	
 }
 
 .cuadro_interno a:hover, .cuadro_interno button:hover,.paginas a:hover {
@@ -177,7 +181,10 @@ section{
 .oculto{
 	display: none;
 }
-
+#menu{
+	padding-left: 8px;
+	background: #535385;
+}
 /* Esto me ayuda a que el footer de la pagina aunque el cuadro sea mas  pequeño pueda quedarse abajo */
 main{
 	min-height: 383px;
@@ -351,12 +358,15 @@ main{
 	width: 50%;
 }
 /* para la pagina individual de cada pelicula o serie */
-.cuadro #titulo_item{
+.cuadro #encabezado_item{
 	padding: 10px 15px;
 	background-color: #252a4e;
 	border-top: 5px solid #7077ad;
 	box-shadow: -3px 0 #7077ad ;
+	display: flex;
+	justify-content: space-between;
 }
+
 #contenido_item{
 	align-items: flex-start;
 	border: 5px solid #252a4e;
