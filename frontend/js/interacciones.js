@@ -3,9 +3,8 @@ function desplegar() {
 	const icono = document.querySelector('.icono_menu');
 	if (menu.style.display === 'none' || menu.style.display === '') {
 		menu.style.display = 'block' ;
-		icono.innerHTML="x";
-	} 
-	else {
+        icono.innerHTML = "✖";
+	}else {
 		menu.style.display = 'none';
 		icono.innerHTML = "☰";
 	}
@@ -14,11 +13,8 @@ function desplegar() {
 function desplega_biblio(){
 	const menu= document.getElementById('menu');
 	const signo =document.getElementById('signo');
-	menu.hidden=!menu.hidden;
-	if(menu.hidden)
-		signo.innerHTML = '&lt;';
-	else 
-		signo.innerHTML = 'v';
+	menu.classList.toggle('hidden');;
+	signo.innerHTML = menu.classList.contains('hidden') ? '&lt;': '▼';
 }
 
 const registro= document.querySelector('.formularios .formulario-registro');

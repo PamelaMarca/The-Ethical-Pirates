@@ -116,6 +116,9 @@ function solicitud_entrar(event){
         .then(res => res.json())
         .then(json =>{
             if(!json.mensaje){
+				//guardara el token
+				localStorage.setItem("token", json.token);
+				console.log(usuario_nombre);
                 alert("Inicio de sesion exitoso. Aprete 'aceptar' para ser redirigido");
                 window.location.href=`perfil.html?cuenta=${usuario_nombre}`;
             }else{

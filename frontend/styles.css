@@ -175,6 +175,12 @@ section{
 	font-size: 14px;
 }
 
+.hidden{
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
 /* Esto me ayuda a que el footer de la pagina aunque el cuadro sea mas  pequeño pueda quedarse abajo */
 main{
 	min-height: 383px;
@@ -410,6 +416,14 @@ main{
 .editar_datos, .editar{
 	background-color: rgb(39, 57, 82);
 }
+
+#datos_persona input, #datos_usuario input{
+	width: 300px;
+	padding: 2px;
+	font-family:serif;
+	margin-bottom: 10px;
+}
+
 .borrar, .salir{
 	background-color: rgb(99, 42, 42);
 }
@@ -434,6 +448,8 @@ main{
 	padding: 5px;
 	cursor: pointer;
 }
+
+
 
 /* pie de pagina */
 

@@ -24,15 +24,15 @@
                     <ul>
                         <li><a href="perfil.html">Perfil</a></li>
                         <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt</strong></button>
-                            <ul id="menu" hidden>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt;</strong></button>
+                            <ul id="menu">
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
                         </li>
     
                         <li><a href="">Comentarios</a></li>
-                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
+                        <li><button onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
 
@@ -90,7 +90,7 @@
     <script>
         window.onload = function(){
             perfil_usuario();
-            // verificar_sesion();
+            verificar_sesion();
         }
       </script>
 </body>

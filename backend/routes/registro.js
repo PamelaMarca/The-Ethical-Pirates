@@ -1,9 +1,9 @@
+// routes/registro.js
 const express = require('express');
 const router = express.Router();
 const { Usuario } = require('../models'); 
 // Ruta para registrar usuario 
 router.post('/registro', async (req, res) => {
-    console.log("Datos recibidos en el backend:", req.body);
     try {
         const {
             NOMBRE,

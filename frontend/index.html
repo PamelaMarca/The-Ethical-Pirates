@@ -25,14 +25,14 @@
                         <li><a href="">Perfil</a></li>
                         <li>
                             <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong> </button>
-                            <ul id="menu" hidden>
+                            <ul id="menu" >
                                 <li><a href="">Mis Series</a></li>
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
                         </li>
     
                         <li><a href="">Comentarios</a></li>
-                        <li><button onclick="cerrarSesion()">Cerrar Sesion</button></li>
+                        <li><button onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
 
@@ -75,7 +75,6 @@
         }
 
         function index(){
-            const sesion= document.querySelector('#navegador_interno [data-iniciado]'); 
             fetch('http://localhost:3000/')
             .then(respuesta => respuesta.json())
             .then(json=>{

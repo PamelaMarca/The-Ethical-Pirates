@@ -1,13 +1,24 @@
+// codificacion por los espacios en el nombre
 const parametro = new URLSearchParams(window.location.search);
 const nombre = parametro.get('cuenta');
-// codificacion por los espacios en el nombre
 const us = document.getElementById('nombre_usuario');
 const datos_pers = document.getElementById('datos_persona');
 const datos_us = document.getElementById('datos_usuario');
+const token = localStorage.getItem('token');
+localStorage.setItem("usuario_nombre",nombre);
 
 async function perfil_usuario(){
-	fetch(`http://localhost:3000/api/v1/cuentas/` + nombre)
-	.then(res => res.json())
+	const usuario_nombre= localStorage.getItem('usuario_nombre');
+	fetch(`http://localhost:3000/api/v1/cuentas/${nombre?? usuario_nombre}`,{
+		method: "GET",
+		headers:{
+			'Authorization':'Bearer ' + token,
+			'Content-Type': 'application/json'
+		}
+	})
+	.then(res => {
+		return res.json();
+	})
 	.then(user =>{
 		if(!user.mensaje){
 			datos_pers.innerHTML="";
@@ -198,8 +209,9 @@ function enviar_cambios(){
 	if(nombre_real.trim()==''|| apellido.trim()==''|| genero.trim()=='' || email.trim()=='' || contacto.trim()==''){
 		alert("Campos vacios no seran modificados");
 	}
-	fetch("http://localhost:3000/api/v1/cuenta/" + nombre,{
-		method: "PUT",
+	const usuario_nombre= localStorage.getItem('usuario_nombre');
+	fetch(`http://localhost:3000/api/v1/cuenta/${nombre?? usuario_nombre}`,{
+	 	method: "PUT",
 		headers:{
 			'Content-Type':'application/json'
 		},
@@ -223,15 +235,20 @@ function enviar_cambios(){
 async function borrando_cuenta() {
 	const desicion= await mostrar_confirmacion("Eliminar permanentemente");
 	if(desicion){
-		fetch("http://localhost:3000/api/v1/cuenta/"+ nombre,{
+		const usuario_nombre= localStorage.getItem('usuario_nombre');
+		fetch("http://localhost:3000/api/v1/cuenta/" + usuario_nombre,{
 			method: "DELETE",
 			headers:{
+				'Authorization': 'Bearer ' + token,
 				'Content-Type':'application/json'
 			}
 		})
 		.then(res=> res.json())
 		.then(json => {
+			localStorage.removeItem("token");
+			localStorage.removeItem("usuario_nombre");
 			alert("Eliminacion de cuenta exitosa");
+			window.location.href='index.html';
 		})
 		.catch(error=> console.error("Error al eliminar cuenta: ",error));
 	}
