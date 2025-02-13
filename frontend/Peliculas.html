@@ -30,7 +30,7 @@
                                 <li><a href="">MIs Peliculas</a></li>
                             </ul>
                         </li>
-                            <li><button onclick="sesion_cerrada()">Cerrar Sesion</button></li>
+                            <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
 
@@ -68,7 +68,7 @@
     <script>
         window.onload= function(){
             pelis();
-            // verificar_sesion();
+            verificar_sesion();
         }
         function pelis(){
             fetch('http://localhost:3000/api/v1/Peliculas')

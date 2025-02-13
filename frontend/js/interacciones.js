@@ -10,11 +10,11 @@ function desplegar() {
 	}
 }
 
-function desplega_biblio(){
-	const menu= document.getElementById('menu');
-	const signo =document.getElementById('signo');
-	menu.classList.toggle('hidden');;
-	signo.innerHTML = menu.classList.contains('hidden') ? '&lt;': '▼';
+function desplega_biblio() {
+    const menu = document.getElementById('menu');
+    const signo = document.getElementById('signo');
+    menu.classList.toggle('oculto'); 
+    signo.innerHTML = menu.classList.contains('oculto') ? '&lt;' : 'v';
 }
 
 const registro= document.querySelector('.formularios .formulario-registro');

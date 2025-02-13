@@ -5,10 +5,9 @@ const us = document.getElementById('nombre_usuario');
 const datos_pers = document.getElementById('datos_persona');
 const datos_us = document.getElementById('datos_usuario');
 const token = localStorage.getItem('token');
-localStorage.setItem("usuario_nombre",nombre);
-
 async function perfil_usuario(){
-	const usuario_nombre= localStorage.getItem('usuario_nombre');
+	const usuario_nombre= localStorage.getItem('nombre');
+	console.log(usuario_nombre);
 	fetch(`http://localhost:3000/api/v1/cuentas/${nombre?? usuario_nombre}`,{
 		method: "GET",
 		headers:{
@@ -20,7 +19,7 @@ async function perfil_usuario(){
 		return res.json();
 	})
 	.then(user =>{
-		if(!user.mensaje){
+		if(token){
 			datos_pers.innerHTML="";
 			datos_us.innerHTML="";
 			const botones= document.getElementById('botones');

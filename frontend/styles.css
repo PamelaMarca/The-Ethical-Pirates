@@ -174,11 +174,8 @@ section{
 	font-family:Arial, Helvetica, sans-serif ;
 	font-size: 14px;
 }
-
-.hidden{
-	visibility: hidden;
-	opacity: 0;
-	transition: opacity 0.3s ease, visibility 0.3s ease;
+.oculto{
+	display: none;
 }
 
 /* Esto me ayuda a que el footer de la pagina aunque el cuadro sea mas  pequeño pueda quedarse abajo */
