@@ -39,13 +39,13 @@ app.get('/api/v1/Favorito/:id/:tipo', verificarToken, async (req, res) => {
         let coleccion;
         if (tipo === "Peliculas") {
             coleccion = await Favoritos.findAll({
-                where : { id_usuario: usuario ,contenido: 'pelicula'},
+                where : { id_usuario: usuario ,contenido: "pelicula"},
                 include: [{ model: Pelicula, as: 'pelicula', attributes: ['NOMBRE_COMPLETO']}]
             });
             console.log(coleccion);
         } else if (tipo === "Series") {
             coleccion = await Favoritos.findAll({ 
-                where : { id_usuario:usuario, contenido: "serie" },
+                where : { id_usuario: usuario, contenido: "serie" },
                 include: [{ model: Serie, as: 'serie', attributes: ['NOMBRE_COMPLETO'] }]
             });
         } else {
@@ -57,10 +57,10 @@ app.get('/api/v1/Favorito/:id/:tipo', verificarToken, async (req, res) => {
     
         const lista_favoritos = coleccion.map(fav => ({
             id_usuario: fav.id_usuario,
-            contenido: tipo === "pelicula" ? fav.pelicula?.NOMBRE_COMPLETO : fav.serie?.NOMBRE_COMPLETO,
+            contenido: tipo == "Peliculas" ? fav.pelicula?.NOMBRE_COMPLETO : fav.serie?.NOMBRE_COMPLETO,
             id_contenido: fav.id_contenido
         }));
-
+        console.log(lista_favoritos);
         res.status(200).json(lista_favoritos);
     }catch(error){
         console.error(error);
@@ -82,6 +82,11 @@ app.post('/api/v1/Favorito', verificarToken, async(req,res)=>{
         id_contenido: ID_CONTENIDO,
     });
     res.json(favorito);
+});
+
+app.delete('/api/v1/Favorito/:id/:tipo/:id_contenido', verificarToken, async(req,res)=>{
+    const { id, tipo, id_contenido }= req.params;
+     
 })
 
 // Obtener todas las películas públicas
