@@ -6,8 +6,6 @@ const { sequelize, Pelicula, Serie, Usuario, Favoritos } = require('./models');
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
 const registroRoutes = require('./routes/registro');
-const { where } = require('sequelize');
-// const { where } = require('sequelize');
 
 app.use(cors());
 app.use(express.json());
@@ -29,18 +27,46 @@ app.get('/', (req, res) => {
 });
 
 // Obtener películas o series (solo públicas o privadas según el tipo)
-app.get('/api/v1/Favorito/:tipo', verificarToken, async (req, res) => {
+app.get('/api/v1/Favorito/:id/:tipo', verificarToken, async (req, res) => {
     const tipo = req.params.tipo;
-    let coleccion;
-    if (tipo === "Peliculas") {
-        coleccion = await Favoritos.findAll({ where : { contenido: "pelicula" }});
-    } else if (tipo === "Series") {
-        coleccion = await Favoritos.findAll({ where : { contenido: "serie" }});
-    } else {
-        return res.status(400).json({ error: "Tipo no válido" });
+    const usuario = req.params.id;
+    
+    // const prueba = await Favoritos.findAll({ where: { id_usuario: req.params.id, contenido: 'pelicula' }, include: [{ model: Pelicula, as:'pelicula',attributes:['NOMBRE_COMPLETO']}]});
+    // console.log(prueba);
+    // res.status(200).json(prueba);
+
+    try{
+        let coleccion;
+        if (tipo === "Peliculas") {
+            coleccion = await Favoritos.findAll({
+                where : { id_usuario: usuario ,contenido: 'pelicula'},
+                include: [{ model: Pelicula, as: 'pelicula', attributes: ['NOMBRE_COMPLETO']}]
+            });
+            console.log(coleccion);
+        } else if (tipo === "Series") {
+            coleccion = await Favoritos.findAll({ 
+                where : { id_usuario:usuario, contenido: "serie" },
+                include: [{ model: Serie, as: 'serie', attributes: ['NOMBRE_COMPLETO'] }]
+            });
+        } else {
+            return res.status(400).json({ error: "Tipo no válido" });
+        }
+
+        if(coleccion.length===0)
+            return res.status(200).json({mensaje: "No se encuentran favoritos"});
+    
+        const lista_favoritos = coleccion.map(fav => ({
+            id_usuario: fav.id_usuario,
+            contenido: tipo === "pelicula" ? fav.pelicula?.NOMBRE_COMPLETO : fav.serie?.NOMBRE_COMPLETO,
+            id_contenido: fav.id_contenido
+        }));
+
+        res.status(200).json(lista_favoritos);
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ mensaje: "Error al obtener favoritos" });
     }
 
-    res.json(coleccion.length ? coleccion : { mensaje: "Crea tu propia lista de favoritos" });
 });
 
 app.post('/api/v1/Favorito', verificarToken, async(req,res)=>{
@@ -61,7 +87,7 @@ app.post('/api/v1/Favorito', verificarToken, async(req,res)=>{
 // Obtener todas las películas públicas
 app.get('/api/v1/Peliculas', async (req, res) => {
     const peliculas = await Pelicula.findAll({ where: { ACCESO: "PUBLICO" } });
-    console.log(peliculas.FECHA_ESTRENO);
+
     res.status(201).json({ respuesta: peliculas.length ? peliculas : { mensaje: "No hay películas disponibles" } });
 });
 
@@ -119,7 +145,7 @@ app.post('/api/v1/inicio', async (req, res) => {
             return res.status(400).json({ mensaje: "Contraseña incorrecta" });
         }
         // Generar el token JWT
-        const token = jwt.sign({ nombre_usuariousuario: cuenta.nombre_usuario }, 'secret_key', { expiresIn: '1h' });
+        const token = jwt.sign({ nombre_usuario: cuenta.nombre_usuario }, 'secret_key', { expiresIn: '1h' });
         res.status(200).json({ token, cuenta });
 
     } catch (error) {
@@ -175,7 +201,6 @@ app.delete('/api/v1/cuenta/:usuario', async (req,res)=>{
 })
 
 //intentar crear una coneccion
-app.post
 
 // Middleware para verificar el token JWT
 function verificarToken(req, res, next) {

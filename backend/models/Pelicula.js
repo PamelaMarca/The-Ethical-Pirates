@@ -48,6 +48,12 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'peliculas',
         timestamps: false
     });
-
+    Pelicula.associate = (models) => {
+        Pelicula.hasMany(models.Favoritos, {
+          foreignKey: 'id_contenido',
+          as: 'favoritos'
+        });
+    };
+    
     return Pelicula;
 };

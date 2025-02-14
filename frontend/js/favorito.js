@@ -1,5 +1,4 @@
 function insertar_fav(id, tipo, contenido, token){
-
 	fetch('http://localhost:3000/api/v1/Favorito',{
 		method:"POST",
 		headers:{
