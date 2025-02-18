@@ -60,7 +60,9 @@
                 <div id="item_informacion">
                 </div>
             </section>
+      
         </div>
+
 	</main>
     <footer class="footer">
             <p>&copy; 2024 The Ethical Pirates</p>
@@ -70,13 +72,14 @@
     <script src="./js/series_peliculas.js"></script>
     <script src="./js/sesion_verificar.js"></script>
     <script src="./js/favorito.js"></script>
+    <script src="./js/comentarios.js"></script>
     <script>
         window.onload= function(){
-            item_indivisual();
+            item_individual();
             verificar_sesion();
 
         }
-        function item_indivisual(){
+        function item_individual(){
             const parametro = new URLSearchParams(window.location.search);
             const nombre = parametro.get('nombre');
             // codificacion por los espacios en el nombre
@@ -85,6 +88,7 @@
             .then(res => res.json())
             .then(dato =>{
                 diseño(dato);
+                diseño_comentarios(dato);
             })
         }
     </script>

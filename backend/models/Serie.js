@@ -53,6 +53,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'favoritos'
     });
   };
+  Serie.associate = (models) => {
+    Serie.hasMany(models.Comentarios, {
+      foreignKey: 'nombre_item',
+      as: 'comentarios'
+    });
+  };
 
   return Serie;
 };

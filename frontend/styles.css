@@ -456,7 +456,13 @@ main{
 	cursor: pointer;
 }
 
-
+#barra_comentar{
+	width: 60%;
+	height: 80px;
+	font-size: 15px;
+	padding: 10px;
+	resize: none;
+}
 
 /* pie de pagina */
 

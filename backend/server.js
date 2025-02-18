@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { sequelize, Pelicula, Serie, Usuario, Favoritos } = require('./models');
+const { sequelize, Pelicula, Serie, Usuario, Favoritos, Comentarios } = require('./models');
 
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
 const registroRoutes = require('./routes/registro');
+const { where } = require('sequelize');
 
 app.use(cors());
 app.use(express.json());
@@ -205,7 +206,49 @@ app.delete('/api/v1/cuenta/:usuario', async (req,res)=>{
 
 })
 
-//intentar crear una coneccion
+app.post('/api/v1/comentar', async (req, res)=>{
+    const { ID_PERSONA, COMENTARIO, NOMBRE_ITEM  }= req.body;
+        
+    const usuario = await Usuario.findOne({ where : { id: ID_PERSONA }});
+    if(!usuario){
+        return res.status(400).json({mensaje: "Error al enviar COMENTARIO"});
+    }
+    if(COMENTARIO.trim() === '' || !COMENTARIO)
+        return res.status(400).json({mensaje: "Comentario vacio"});
+    
+    let item = await Pelicula.findOne({ where: {NOMBRE_COMPLETO: NOMBRE_ITEM}});
+
+    if(!item){
+        item= await Serie.findOne({ where: { NOMBRE_COMPLETO: NOMBRE_ITEM }});
+        if(!item)
+            return res.status(400).json({ mensaje: "No se puodo encontrar el nombre para el item"});
+    }
+
+    const comentar = await Comentarios.create({
+        id_usuario: ID_PERSONA,
+        comentario: COMENTARIO,
+        nombre_item: NOMBRE_ITEM
+    });
+
+    res.json(comentar);
+});
+
+app.get('/api/v1/comentarios/:item', async (req,res)=>{
+    const comentarios_item = await Comentarios.findAll({ 
+        where: { nombre_item: decodeURIComponent(req.params.item) },
+        include: [{ model: Usuario, as: 'usuario', attributes: ['nombre_usuario']}]
+    })
+    if (comentarios_item.length === 0)
+        return res.status(200).json({mensaje: "No hay comentarios"});
+    
+    const todos_comentarios = comentarios_item.map(comentario => ({
+        nombre_usuario: comentario.usuario ? comentario.usuario.nombre_usuario : 'Invitado',
+        comentario: comentario.comentario,
+        nombre_item: comentario.nombre_item
+    }));
+
+    res.status(200).json(todos_comentarios);
+})
 
 // Middleware para verificar el token JWT
 function verificarToken(req, res, next) {

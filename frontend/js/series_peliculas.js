@@ -116,6 +116,7 @@ document.getElementById('buscar').addEventListener('click', () => {
 
 document.getElementById('search').addEventListener('blur', posicion_original);
 
+
 function diseño(dato) {
     console.log("Datos recibidos en diseño():", dato);  // Verifica que los datos tienen el campo LINK
 

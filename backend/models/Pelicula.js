@@ -54,6 +54,12 @@ module.exports = (sequelize, DataTypes) => {
           as: 'favoritos'
         });
     };
+    Pelicula.associate = (models) => {
+        Pelicula.hasMany(models.Comentarios, {
+          foreignKey: 'nombre_item',
+          as: 'comentarios'
+        });
+    };
     
     return Pelicula;
 };

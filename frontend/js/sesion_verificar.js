@@ -16,6 +16,7 @@ function sesion_cerrada() {
 	index.style.display= 'block';
 	localStorage.removeItem('token');
 	localStorage.removeItem('nombre');
+	localStorage.removeItem('id_user');
 }
 
 function verificar_sesion(){

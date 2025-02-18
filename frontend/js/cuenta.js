@@ -82,8 +82,8 @@ function solicitud_registro(event){
 			if(json.mensaje){
 				mensaje.innerHTML=`<p>${json.mensaje}</p>`;
 			}else{
-				alert("Registro exitoso. Aprete 'aceptar' para ser redireccionado");
-				window.location.href=`perfil.html?cuenta=${usuario.value}`;
+				alert("Registro exitoso.");
+				window.location.href=`inicio_registro.html`;
 			}
 		})
         .catch(error =>{
