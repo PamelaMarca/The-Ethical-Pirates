@@ -71,22 +71,38 @@
 			mostrar_fav()
             verificar_sesion();
         }
-		// function eliminar_favorito(){
-		// 	const token = localStorage.getItem('token');
-		// 	const us = localStorage.getItem('id_user');
-		// 	if (!token){
-		// 		alert("Inicie sesion para eliminar de favorito")
-		// 		sesion_cerrada();
-		// 		window.location.href="inicio_registro.html";
-		// 	}
-		// 	fetch(`http://localhost:3000/api/v1/Favorito/${us}/${tipo}/${id_contenido}`,{
-		// 		method: "DELETE",
-		// 		headers: {
-		// 			'Authorization': 'Bearer ' + token,
-		// 			'Content-Type': 'application/json'
-		// 			}
-		// 		})
-		// }
+		function eliminar_favorito(id_contenido){
+			const parametro = new URLSearchParams(window.location.search);
+			const tipo = parametro.get('tipo');
+			const token = localStorage.getItem('token');
+			const us = localStorage.getItem('id_user');
+			if (!token){
+				alert("Inicie sesion para eliminar de favorito")
+				sesion_cerrada();
+				window.location.href="inicio_registro.html";
+			}
+			let contenido;
+			if(tipo === 'Peliculas') contenido= 'pelicula';
+			else if(tipo === 'Series') contenido= 'serie';
+
+			console.log(`ID Usuario: ${us}, Tipo: ${contenido}, ID Contenido: ${id_contenido}`);
+			
+			fetch(`http://localhost:3000/api/v1/Favorito/${us}/${contenido}/${id_contenido}`,{
+				method: "DELETE",
+				headers: {
+					'Authorization': 'Bearer ' + token,
+					'Content-Type': 'application/json'
+					}
+			})
+			
+			.then(res => res.json())
+			.then( json=>{
+				if(!mensaje){
+					alert("Eliminado de favoritos con exito");
+					// mostrar_fav();
+				}
+			})
+		}
 
 		function mostrar_fav(){
 			const parametro = new URLSearchParams(window.location.search);
@@ -106,29 +122,44 @@
 			})
 			.then(res => res.json())
 			.then(fav =>{
-				console.log(fav);
+				const cuadro = document.getElementById('cuadro');
+				cuadro.innerHTML='';
+
 				if(Array.isArray(fav) && fav.length > 0){
-					const cuadro = document.getElementById('cuadro');
-					const div = document.createElement('div');
-					const columna = document.createElement('ul');
+					const tabla = document.createElement('table');
+					tabla.id='tabla_favoritos';
+					const encabezado = document.createElement('thead');
+					encabezado.innerHTML='<tr><th id="Nombres_item">Nombre</th></tr>';
+					tabla.appendChild(encabezado);
+
+					const cuerpo = document.createElement('tbody');
 					fav.forEach(element => {
-						const fila = document.createElement('li');
+
+						const fila = document.createElement('tr');
+						const celda1 = document.createElement('td');
 						const titulo = document.createElement('a');
 						titulo.innerText= element.contenido;
 						titulo.href="Items.html?nombre=" + encodeURIComponent(element.contenido);
-						fila.appendChild(titulo);
+						celda1.appendChild(titulo);
 
+						const celda2 = document.createElement('td');
 						const eliminar = document.createElement('button');
+						eliminar.classList.add('eliminar_fav');
+						eliminar.id='eliminar_fav';
 						eliminar.innerText="Eliminar de favoritos";
 						eliminar.onclick= ()=> eliminar_favorito(element.id_contenido);
-						fila.appendChild(eliminar);
+						celda2.appendChild(eliminar);
 
-						columna.appendChild(fila);
+						fila.appendChild(celda1);
+						fila.appendChild(celda2);
+						cuerpo.appendChild(fila);
 					});
-					div.appendChild(columna);
-					cuadro.appendChild(div);
+					tabla.appendChild(cuerpo);
+					cuadro.appendChild(tabla);
 				}else{
-					alert("No tienes favoritos");
+					const mensaje = document.createElement('h2');
+					mensaje.innerText="No tienes favoritos Aun";
+					cuadro.appendChild(mensaje);
 				}
 			})
 		}

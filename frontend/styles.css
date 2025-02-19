@@ -414,7 +414,7 @@ main{
 
 }
 
-#botones button{
+#botones button, .eliminar_fav{
 	padding: 10px;
 	color: #bbe2ec;
 	cursor: pointer;
@@ -431,7 +431,7 @@ main{
 	margin-bottom: 10px;
 }
 
-.borrar, .salir{
+.borrar, .salir, .eliminar_fav{
 	background-color: rgb(99, 42, 42);
 }
 
@@ -456,12 +456,77 @@ main{
 	cursor: pointer;
 }
 
+#tabla_favoritos{
+	width:100%;
+	border-collapse: collapse;
+	margin: 20px;
+}
+
+#Nombres_item{
+	width: 50%;
+}
+#tabla_favoritos td{
+	padding: 8px 16px;
+}
+#tabla_favoritos a{
+	color: #9cb3b8;
+	text-decoration: none;
+	cursor: pointer;
+}
+#tabla_favoritos a:hover{
+	color: #edf1f1;
+}
+
+/* comentarios */
+.comentarios{
+	width: 100%;
+	padding: 15px;
+}
+
+.cuadro_ingreso_comentario{
+	margin-bottom: 40px;
+}
+
 #barra_comentar{
 	width: 60%;
 	height: 80px;
 	font-size: 15px;
 	padding: 10px;
 	resize: none;
+}
+#boton_comentar{
+	margin: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+
+#lista_comentarios{
+	width: 90%;
+	color: #161646;
+}
+
+.comentarios h3{
+	background: #313b70e8;
+	padding: 4px;
+}
+.comentario_individual, .comentarios h3{
+	margin: 20px 0px;
+}
+.comentario_individual h4{
+	background: #2e2e4b;
+	color: #d1d3e2;
+	padding: 10px;
+}
+
+.comentario_individual div{
+	padding: 20px 30px;
+	font-size: 17px;
+	background: #a9acbb;
+
+}
+.sin_comentarios{
+	color: #868a96;
+	padding: 10px;
 }
 
 /* pie de pagina */
