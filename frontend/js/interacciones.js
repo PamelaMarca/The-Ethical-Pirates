@@ -40,7 +40,7 @@ function boton_registro(){
 	}
 }
 function boton_inicio(){
-	if(window.innerWidth<471){
+	if(window.innerWidth < 471){
 		registro.style.display="none";
 		inicio.style.display="block";
 		pregunta_inicio.style.display="none";

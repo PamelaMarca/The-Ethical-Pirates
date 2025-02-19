@@ -1,12 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { sequelize, Pelicula, Serie, Usuario } = require('./models');
+const { sequelize, Pelicula, Serie, Usuario, Favoritos, Comentarios } = require('./models');
 
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
 const registroRoutes = require('./routes/registro');
-// const { where } = require('sequelize');
+const { where } = require('sequelize');
 
 app.use(cors());
 app.use(express.json());
@@ -28,34 +28,88 @@ app.get('/', (req, res) => {
 });
 
 // Obtener películas o series (solo públicas o privadas según el tipo)
-app.get('/api/v1/Biblioteca/:tipo', verificarToken, async (req, res) => {
+app.get('/api/v1/Favorito/:id/:tipo', verificarToken, async (req, res) => {
     const tipo = req.params.tipo;
-    let coleccion;
-    if (tipo === "Peliculas") {
-        coleccion = await Pelicula.findAll();
-    } else if (tipo === "Series") {
-        coleccion = await Serie.findAll();
-    } else {
-        return res.status(400).json({ error: "Tipo no válido" });
+    const usuario = req.params.id;
+    
+    // const prueba = await Favoritos.findAll({ where: { id_usuario: req.params.id, contenido: 'pelicula' }, include: [{ model: Pelicula, as:'pelicula',attributes:['NOMBRE_COMPLETO']}]});
+    // console.log(prueba);
+    // res.status(200).json(prueba);
+
+    try{
+        let coleccion;
+        if (tipo === "Peliculas") {
+            coleccion = await Favoritos.findAll({
+                where : { id_usuario: usuario ,contenido: "pelicula"},
+                include: [{ model: Pelicula, as: 'pelicula', attributes: ['NOMBRE_COMPLETO']}]
+            });
+            console.log(coleccion);
+        } else if (tipo === "Series") {
+            coleccion = await Favoritos.findAll({ 
+                where : { id_usuario: usuario, contenido: "serie" },
+                include: [{ model: Serie, as: 'serie', attributes: ['NOMBRE_COMPLETO'] }]
+            });
+        } else {
+            return res.status(400).json({ error: "Tipo no válido" });
+        }
+
+        if(coleccion.length===0)
+            return res.status(200).json({mensaje: "No se encuentran favoritos"});
+    
+        const lista_favoritos = coleccion.map(fav => ({
+            id_usuario: fav.id_usuario,
+            contenido: tipo == "Peliculas" ? fav.pelicula?.NOMBRE_COMPLETO : fav.serie?.NOMBRE_COMPLETO,
+            id_contenido: fav.id_contenido
+        }));
+        console.log(lista_favoritos);
+        res.status(200).json(lista_favoritos);
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ mensaje: "Error al obtener favoritos" });
     }
 
-    const privado = coleccion.filter(item => item.ACCESO === "PRIVADO");
-    res.json(privado.length ? privado : { mensaje: "Crea tu propia lista" });
 });
+
+app.post('/api/v1/Favorito', verificarToken, async(req,res)=>{
+    const { ID_USUARIO, CONTENIDO, ID_CONTENIDO } = req.body;
+    if(!ID_USUARIO || !CONTENIDO || !ID_CONTENIDO)
+        return res.status(400).json({ mensaje: "No se logro guardar en favoritos"});
+    const yaExiste= await Favoritos.findOne({ where :{ id_usuario:ID_USUARIO, contenido:CONTENIDO, id_contenido: ID_CONTENIDO }});
+    if(yaExiste)
+        return res.status(400).json({mensaje: "Ya esta en favoritos"});
+    const favorito= await Favoritos.create({
+        id_usuario: ID_USUARIO,
+        contenido: CONTENIDO,
+        id_contenido: ID_CONTENIDO,
+    });
+    res.json(favorito);
+});
+
+app.delete('/api/v1/Favorito/:id/:tipo/:id_contenido', verificarToken, async(req,res)=>{
+    const { id, tipo, id_contenido }= req.params;
+     
+})
 
 // Obtener todas las películas públicas
 app.get('/api/v1/Peliculas', async (req, res) => {
     const peliculas = await Pelicula.findAll({ where: { ACCESO: "PUBLICO" } });
-    console.log(peliculas.FECHA_ESTRENO);
+
     res.status(201).json({ respuesta: peliculas.length ? peliculas : { mensaje: "No hay películas disponibles" } });
 });
 
 // Obtener una película por nombre
-app.get('/api/v1/Peliculas/:nombre', async (req, res) => {
+app.get('/api/v1/Contenido/:nombre', async (req, res) => {
     const nombre = decodeURIComponent(req.params.nombre);
+    const serie = await Serie.findOne({ where: { NOMBRE_COMPLETO: nombre } });
     const pelicula = await Pelicula.findOne({ where: { NOMBRE_COMPLETO: nombre } });
-    if (!pelicula) return res.status(404).json({ mensaje: "Película no encontrada" });
-    res.json(pelicula);
+    if (!pelicula && !serie) 
+        return res.status(404).json({ mensaje: "Contenido no encontrada" });
+    if(!serie){
+        return res.json({ ...pelicula.toJSON(),tipo:"pelicula"});
+    }
+    if(!pelicula){
+        return res.json({ ...serie.toJSON(),tipo:"serie" });
+    }
 });
 
 // Obtener todas las series públicas
@@ -64,13 +118,6 @@ app.get('/api/v1/Series', async (req, res) => {
     res.status(201).json({ respuesta: series.length ? series : { mensaje: "No hay series disponibles" } });
 });
 
-// Obtener una serie por nombre
-app.get('/api/v1/Series/:nombre', async (req, res) => {
-    const nombre = decodeURIComponent(req.params.nombre);
-    const serie = await Serie.findOne({ where: { NOMBRE_COMPLETO: nombre } });
-    if (!serie) return res.status(404).json({ mensaje: "Serie no encontrada" });
-    res.json(serie);
-});
 
 // Obtener datos de usuario (sin devolver contraseña)
 app.get('/api/v1/cuentas/:us',verificarToken, async (req, res) => {
@@ -104,7 +151,7 @@ app.post('/api/v1/inicio', async (req, res) => {
             return res.status(400).json({ mensaje: "Contraseña incorrecta" });
         }
         // Generar el token JWT
-        const token = jwt.sign({ nombre_usuariousuario: cuenta.nombre_usuario }, 'secret_key', { expiresIn: '1h' });
+        const token = jwt.sign({ nombre_usuario: cuenta.nombre_usuario }, 'secret_key', { expiresIn: '1h' });
         res.status(200).json({ token, cuenta });
 
     } catch (error) {
@@ -118,13 +165,13 @@ app.get('/api/v1/perfil', verificarToken, async (req, res) => {
     try {
         // Usar el 'req.usuario' que contiene el payload del token
         const usuario = await Usuario.findOne({ where: { nombre_usuario: req.usuario.nombre_usuario } });
-        res.status(200).json({ usuario });
+        res.status(200).json(usuario);
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al obtener perfil' });
     }
 });
 
-
+//modificar cuenta
 app.put('/api/v1/cuenta/:usuario',async (req,res)=>{
     const { CLAVE , NUEVA_CLAVE, NOMBRE, APELLIDO, GENERO, CORREO, TEL } = req.body;
     let cuenta = await Usuario.findOne({ where: { nombre_usuario: req.params.usuario }});
@@ -159,6 +206,7 @@ app.delete('/api/v1/cuenta/:usuario', async (req,res)=>{
 
 })
 
+<<<<<<< HEAD
 //formulario de carga
 app.post('/api/v1/Peliculas', verificarToken, async (req, res) => {
     try {
@@ -178,6 +226,51 @@ app.post('/api/v1/Series', verificarToken, async (req, res) => {
     }
 });
 
+=======
+app.post('/api/v1/comentar', async (req, res)=>{
+    const { ID_PERSONA, COMENTARIO, NOMBRE_ITEM  }= req.body;
+        
+    const usuario = await Usuario.findOne({ where : { id: ID_PERSONA }});
+    if(!usuario){
+        return res.status(400).json({mensaje: "Error al enviar COMENTARIO"});
+    }
+    if(COMENTARIO.trim() === '' || !COMENTARIO)
+        return res.status(400).json({mensaje: "Comentario vacio"});
+    
+    let item = await Pelicula.findOne({ where: {NOMBRE_COMPLETO: NOMBRE_ITEM}});
+
+    if(!item){
+        item= await Serie.findOne({ where: { NOMBRE_COMPLETO: NOMBRE_ITEM }});
+        if(!item)
+            return res.status(400).json({ mensaje: "No se puodo encontrar el nombre para el item"});
+    }
+
+    const comentar = await Comentarios.create({
+        id_usuario: ID_PERSONA,
+        comentario: COMENTARIO,
+        nombre_item: NOMBRE_ITEM
+    });
+
+    res.json(comentar);
+});
+
+app.get('/api/v1/comentarios/:item', async (req,res)=>{
+    const comentarios_item = await Comentarios.findAll({ 
+        where: { nombre_item: decodeURIComponent(req.params.item) },
+        include: [{ model: Usuario, as: 'usuario', attributes: ['nombre_usuario']}]
+    })
+    if (comentarios_item.length === 0)
+        return res.status(200).json({mensaje: "No hay comentarios"});
+    
+    const todos_comentarios = comentarios_item.map(comentario => ({
+        nombre_usuario: comentario.usuario ? comentario.usuario.nombre_usuario : 'Invitado',
+        comentario: comentario.comentario,
+        nombre_item: comentario.nombre_item
+    }));
+
+    res.status(200).json(todos_comentarios);
+})
+>>>>>>> develop_v3
 
 // Middleware para verificar el token JWT
 function verificarToken(req, res, next) {

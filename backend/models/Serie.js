@@ -47,6 +47,18 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'series',
       timestamps: false
   });
+  Serie.associate = (models) => {
+    Serie.hasMany(models.Favoritos, {
+      foreignKey: 'id_contenido',
+      as: 'favoritos'
+    });
+  };
+  Serie.associate = (models) => {
+    Serie.hasMany(models.Comentarios, {
+      foreignKey: 'nombre_item',
+      as: 'comentarios'
+    });
+  };
 
   return Serie;
 };

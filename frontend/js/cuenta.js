@@ -82,8 +82,8 @@ function solicitud_registro(event){
 			if(json.mensaje){
 				mensaje.innerHTML=`<p>${json.mensaje}</p>`;
 			}else{
-				alert("Registro exitoso. Aprete 'aceptar' para ser redireccionado");
-				window.location.href=`perfil.html?cuenta=${usuario.value}`;
+				alert("Registro exitoso.");
+				window.location.href=`inicio_registro.html`;
 			}
 		})
         .catch(error =>{
@@ -119,7 +119,7 @@ function solicitud_entrar(event){
 				//guardara el token
 				localStorage.setItem("token", json.token);
 				localStorage.setItem("nombre", usuario_nombre);
-				console.log(usuario_nombre);
+				localStorage.setItem("id_user", json.cuenta.id);
                 alert("Inicio de sesion exitoso. Aprete 'aceptar' para ser redirigido");
                 window.location.href=`perfil.html?cuenta=${usuario_nombre}`;
             }else{

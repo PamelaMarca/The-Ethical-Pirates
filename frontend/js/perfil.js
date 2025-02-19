@@ -4,10 +4,10 @@ const nombre = parametro.get('cuenta');
 const us = document.getElementById('nombre_usuario');
 const datos_pers = document.getElementById('datos_persona');
 const datos_us = document.getElementById('datos_usuario');
-const token = localStorage.getItem('token');
+
 async function perfil_usuario(){
 	const usuario_nombre= localStorage.getItem('nombre');
-	console.log(usuario_nombre);
+	const token = localStorage.getItem('token');
 	fetch(`http://localhost:3000/api/v1/cuentas/${nombre?? usuario_nombre}`,{
 		method: "GET",
 		headers:{
@@ -235,7 +235,8 @@ async function borrando_cuenta() {
 	const desicion= await mostrar_confirmacion("Eliminar permanentemente");
 	if(desicion){
 		const usuario_nombre= localStorage.getItem('usuario_nombre');
-		fetch("http://localhost:3000/api/v1/cuenta/" + usuario_nombre,{
+		const token = localStorage.getItem('token');
+		fetch(`http://localhost:3000/api/v1/cuenta/${nombre?? usuario_nombre}`,{
 			method: "DELETE",
 			headers:{
 				'Authorization': 'Bearer ' + token,
@@ -244,10 +245,14 @@ async function borrando_cuenta() {
 		})
 		.then(res=> res.json())
 		.then(json => {
-			localStorage.removeItem("token");
-			localStorage.removeItem("usuario_nombre");
-			alert("Eliminacion de cuenta exitosa");
-			window.location.href='index.html';
+			if(!json.mensaje){
+				localStorage.removeItem("token");
+				localStorage.removeItem("usuario_nombre");
+				alert("Eliminacion de cuenta exitosa");
+				window.location.href='index.html';
+			}else{
+				alert(json.mensaje);
+			}
 		})
 		.catch(error=> console.error("Error al eliminar cuenta: ",error));
 	}

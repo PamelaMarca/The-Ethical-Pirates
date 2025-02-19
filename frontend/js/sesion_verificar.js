@@ -16,11 +16,11 @@ function sesion_cerrada() {
 	index.style.display= 'block';
 	localStorage.removeItem('token');
 	localStorage.removeItem('nombre');
+	localStorage.removeItem('id_user');
 }
 
 function verificar_sesion(){
 	const token = localStorage.getItem("token");
-
 	if(!token){ 
 		sesion_cerrada();
 	}else{
@@ -28,13 +28,23 @@ function verificar_sesion(){
 	}
 }
 
-document.getElementById('perfil_usuario').addEventListener('click', ()=>{
-	const token_nombre = localStorage.getItem("nombre");
+document.addEventListener('DOMContentLoaded',()=>{
 	const perfil = document.getElementById('perfil_usuario');
-	window.location.href= `perfil.html?cuenta=${token_nombre}`
-})
-
-document.getElementById('cerrar_sesion').addEventListener('click',()=>{
-	sesion_cerrada();
-	window.location.href='inicio_registro.html';
+	const boton_cerrar = document.getElementById('cerrar_sesion');
+	if(perfil){
+		perfil.addEventListener('click', ()=>{
+			const token_nombre = localStorage.getItem("nombre");
+			window.location.href= `perfil.html?cuenta=${token_nombre}`
+		})
+	}else{
+		console.error("Perfil no encontrado");
+	}
+	if(boton_cerrar){
+		boton_cerrar.addEventListener('click',()=>{
+			sesion_cerrada();
+			window.location.href='inicio_registro.html';
+		})
+	}else{
+		console.log("NO se pudo cerrar");
+	}
 })

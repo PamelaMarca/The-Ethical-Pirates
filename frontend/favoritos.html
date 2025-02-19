@@ -24,14 +24,17 @@
                     <ul>
                         <li><a id="perfil_usuario">Perfil</a></li>
                         <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt</strong></button>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt;</strong></button>
                             <ul id="menu">
-                                <li><a href="#">Mis Series</a></li>
-                                <li><a href="">MIs Peliculas</a></li>
+                                <li><a href="favoritos.html?tipo=Series">Mis Series</a></li>
+                                <li><a href="favoritos.html?tipo=Peliculas">MIs Peliculas</a></li>
                             </ul>
                         </li>
+<<<<<<< HEAD:frontend/mis_favoritos.html
                         <li><a href="carga.html">Subir Pelis o Series</a></li>
                         <li><a href="">Comentarios</a></li>
+=======
+>>>>>>> develop_v3:frontend/favoritos.html
                         <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
@@ -57,26 +60,7 @@
     </header>
 	<main>
         <div class="cuadro resultados" id="cuadro">
-            <h2 id="titulo_item">Perfil <span id="nombre_usuario"></span> </h2>
-            <div id="perfil_detalles" class="formato_perfil">
-                <div>
-                    <h3>Datos Personales</h3>
-                    <div id="datos_persona"class="datos">
-                    </div>
-                </div>
-                <div>
-                    <h3>Usuario</h3>
-                    <div id="datos_usuario" class="datos">
-                    </div>
-                </div>
-            </div> 
-            <div id="botones" class="formato_perfil">
-            </div>
-        </div>
-        <div id="confirmar_accion">
-            <h3>Estas seguro de <span id="palabra"></span> la cuenta?</h3>
-            <button onclick="respuesta_resibida(true)">Aceptar</button>
-            <button onclick="respuesta_resibida(false)">Cancelar</button>
+
         </div>
 	</main>
     <footer class="footer">
@@ -90,9 +74,70 @@
 
     <script>
         window.onload = function(){
-            perfil_usuario();
+			mostrar_fav()
             verificar_sesion();
         }
+		// function eliminar_favorito(){
+		// 	const token = localStorage.getItem('token');
+		// 	const us = localStorage.getItem('id_user');
+		// 	if (!token){
+		// 		alert("Inicie sesion para eliminar de favorito")
+		// 		sesion_cerrada();
+		// 		window.location.href="inicio_registro.html";
+		// 	}
+		// 	fetch(`http://localhost:3000/api/v1/Favorito/${us}/${tipo}/${id_contenido}`,{
+		// 		method: "DELETE",
+		// 		headers: {
+		// 			'Authorization': 'Bearer ' + token,
+		// 			'Content-Type': 'application/json'
+		// 			}
+		// 		})
+		// }
+
+		function mostrar_fav(){
+			const parametro = new URLSearchParams(window.location.search);
+			const tipo = parametro.get('tipo');
+			const us = localStorage.getItem('id_user');
+			const token = localStorage.getItem('token');
+			if(!token){
+				alert("Inicie para ver lista de vaforitos");
+				return;
+			}
+			fetch(`http://localhost:3000/api/v1/Favorito/${us}/${tipo}`, {
+				method:"GET",
+				headers:{
+				'Authorization':'Bearer ' + token,
+				'Content-Type': 'application/json'
+				}
+			})
+			.then(res => res.json())
+			.then(fav =>{
+				console.log(fav);
+				if(Array.isArray(fav) && fav.length > 0){
+					const cuadro = document.getElementById('cuadro');
+					const div = document.createElement('div');
+					const columna = document.createElement('ul');
+					fav.forEach(element => {
+						const fila = document.createElement('li');
+						const titulo = document.createElement('a');
+						titulo.innerText= element.contenido;
+						titulo.href="Items.html?nombre=" + encodeURIComponent(element.contenido);
+						fila.appendChild(titulo);
+
+						const eliminar = document.createElement('button');
+						eliminar.innerText="Eliminar de favoritos";
+						eliminar.onclick= ()=> eliminar_favorito(element.id_contenido);
+						fila.appendChild(eliminar);
+
+						columna.appendChild(fila);
+					});
+					div.appendChild(columna);
+					cuadro.appendChild(div);
+				}else{
+					alert("No tienes favoritos");
+				}
+			})
+		}
       </script>
 </body>
 </html>
