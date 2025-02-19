@@ -206,7 +206,6 @@ app.delete('/api/v1/cuenta/:usuario', async (req,res)=>{
 
 })
 
-<<<<<<< HEAD
 //formulario de carga
 app.post('/api/v1/Peliculas', verificarToken, async (req, res) => {
     try {
@@ -226,7 +225,6 @@ app.post('/api/v1/Series', verificarToken, async (req, res) => {
     }
 });
 
-=======
 app.post('/api/v1/comentar', async (req, res)=>{
     const { ID_PERSONA, COMENTARIO, NOMBRE_ITEM  }= req.body;
         
@@ -270,7 +268,6 @@ app.get('/api/v1/comentarios/:item', async (req,res)=>{
 
     res.status(200).json(todos_comentarios);
 })
->>>>>>> develop_v3
 
 // Middleware para verificar el token JWT
 function verificarToken(req, res, next) {
