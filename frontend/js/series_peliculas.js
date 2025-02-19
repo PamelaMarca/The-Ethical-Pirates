@@ -6,6 +6,7 @@ const barra_busqueda = document.getElementById('search');
 function items(variable, lista) {
     const fila = document.createElement('li');
     const url_imagen = variable.URL_POSTER ? variable.URL_POSTER : './imagenes/sin_imagen.jpg';
+    const fecha_estreno = variable.FECHA_ESTRENO ? variable.FECHA_ESTRENO : "Fecha desconocida";
     fila.classList.add('items');
     fila.innerHTML = `
         <div class="info">
