@@ -585,6 +585,11 @@ height: 5px;
 	background: #9598b9;
 	transition-duration: 0.5s;
 }
+.boton_plataforma.activo{
+	background: #276f91;
+	color: #c9cccf;
+	border-radius: 20px;
+}
 .boton_plataforma:hover{
 	background: #403c66;
 	color: #c9cccf;

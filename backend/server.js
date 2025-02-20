@@ -6,6 +6,7 @@ const { sequelize, Pelicula, Serie, Usuario, Favoritos, Comentarios, Plataforma 
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
 const registroRoutes = require('./routes/registro');
+const { where } = require('sequelize');
 
 app.use(cors());
 app.use(express.json());
@@ -160,7 +161,6 @@ app.delete('/api/v1/Plataforma/:ID', async(req,res)=>{
     console.log('Plataforma encontrado:', plataforma_elimnar);
     await plataforma_elimnar.destroy();
     res.status(200).json(plataforma_elimnar);
-     
 })
 
 app.put('/api/v1/Plataforma/:nombre', async (req,res)=>{
@@ -175,6 +175,20 @@ app.put('/api/v1/Plataforma/:nombre', async (req,res)=>{
     plataforma.plataforma= nombre_nuevo;
     await plataforma.save();
     res.status(200).json(nombre_nuevo);
+})
+
+app.post('/api/v1/Plataforma', async (req,res)=>{
+    const { plataforma }= req.body;
+    if (plataforma.trim() === '') {
+        return res.status(400).json({ mensaje: 'No se ingreso nombre de Plataforma'});
+    }
+    const existe = await Plataforma.findOne({ where: { plataforma: plataforma.trim().toLowerCase() } });
+    if(existe)
+        return res.status(400).json({mensaje: "Plataforma existente"});
+    const nueva_plataforma = await Plataforma.create({
+        plataforma: plataforma.trim()
+    });
+    res.status(200).json(nueva_plataforma);
 })
 
 // Obtener datos de usuario (sin devolver contraseña)

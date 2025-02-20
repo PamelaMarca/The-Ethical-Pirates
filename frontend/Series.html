@@ -56,11 +56,17 @@
         </section>
   
     </header>
-    <main>
-        <nav id="navegador_plataformas"></nav>
+    <main >
+        <div>
+            <nav id="navegador_plataformas"></nav>
+            <div style="margin: 0 40px;">
+                <input type="text" class="ingresar_plataforma">
+                <button onclick="agregar_plataforma()">Agregar Plataforma</button>
+                <button onclick="eliminar_plataforma()">Eliminar Plataforma</button>
+            </div>
+        </div>
         <div class="cuadro resultados" id="cuadro">
         </div>
-
     </main>
     <footer>
         <p>&copy; 2024 The Ethical Pirates</p>
@@ -69,6 +75,7 @@
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
     <script src="./js/sesion_verificar.js"></script>
+    <script src="./js/plataformas.js"></script>
     <script>
         window.onload = function(){
             series();
@@ -79,6 +86,7 @@
             console.log(plataforma);
             const cuadro = document.getElementById('cuadro');
             cuadro.innerHTML='';
+
             cuadro.innerHTML =`<h3>${tipo}</h3>`;
             const lista = document.createElement('ul');
             lista.classList.add('fichas');
@@ -108,7 +116,12 @@
                     const boton_plataforma = document.createElement('button');
                     boton_plataforma.innerText= p.plataforma;
                     boton_plataforma.classList.add('boton_plataforma');
-                    boton_plataforma.onclick=()=> items_plataforma(dato, p.plataforma,tipo);
+                    boton_plataforma.onclick=()=> {
+                        const botones = document.querySelectorAll('.boton_plataforma');
+                        botones.forEach(b => b.classList.remove('activo'));
+                        boton_plataforma.classList.add('activo');
+                        items_plataforma(dato, p.plataforma,tipo);
+                    }
                     plataformas.appendChild(boton_plataforma);
                 });
                 cuadro_externo.appendChild(plataformas);

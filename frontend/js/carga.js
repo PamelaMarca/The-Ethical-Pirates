@@ -25,6 +25,8 @@ function solicitud_carga(event) {
     const poster = document.getElementById("poster").value;
     const acceso = document.getElementById("acceso").value;
     const link = document.getElementById("link").value;
+
+
   
     // Crear objeto con los datos a enviar
     const datos = {
@@ -40,7 +42,7 @@ function solicitud_carga(event) {
       ACCESO: acceso,
       LINK: link,
     };
-  
+    
     // Determinar la URL de la API según el tipo de contenido
     let urlApi = "";
     if (tipo === "pelicula") {
