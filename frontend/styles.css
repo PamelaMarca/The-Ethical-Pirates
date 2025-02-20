@@ -645,6 +645,28 @@ footer{
 	.formulario-registro{
 		left: 0px;
 	}
+	/* Estilos para los botones de editar y eliminar dentro del contenedor #item_informacion */
+#item_informacion button {
+	display: inline-block;       
+	visibility: visible;         
+	background-color: #007BFF;  
+	color: #fff;                
+	padding: 10px 15px;         
+	margin: 5px;                
+	border: none;               
+	border-radius: 4px;          
+	cursor: pointer;            
+  }
+  
+  /* Estilo específico para el botón de eliminar */
+  #item_informacion button#eliminar {
+	background-color: #dc3545;   
+  }
+  
+  #item_informacion button:hover {
+	opacity: 0.9;
+  }
+  
 	
 		
 }

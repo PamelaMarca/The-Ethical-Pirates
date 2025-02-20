@@ -53,6 +53,34 @@ function boton_inicio(){
 		pregunta_inicio.style.opacity='0';
 	}
 }
+function editarItem() {
+    const parametro = new URLSearchParams(window.location.search);
+    const nombre = parametro.get('nombre');
+    window.location.href = `carga.html?editar=${encodeURIComponent(nombre)}`;
+}
+
+function eliminarContenido() {
+	const parametro = new URLSearchParams(window.location.search);
+	const editar = parametro.get("editar");
+  
+	// Confirmar la eliminación
+	if (confirm("¿Estás seguro de que quieres eliminar este contenido?")) {
+	  fetch(`http://localhost:3000/api/v1/Contenido/${encodeURIComponent(editar)}`, {
+		method: "DELETE",
+	  })
+		.then((response) => {
+		  if (response.ok) {
+			alert("Contenido eliminado correctamente");
+			window.location.href = "items.html"; // Redirigir a la lista de contenido
+		  } else {
+			alert("Error al eliminar");
+		  }
+		})
+		.catch((error) => console.error("Error:", error));
+	}
+  }
+  
+
 
 // document.getElementById('plataforma').addEventListener('click', ()=>{
 // 	const direccion = document.getElementById('plataforma').innerText;
