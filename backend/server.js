@@ -312,6 +312,43 @@ app.get('/api/v1/comentarios/:item', async (req,res)=>{
     res.status(200).json(todos_comentarios);
 });
 
+//LOS Comentarios por usuario
+app.get('/api/v1/comentario/:id', verificarToken, async (req, res) => {
+    const usuario = req.params.id;
+    try{
+        const coleccion = await Comentarios.findAll({
+            where : { id_usuario: usuario},
+        });
+        if(coleccion.length===0)
+            return res.status(200).json({mensaje: "No se encuentran favoritos"});
+    
+        const lista_comentarios = coleccion.map(e => ({
+            id: e.id,
+            id_usuario: e.id_usuario,
+            comentario:e.comentario,
+            nombre_item: e.nombre_item
+        }));
+
+        console.log(lista_comentarios);
+        res.status(200).json(lista_comentarios);
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ mensaje: "Error al obtener comentarios" });
+    }
+});
+
+app.delete('/api/v1/Comentario/:ID', verificarToken, async(req,res)=>{
+    const ID = req.params.ID;
+    console.log(`ID: ${ID}`);
+    const comentario_eliminar = await Comentarios.findOne({ where: { id: ID } });
+    if (!comentario_eliminar) {
+        return res.status(400).json({ mensaje: "Error al intentar eliminar de comentarios" });
+    }
+    console.log('comentario encontrado:', comentario_eliminar);
+    await comentario_eliminar.destroy();
+    res.status(200).json(comentario_eliminar);
+})
+
 
 // Middleware para verificar el token JWT
 function verificarToken(req, res, next) {

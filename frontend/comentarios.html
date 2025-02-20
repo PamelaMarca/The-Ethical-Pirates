@@ -31,7 +31,7 @@
                             </ul>
                         </li>
 						<li><a href="carga.html">Subir Pelis o Series</a></li>
-                        <li><a href="comentarios.html">Comentarios</a></li>
+                        <li><a id="comentarios_usuario" href="comentarios.html">Comentarios</a></li>
                         <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
@@ -69,26 +69,21 @@
     <script src="./js/perfil.js"></script>
     <script>
         window.onload = function(){
-			mostrar_fav()
+			mostrar_comentario()
             verificar_sesion();
         }
-		function eliminar_favorito(id_contenido){
-			const parametro = new URLSearchParams(window.location.search);
-			const tipo = parametro.get('tipo');
+		function eliminar_comentario(id_comentario){
 			const token = localStorage.getItem('token');
 			const us = localStorage.getItem('id_user');
 			if (!token){
-				alert("Inicie sesion para eliminar de favorito")
+				alert("Inicie sesion para eliminar de comentario")
 				sesion_cerrada();
 				window.location.href="inicio_registro.html";
 			}
-			let contenido;
-			if(tipo === 'Peliculas') contenido= 'pelicula';
-			else if(tipo === 'Series') contenido= 'serie';
 
-			console.log(`ID Usuario: ${us}, Tipo: ${contenido}, ID Contenido: ${id_contenido}`);
+			console.log(`ID Contenido: ${id_comentario}`);
 			
-			fetch(`http://localhost:3000/api/v1/Favorito/${us}/${contenido}/${id_contenido}`,{
+			fetch(`http://localhost:3000/api/v1/Comentario/${id_comentario}`,{
 				method: "DELETE",
 				headers: {
 					'Authorization': 'Bearer ' + token,
@@ -99,22 +94,19 @@
 			.then(res => res.json())
 			.then( json=>{
 				if(!mensaje){
-					alert("Eliminado de favoritos con exito");
-					// mostrar_fav();
+					alert("Eliminado de comentarios con exito");
 				}
 			})
 		}
 
-		function mostrar_fav(){
-			const parametro = new URLSearchParams(window.location.search);
-			const tipo = parametro.get('tipo');
+		function mostrar_comentario(){
 			const us = localStorage.getItem('id_user');
 			const token = localStorage.getItem('token');
 			if(!token){
-				alert("Inicie para ver lista de vaforitos");
+				alert("Inicie para ver lista de comentarios");
 				return;
 			}
-			fetch(`http://localhost:3000/api/v1/Favorito/${us}/${tipo}`, {
+			fetch(`http://localhost:3000/api/v1/comentario/${us}`, {
 				method:"GET",
 				headers:{
 				'Authorization':'Bearer ' + token,
@@ -122,44 +114,55 @@
 				}
 			})
 			.then(res => res.json())
-			.then(fav =>{
+			.then(json =>{
 				const cuadro = document.getElementById('cuadro');
 				cuadro.innerHTML='';
 
-				if(Array.isArray(fav) && fav.length > 0){
+				if(Array.isArray(json) && json.length > 0){
 					const tabla = document.createElement('table');
-					tabla.id='tabla';
+					tabla.id='tabla_comentarios';
 					const encabezado = document.createElement('thead');
-					encabezado.innerHTML='<tr><th id="Nombres_item">Nombre</th><th></th></tr>';
+					encabezado.innerHTML='<tr><th id="Nombres_item">Ubicacion</th><th>Comentario</th><th></th></tr>';
 					tabla.appendChild(encabezado);
 
 					const cuerpo = document.createElement('tbody');
-					fav.forEach(element => {
-
+					json.forEach(element => {
 						const fila = document.createElement('tr');
 						const celda1 = document.createElement('td');
 						const titulo = document.createElement('a');
-						titulo.innerText= element.contenido;
-						titulo.href="Items.html?nombre=" + encodeURIComponent(element.contenido);
+						titulo.innerText= element.nombre_item;
+						titulo.href="Items.html?nombre=" + encodeURIComponent(element.nombre_item);
 						celda1.appendChild(titulo);
 
 						const celda2 = document.createElement('td');
+						celda2.classList.add('texto_comentario');
+						const comentario_item= document.createElement('div');
+						comentario_item.classList.add('text_comentario');
+						(element.comentario).split('\n').forEach(parrafo => {
+							const p = document.createElement('p');
+							p.innerText = parrafo;
+							comentario_item.appendChild(p);
+						});
+						celda2.appendChild(comentario_item);
+			
+						const celda3 = document.createElement('td');
 						const eliminar = document.createElement('button');
-						eliminar.classList.add('eliminar_fav');
-						eliminar.id='eliminar_fav';
-						eliminar.innerText="Eliminar de favoritos";
-						eliminar.onclick= ()=> eliminar_favorito(element.id_contenido);
-						celda2.appendChild(eliminar);
+						eliminar.classList.add('eliminar');
+						eliminar.id='eliminar_comenatrio';
+						eliminar.innerText="Eliminar de comentarios";
+						eliminar.onclick= ()=> eliminar_comentario(element.id);
+						celda3.appendChild(eliminar);
 
 						fila.appendChild(celda1);
 						fila.appendChild(celda2);
+						fila.appendChild(celda3);
 						cuerpo.appendChild(fila);
 					});
 					tabla.appendChild(cuerpo);
 					cuadro.appendChild(tabla);
 				}else{
 					const mensaje = document.createElement('h2');
-					mensaje.innerText="No tienes favoritos Aun";
+					mensaje.innerText="No tienes comentarios Aun";
 					cuadro.appendChild(mensaje);
 				}
 			})

@@ -22,7 +22,6 @@ function enviar_comentario(item){
 
 async function cargar_comentarios(dato){
 	const lista = document.getElementById('lista_comentarios');
-
 	fetch('http://localhost:3000/api/v1/comentarios/'+ encodeURIComponent(dato.NOMBRE_COMPLETO))
 	.then( res => res.json())
 	.then( json => {
@@ -91,3 +90,5 @@ function diseño_comentarios(dato){
 	cuadro.appendChild(comentarios);
 	cargar_comentarios(dato);
 }
+
+

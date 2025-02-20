@@ -199,7 +199,6 @@ main{
 	color: #bcc9cc;
 }
 
-
 .css_mensaje{
 	min-height: 100%;
 	margin: 12px 8px;
@@ -426,7 +425,7 @@ main{
 
 }
 
-#botones button, .eliminar_fav{
+#botones button, .eliminar{
 	padding: 10px;
 	color: #bbe2ec;
 	cursor: pointer;
@@ -443,7 +442,7 @@ main{
 	margin-bottom: 10px;
 }
 
-.borrar, .salir, .eliminar_fav{
+.borrar, .salir, .eliminar{
 	background-color: rgb(99, 42, 42);
 }
 
@@ -472,22 +471,37 @@ main{
 	width:80%;
 	border-collapse: collapse;
 	margin: auto;
+	border: 2px solid #196ca3;
+}
+#tabla_comentarios{
+	width: 100%;
+	border: 2px solid #281d66;
+	border-collapse: collapse;
+
+}
+#tabla_comentarios th{
+	width: 30%;
+	background: #281d66;
+	padding: 5px;
 }
 
-th{
+#tabla_favoritos th{
 	width: 70%;
 	background: #196ca3;
 	padding: 5px;
 }
-#tabla_favoritos td{
+#tabla_favoritos td, #tabla_comentarios td{
 	padding: 8px 16px;
+	border: 2px solid #196ca3;
+
+	
 }
-#tabla_favoritos a{
+#tabla_favoritos a, #tabla_comentarios a{
 	color: #9cb3b8;
 	text-decoration: none;
 	cursor: pointer;
 }
-#tabla_favoritos a:hover{
+#tabla_favoritos a, #tabla_comentarios a:hover{
 	color: #edf1f1;
 }
 
@@ -691,6 +705,6 @@ footer{
 	.formulario-registro{
 		left: 0px;
 	}
-	
+
 		
 }
