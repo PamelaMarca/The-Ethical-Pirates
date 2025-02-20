@@ -56,7 +56,7 @@ async function perfil_usuario(){
 			boton_cambios.id="editar_cuenta";
 			boton_cambios.classList.add('editar_datos');
 			boton_cambios.innerText="Editar Perfil";
-			boton_cambios.onclick=editar_cuenta;
+			boton_cambios.onclick=()=>editar_cuenta(user);
 			botones.appendChild(boton_cambios);
 
 			const boton_cancelar = document.createElement('button');
@@ -90,7 +90,7 @@ function respuesta_resibida(desicion){
 	window.confirmar_respuesta(desicion);
 }
 
-async function editar_cuenta() {
+async function editar_cuenta(user) {
 	const desicion= await mostrar_confirmacion("editar");
 	if (desicion){
 		// vacio valores anteriores
@@ -103,7 +103,7 @@ async function editar_cuenta() {
 		text_nombre.innerText= "Nombre:";
 		const nombre_real = document.createElement('input');
 		nombre_real.type="text";
-		nombre_real.placeholder="ej: Ariel";
+		nombre_real.placeholder=user.nombre;
 		nombre_real.id="nombre_edit";
 		datos_pers.appendChild(text_nombre);
 		datos_pers.appendChild(nombre_real);
@@ -112,7 +112,7 @@ async function editar_cuenta() {
 		text_apell.innerText= "Apellido:";
 		const apellido = document.createElement('input');
 		apellido.type="text";
-		apellido.placeholder="ej: Torres";
+		apellido.placeholder=user.apellido;
 		apellido.id="apellido_edit";
 		datos_pers.appendChild(text_apell);
 		datos_pers.appendChild(apellido);
@@ -148,7 +148,7 @@ async function editar_cuenta() {
 		text_email.innerText= "Email:";
 		const email = document.createElement('input');
 		email.type="email";
-		email.placeholder= 'ej: aviondisparadoenelcielo@gmail.ar';
+		email.placeholder= user.email== '' ? 'ej: sincorreo@gmail.ar': user.email ;
 		email.id="email_edit";
 		datos_pers.appendChild(text_email);
 		datos_pers.appendChild(email);
@@ -158,7 +158,7 @@ async function editar_cuenta() {
 		text_tel.innerText= 'Numero de Telefono: ';
 		const tel = document.createElement('input');
 		tel.type="tel";
-		tel.placeholder= 'ej: 15 12345678';
+		tel.placeholder= user.telefono;
 		tel.id="tel_edit";
 		datos_pers.appendChild(text_tel)
 		datos_pers.appendChild(tel);
