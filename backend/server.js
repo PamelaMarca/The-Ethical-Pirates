@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { sequelize, Pelicula, Serie, Usuario, Favoritos, Comentarios } = require('./models');
+const { sequelize, Pelicula, Serie, Usuario, Favoritos, Comentarios, Plataforma } = require('./models');
 
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
@@ -121,6 +121,76 @@ app.get('/api/v1/Series', async (req, res) => {
     const series = await Serie.findAll({ where: { ACCESO: "PUBLICO" } });
     res.status(201).json({ respuesta: series.length ? series : { mensaje: "No hay series disponibles" } });
 });
+
+app.get('/api/v1/Plataformas', async (req, res)=>{
+    try{
+        const plataforma = await Plataforma.findAll();
+        if(plataforma.length===0){        
+            return res.status(404).json({mensaje: "No se hayaron las plataformas"});
+        }
+        res.status(201).json(plataforma);
+    }catch(error){
+        console.log("Error al obtener datos de las plataformas");
+        res.status(500).json({ mensaje: "Error en el servidor" });
+    }
+});
+app.get('/api/v1/Plataformas/:nombre',async (req,res)=>{
+    const plataforma_nombre = decodeURIComponent(req.params.nombre);
+
+    const las_series=await Serie.findAll({ where: { plataforma: plataforma_nombre }});
+    const las_pelis=await Pelicula.findAll({ where: { plataforma: plataforma_nombre }});
+    let respuesta=[];
+    if (las_pelis.length>0){
+        respuesta=respuesta.concat(las_pelis);
+    }
+    if(las_series.length>0)
+        respuesta=respuesta.concat(las_series);
+    if (respuesta.length == 0)
+        return res.status(404).json({ mensaje: 'No se encontraron series o películas para esta plataforma' });
+    res.status(200).json(respuesta);
+})
+
+app.delete('/api/v1/Plataforma/:ID', async(req,res)=>{
+    const ID = decodeURIComponent(req.params.ID);
+    console.log(`ID: ${ID}`);
+    const plataforma_elimnar = await Plataforma.findOne({ where: { plataforma: ID } });
+    if (!plataforma_elimnar) {
+        return res.status(400).json({ mensaje: "Error al intentar eliminar de plataforma" });
+    }
+    await Serie.destroy({ where: { plataforma: ID } });
+    await Pelicula.destroy({ where: { plataforma: ID } });
+    console.log('Plataforma encontrado:', plataforma_elimnar);
+    await plataforma_elimnar.destroy();
+    res.status(200).json(plataforma_elimnar);
+})
+
+app.put('/api/v1/Plataforma/:nombre', async (req,res)=>{
+    const plataforma_nombre = decodeURIComponent(req.params.nombre);
+    const { nombre_nuevo } = req.body;
+    console.log(nombre_nuevo);
+    const plataforma = await Plataforma.findOne({ where: { plataforma : plataforma_nombre}})
+    if(!plataforma || nombre_nuevo == '')
+        return res.status(400).json({mensaje: 'Nombre de plataforma no encontrado'});
+    await Serie.update({ PLATAFORMA: nombre_nuevo }, { where: { PLATAFORMA: plataforma_nombre } });
+    await Pelicula.update({ PLATAFORMA: nombre_nuevo}, { where: { PLATAFORMA: plataforma_nombre } });
+    plataforma.plataforma= nombre_nuevo;
+    await plataforma.save();
+    res.status(200).json(nombre_nuevo);
+})
+
+app.post('/api/v1/Plataforma', async (req,res)=>{
+    const { plataforma }= req.body;
+    if (plataforma.trim() === '') {
+        return res.status(400).json({ mensaje: 'No se ingreso nombre de Plataforma'});
+    }
+    const existe = await Plataforma.findOne({ where: { plataforma: plataforma.trim().toLowerCase() } });
+    if(existe)
+        return res.status(400).json({mensaje: "Plataforma existente"});
+    const nueva_plataforma = await Plataforma.create({
+        plataforma: plataforma.trim()
+    });
+    res.status(200).json(nueva_plataforma);
+})
 
 // Obtener datos de usuario (sin devolver contraseña)
 app.get('/api/v1/cuentas/:us', verificarToken, async (req, res) => {
@@ -274,6 +344,42 @@ app.get('/api/v1/comentarios/:item', async (req, res) => {
         nombre_item: comentario.nombre_item
     }));
     res.status(200).json(todos_comentarios);
+});
+//LOS Comentarios por usuario
+app.get('/api/v1/comentario/:id', verificarToken, async (req, res) => {
+    const usuario = req.params.id;
+    try{
+        const coleccion = await Comentarios.findAll({
+            where : { id_usuario: usuario},
+        });
+        if(coleccion.length===0)
+            return res.status(200).json({mensaje: "No se encuentran favoritos"});
+
+        const lista_comentarios = coleccion.map(e => ({
+            id: e.id,
+            id_usuario: e.id_usuario,
+            comentario:e.comentario,
+            nombre_item: e.nombre_item
+        }));
+
+        console.log(lista_comentarios);
+        res.status(200).json(lista_comentarios);
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ mensaje: "Error al obtener comentarios" });
+    }
+});
+
+app.delete('/api/v1/Comentario/:ID', verificarToken, async(req,res)=>{
+    const ID = req.params.ID;
+    console.log(`ID: ${ID}`);
+    const comentario_eliminar = await Comentarios.findOne({ where: { id: ID } });
+    if (!comentario_eliminar) {
+        return res.status(400).json({ mensaje: "Error al intentar eliminar de comentarios" });
+    }
+    console.log('comentario encontrado:', comentario_eliminar);
+    await comentario_eliminar.destroy();
+    res.status(200).json(comentario_eliminar);
 });
 
 // Ruta para actualizar un contenido (película o serie) – se requiere token

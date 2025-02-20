@@ -21,20 +21,9 @@
             <nav id="navegador_interno">
                 <div class="icono_menu" onclick="desplegar()">☰</div>
                 <div class="cuadro_interno" id="cuadro_interno">
-                    <ul>
+                    <<ul>
                         <li><a id="perfil_usuario">Perfil</a></li>
                         <li>
-                          <button class="biblio" onclick="desplega_biblio()">
-                            Mi Biblioteca <strong id="signo">&lt;</strong>
-                          </button>
-                          <ul id="menu">
-                            <li><a href="favoritos.html?tipo=Series">Mis Series</a></li>
-                            <li><a href="favoritos.html?tipo=Peliculas">Mis Películas</a></li>
-                          </ul>
-                        </li>
-                        <li><a href="carga.html">Subir Pelis o Series</a></li>
-                        <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
-                      </ul>
                             <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt;</strong></button>
                             <ul id="menu">
                                 <li><a href="favoritos.html?tipo=Series">Mis Series</a></li>
@@ -42,6 +31,8 @@
                             </ul>
                         </li>
                         <li><a href="carga.html">Subir Pelis o Series</a></li>
+                        <li><a href="comentarios.html">Comentarios</a></li>
+
                         <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
@@ -76,16 +67,65 @@
     <script src="./js/interacciones.js"></script>
     <script src="./js/series_peliculas.js"></script>
     <script src="./js/sesion_verificar.js"></script>
+    <script src="./js/plataformas.js"></script>
+    
     <script>
         window.onload= function(){
             pelis();
             verificar_sesion();
         }
+
+        function items_plataforma(dato, plataforma, tipo){
+            console.log(plataforma);
+            const cuadro = document.getElementById('cuadro');
+            cuadro.innerHTML='';
+            cuadro.innerHTML =`<h3>${tipo}</h3>`;
+            const lista = document.createElement('ul');
+            lista.classList.add('fichas');
+            dato.forEach(json=>{
+                if(json.PLATAFORMA === plataforma){
+                    items(json,lista);
+                }
+            });
+            if(lista.childElementCount > 0){
+                cuadro.appendChild(lista);
+            }else{
+                const aviso = document.createElement('div');
+                aviso.classList.add('css_mensaje');
+                aviso.innerHTML = 'No se encontraron items para esta plataforma';
+                cuadro.appendChild(aviso);
+            }
+        }
+
+        function plataformas(dato, tipo){
+            fetch('http://localhost:3000/api/v1/Plataformas')
+            .then(res => res.json())
+            .then(elemento =>{
+                const cuadro_externo= document.getElementById('navegador_plataformas');
+                const plataformas = document.createElement('div');
+                plataformas.id='plataformas';
+                elemento.forEach(p => {
+                    const boton_plataforma = document.createElement('button');
+                    boton_plataforma.innerText= p.plataforma;
+                    boton_plataforma.classList.add('boton_plataforma');
+                    boton_plataforma.onclick=()=> {
+                        const botones = document.querySelectorAll('.boton_plataforma');
+                        botones.forEach(b => b.classList.remove('activo'));
+                        boton_plataforma.classList.add('activo');
+                        items_plataforma(dato, p.plataforma,tipo);
+                    }
+                    plataformas.appendChild(boton_plataforma);
+                });
+                cuadro_externo.appendChild(plataformas);
+
+            })
+        };
         function pelis(){
             fetch('http://localhost:3000/api/v1/Peliculas')
             .then(respuesta => respuesta.json())
             .then(json=>{
                 const cuadro = document.getElementById('cuadro');
+                plataformas(json.respuesta,"Peliculas");
                 cuadro.innerHTML =`<h3>Peliculas</h3>`
                 if(json.respuesta){
                     const lista = document.createElement('ul');

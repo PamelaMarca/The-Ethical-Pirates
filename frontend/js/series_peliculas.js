@@ -190,24 +190,21 @@ function diseño(dato) {
     informacion.appendChild(idioma);
 
     const plataforma = document.createElement('p');
-    plataforma.innerHTML = `Plataforma: <span id="plataforma">${dato.PLATAFORMA}</span>`;
+    const link = document.createElement('a');
+    link.id = 'plataforma';
+    link.href = `Plataforma.html?plataforma=${dato.PLATAFORMA}`;
+    link.innerText = dato.PLATAFORMA;
+    plataforma.innerHTML = 'Plataforma: ';
+    plataforma.appendChild(link);
     informacion.appendChild(plataforma);
 
-    // Verifica si el valor de LINK está presente antes de crear el botón
     const boton_plataforma = document.createElement('a');
     boton_plataforma.classList.add('boton-plataforma');
-    
-    if (dato.LINK && dato.LINK !== '') {  // Verifica si LINK no es vacío o nulo
-        boton_plataforma.innerText = `Ver en ${dato.PLATAFORMA}`;
-        boton_plataforma.href = dato.LINK;
-    } else {
-        boton_plataforma.innerText = "Enlace no disponible";
-        boton_plataforma.href = '#'; // No hay enlace disponible
-    }
+    boton_plataforma.innerText = `Ver en ${dato.PLATAFORMA}`;
+    boton_plataforma.href = dato.LINK;
 	informacion.appendChild(boton_plataforma);
 
     // Añadir el botón debajo de la plataforma
-
 	cuadro_datos.appendChild(informacion); // Se añade debajo de la sinopsis
     cuadro_datos.appendChild(cuadro_sinopsis);
 

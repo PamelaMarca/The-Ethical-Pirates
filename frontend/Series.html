@@ -1,104 +1,156 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piratas del Cine</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piratas del Cine</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="Home">
-    <header class="cabezal">
-        <section>
-            <div class="presentacion">
-                <img src="./imagenes/cine.png" alt="imagen" width="200px">
-                <h1 id="titulo">Piratas del Cine</h1>                
-            </div>
+  <header class="cabezal">
+    <section>
+      <div class="presentacion">
+        <img src="./imagenes/cine.png" alt="imagen" width="200px">
+        <h1 id="titulo">Piratas del Cine</h1>
+      </div>
 
-            <div class ="ingresar" id="ingresar">
-                <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
-            </div>
-            
-            <nav id="navegador_interno">
-                <div class="icono_menu" onclick="desplegar()">☰</div>
-                <div class="cuadro_interno" id="cuadro_interno">
-                    <ul>
-                        <li><a id="perfil_usuario">Perfil</a></li>
-                        <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca   <strong id="signo">&lt</strong></button>
-                            <ul id="menu">
-                                <li><a href="favoritos.html?tipo=Series">Mis Series</a></li>
-                                <li><a href="favoritos.html?tipo=Peliculas">MIs Peliculas</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="carga.html">Subir Pelis o Series</a></li>
-                        <li><a href="">Comentarios</a></li>
-                        <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
-                    </ul>
-                </div>
+      <div class="ingresar" id="ingresar">
+        <a href="inicio_registro.html" class="boton">Iniciar Sesion</a>
+      </div>
 
-            </nav> 
-        </section>    
-        <section>
-            <nav class="navegador">
-                <div class="paginas">
-                <a id="index" href="index.html">Home</a>
-                <a href="Series.html">Series</a>
-                <a href="Peliculas.html">Peliculas</a>
-                </div>
-
-                <div id="buscador">
-                    <input type="text" id="search" placeholder="Buscar una serie">
-                    <span id="buscar">&#128269</span>
-                </div>
-            </nav>
-
-        </section>
-  
-    </header>
-    <main>
-        <div class="cuadro resultados" id="cuadro">
+      <nav id="navegador_interno">
+        <div class="icono_menu" onclick="desplegar()">☰</div>
+        <div class="cuadro_interno" id="cuadro_interno">
+          <ul>
+            <li><a id="perfil_usuario" href="#">Perfil</a></li>
+            <li>
+              <button class="biblio" onclick="desplega_biblio()">
+                Mi Biblioteca <strong id="signo">&lt;</strong>
+              </button>
+              <ul id="menu">
+                <li><a href="favoritos.html?tipo=Series">Mis Series</a></li>
+                <li><a href="favoritos.html?tipo=Peliculas">Mis Peliculas</a></li>
+              </ul>
+            </li>
+            <li><a href="carga.html">Subir Pelis o Series</a></li>
+            <li><a href="comentarios.html">Comentarios</a></li>
+            <li>
+              <button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button>
+            </li>
+          </ul>
         </div>
+      </nav>
+    </section>
 
-    </main>
-    <footer>
-        <p>&copy; 2024 The Ethical Pirates</p>
-    </footer>
-    <script src="../backend/server.js"></script>
-    <script src="./js/interacciones.js"></script>
-    <script src="./js/series_peliculas.js"></script>
-    <script src="./js/sesion_verificar.js"></script>
-    <script>
-        window.onload = function(){
-            series();
-            verificar_sesion();
+    <section>
+      <nav class="navegador">
+        <div class="paginas">
+          <a id="index" href="index.html">Home</a>
+          <a href="Series.html">Series</a>
+          <a href="Peliculas.html">Peliculas</a>
+        </div>
+        <div id="buscador">
+          <input type="text" id="search" placeholder="Buscar una serie">
+          <span id="buscar">&#128269;</span>
+        </div>
+      </nav>
+    </section>
+  </header>
+
+  <main>
+    <div>
+      <nav id="navegador_plataformas"></nav>
+      <div style="margin: 0 40px;">
+        <input type="text" class="ingresar_plataforma" placeholder="Nombre de plataforma">
+        <button onclick="agregar_plataforma()">Agregar Plataforma</button>
+        <button onclick="eliminar_plataforma()">Eliminar Plataforma</button>
+      </div>
+    </div>
+    <div class="cuadro resultados" id="cuadro"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 The Ethical Pirates</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/interacciones.js"></script>
+  <script src="./js/series_peliculas.js"></script>
+  <script src="./js/sesion_verificar.js"></script>
+  <script src="./js/plataformas.js"></script>
+  <script>
+    window.onload = function() {
+      series();
+      verificar_sesion();
+    };
+
+    function series() {
+      fetch('http://localhost:3000/api/v1/Series')
+        .then(respuesta => respuesta.json())
+        .then(json => {
+          const cuadro = document.getElementById('cuadro');
+          // Actualizamos la navegación de plataformas usando los datos recibidos
+          plataformas(json.respuesta, "Series");
+          cuadro.innerHTML = `<h3>Series</h3>`;
+          if (json.respuesta) {
+            const lista = document.createElement('ul');
+            lista.classList.add('fichas');
+            json.respuesta.forEach(item => {
+              // Se asume que existe una función 'items' que genera cada ficha de contenido
+              items(item, lista);
+            });
+            cuadro.appendChild(lista);
+          }
+        })
+        .catch(error => console.error("Error al cargar series:", error));
+    }
+
+    function items_plataforma(dato, plataforma, tipo) {
+      console.log(plataforma);
+      const cuadro = document.getElementById('cuadro');
+      cuadro.innerHTML = `<h3>${tipo}</h3>`;
+      const lista = document.createElement('ul');
+      lista.classList.add('fichas');
+      dato.forEach(json => {
+        if (json.PLATAFORMA === plataforma) {
+          items(json, lista);
         }
-        
-        function series(){
-            fetch('http://localhost:3000/api/v1/Series')
-            .then(respuesta => respuesta.json())
-            .then(json=>{
-                const cuadro = document.getElementById('cuadro');
-                
-                cuadro.innerHTML =`<h3>Series</h3>`
+      });
+      if (lista.childElementCount > 0) {
+        cuadro.appendChild(lista);
+      } else {
+        const aviso = document.createElement('div');
+        aviso.classList.add('css_mensaje');
+        aviso.innerHTML = 'No se encontraron items para esta plataforma';
+        cuadro.appendChild(aviso);
+      }
+    }
 
-                if(json.respuesta){
-                    const lista = document.createElement('ul');
-                    lista.classList.add('fichas')
-                    json.respuesta.forEach(serie =>{
-                        items(serie,lista);
-                    })
-                    cuadro.appendChild(lista);            
-                }
-                else if(json.mensaje){
-                    const aviso = document.createElement('div');
-                    aviso.classList.add('css_mensaje');
-                    aviso.innerHTML = json.mensaje;
-                    cuadro.appendChild(aviso)
-                }
-            })            
-        }
-
-
-    </script>
+    function plataformas(dato, tipo) {
+      fetch('http://localhost:3000/api/v1/Plataformas')
+        .then(res => res.json())
+        .then(elemento => {
+          const cuadro_externo = document.getElementById('navegador_plataformas');
+          // Limpiamos el contenedor
+          cuadro_externo.innerHTML = "";
+          const divPlataformas = document.createElement('div');
+          divPlataformas.id = 'plataformas';
+          elemento.forEach(p => {
+            const boton_plataforma = document.createElement('button');
+            boton_plataforma.innerText = p.plataforma;
+            boton_plataforma.classList.add('boton_plataforma');
+            boton_plataforma.onclick = () => {
+              const botones = document.querySelectorAll('.boton_plataforma');
+              botones.forEach(b => b.classList.remove('activo'));
+              boton_plataforma.classList.add('activo');
+              items_plataforma(dato, p.plataforma, tipo);
+            };
+            divPlataformas.appendChild(boton_plataforma);
+          });
+          cuadro_externo.appendChild(divPlataformas);
+        })
+        .catch(error => console.error("Error al cargar plataformas:", error));
+    }
+  </script>
 </body>
 </html>

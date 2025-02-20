@@ -15,13 +15,15 @@ const Serie = require('./Serie')(sequelize, Sequelize.DataTypes);
 const Usuario = require('./Usuario')(sequelize, Sequelize.DataTypes);
 const Favoritos = require('./Favoritos')(sequelize, Sequelize.DataTypes);
 const Comentarios = require('./Comentarios')(sequelize, Sequelize.DataTypes);
+const Plataforma = require('./Plataforma')(sequelize, Sequelize.DataTypes);
 
 const moldes = {
     Pelicula,
     Serie,
     Usuario,
     Favoritos,
-    Comentarios
+    Comentarios,
+    Plataforma
 };
 
 // Configura las asociaciones
