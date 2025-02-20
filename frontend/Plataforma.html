@@ -78,9 +78,16 @@
             cuadro.innerHTML =`<div id="nombre_plataforma" style="display:flex; margin:10px;"><h3 style="margin:10px;">${plataforma}</h3></div>`;
 			const boton_modificar = document.createElement('button');
 			boton_modificar.innerText = 'Modificar Nombre';
+            boton_modificar.style.margin="0 30px";
 			boton_modificar.onclick = () => modificar_nombre_plataforma(plataforma);
-			const nombrePlataformaDiv = document.getElementById('nombre_plataforma');
-			nombrePlataformaDiv.appendChild(boton_modificar);
+            const boton_elimnar = document.createElement('button');
+            boton_elimnar.style.margin="0 30px";
+			boton_elimnar.innerText = 'Eliminar plataforma';
+			boton_elimnar.onclick = () => eliminar_plataforma(plataforma);
+
+			const nombre_plataforma = document.getElementById('nombre_plataforma');
+			nombre_plataforma.appendChild(boton_modificar);
+            nombre_plataforma.appendChild(boton_elimnar)
 
 			const lista = document.createElement('ul');
             lista.classList.add('fichas');
@@ -159,6 +166,19 @@
 			nombre_p.appendChild(formulario)
 
 		}
+        function eliminar_plataforma(plataforma){
+            fetch(`http://localhost:3000/api/v1/Plataforma/${encodeURIComponent(plataforma)}`, {
+				method:'DELETE',
+				headers:{
+                    'Content-Type': 'application/json'
+				}
+			})
+            .then(res => res.json())
+            .then(respuesta =>{
+                alert("Eliminacion con exito");
+                window.location.href='Peliculas.html';
+            })
+        }
 
 
     </script>

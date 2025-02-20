@@ -148,6 +148,21 @@ app.get('/api/v1/Plataformas/:nombre',async (req,res)=>{
     res.status(200).json(respuesta);
 })
 
+app.delete('/api/v1/Plataforma/:ID', async(req,res)=>{
+    const ID = decodeURIComponent(req.params.ID);
+    console.log(`ID: ${ID}`);
+    const plataforma_elimnar = await Plataforma.findOne({ where: { plataforma: ID } });
+    if (!plataforma_elimnar) {
+        return res.status(400).json({ mensaje: "Error al intentar eliminar de plataforma" });
+    }
+    await Serie.destroy({ where: { plataforma: ID } });
+    await Pelicula.destroy({ where: { plataforma: ID } });
+    console.log('Plataforma encontrado:', plataforma_elimnar);
+    await plataforma_elimnar.destroy();
+    res.status(200).json(plataforma_elimnar);
+     
+})
+
 app.put('/api/v1/Plataforma/:nombre', async (req,res)=>{
     const plataforma_nombre = decodeURIComponent(req.params.nombre);
     const { nombre_nuevo } = req.body;
