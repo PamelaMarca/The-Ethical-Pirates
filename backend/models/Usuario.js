@@ -62,7 +62,6 @@ module.exports = (sequelize, DataTypes) => {
         as: 'favoritos',
         onDelete: 'CASCADE'
     });
-    
     Usuario.hasMany(models.Comentarios, {
         foreignKey: 'id_usuario',
         as: 'comentarios',

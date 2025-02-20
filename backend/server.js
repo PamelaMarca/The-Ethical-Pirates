@@ -1,12 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const { sequelize, Pelicula, Serie, Usuario, Favoritos, Comentarios } = require('./models');
+const { sequelize, Pelicula, Serie, Usuario, Favoritos, Comentarios, Plataforma } = require('./models');
 
 const app = express();
 const busquedaRoutes = require('./routes/busqueda');
 const registroRoutes = require('./routes/registro');
-const { where } = require('sequelize');
 
 app.use(cors());
 app.use(express.json());
@@ -121,6 +120,47 @@ app.get('/api/v1/Series', async (req, res) => {
     res.status(201).json({ respuesta: series.length ? series : { mensaje: "No hay series disponibles" } });
 });
 
+app.get('/api/v1/Plataformas', async (req, res)=>{
+    try{
+        const plataforma = await Plataforma.findAll();
+        if(plataforma.length===0){        
+            return res.status(404).json({mensaje: "No se hayaron las plataformas"});
+        }
+        res.status(201).json(plataforma);
+    }catch(error){
+        console.log("Error al obtener datos de las plataformas");
+        res.status(500).json({ mensaje: "Error en el servidor" });
+    }
+});
+app.get('/api/v1/Plataformas/:nombre',async (req,res)=>{
+    const plataforma_nombre = decodeURIComponent(req.params.nombre);
+
+    const las_series=await Serie.findAll({ where: { plataforma: plataforma_nombre }});
+    const las_pelis=await Pelicula.findAll({ where: { plataforma: plataforma_nombre }});
+    let respuesta=[];
+    if (las_pelis.length>0){
+        respuesta=respuesta.concat(las_pelis);
+    }
+    if(las_series.length>0)
+        respuesta=respuesta.concat(las_series);
+    if (respuesta.length == 0)
+        return res.status(404).json({ mensaje: 'No se encontraron series o películas para esta plataforma' });
+    res.status(200).json(respuesta);
+})
+
+app.put('/api/v1/Plataforma/:nombre', async (req,res)=>{
+    const plataforma_nombre = decodeURIComponent(req.params.nombre);
+    const { nombre_nuevo } = req.body;
+    console.log(nombre_nuevo);
+    const plataforma = await Plataforma.findOne({ where: { plataforma : plataforma_nombre}})
+    if(!plataforma || nombre_nuevo == '')
+        return res.status(400).json({mensaje: 'Nombre de plataforma no encontrado'});
+    await Serie.update({ PLATAFORMA: nombre_nuevo }, { where: { PLATAFORMA: plataforma_nombre } });
+    await Pelicula.update({ PLATAFORMA: nombre_nuevo}, { where: { PLATAFORMA: plataforma_nombre } });
+    plataforma.plataforma= nombre_nuevo;
+    await plataforma.save();
+    res.status(200).json(nombre_nuevo);
+})
 
 // Obtener datos de usuario (sin devolver contraseña)
 app.get('/api/v1/cuentas/:us',verificarToken, async (req, res) => {
@@ -251,7 +291,8 @@ app.get('/api/v1/comentarios/:item', async (req,res)=>{
     }));
 
     res.status(200).json(todos_comentarios);
-})
+});
+
 
 // Middleware para verificar el token JWT
 function verificarToken(req, res, next) {

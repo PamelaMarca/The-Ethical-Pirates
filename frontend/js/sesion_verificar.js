@@ -21,7 +21,7 @@ function sesion_cerrada() {
 
 function verificar_sesion(){
 	const token = localStorage.getItem("token");
-	if(!token){ 
+	if(!token ){ 
 		sesion_cerrada();
 	}else{
 		iniciado();

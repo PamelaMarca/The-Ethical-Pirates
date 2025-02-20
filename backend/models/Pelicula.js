@@ -53,13 +53,17 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'id_contenido',
           as: 'favoritos'
         });
-    };
-    Pelicula.associate = (models) => {
         Pelicula.hasMany(models.Comentarios, {
           foreignKey: 'nombre_item',
           as: 'comentarios'
         });
-    };
+        // Pelicula.belongsTo(models.Plataforma, {
+        //   foreignKey: 'plataforma',
+        //   as: 'plataformas',
+        //   onDelete: 'CASCADE',
+        //   onUpdate: 'CASCADE'
+        // });
+    }
     
     return Pelicula;
 };

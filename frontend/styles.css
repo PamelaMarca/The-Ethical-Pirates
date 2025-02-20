@@ -379,13 +379,24 @@ main{
 .cuadro_informacion p{
 	padding-bottom:6px;
 }
-.cuadro_informacion span:hover{
-	color: #50c9eb;
-	cursor: pointer;
-}
+
 .cuadro_informacion a{
 	color: #50c9eb;
 }
+
+#plataforma{
+	background: none;
+	border: none;
+	color: #e0e6e9;
+	text-decoration: none;
+	
+}
+
+#plataforma:hover{
+	color: #50c9eb;
+	cursor: pointer;
+}
+
 .caja_sinopsis{
 	padding-top: 15px;
 	width: 50%;
@@ -457,13 +468,15 @@ main{
 }
 
 #tabla_favoritos{
-	width:100%;
+	width:80%;
 	border-collapse: collapse;
-	margin: 20px;
+	margin: auto;
 }
 
-#Nombres_item{
-	width: 50%;
+th{
+	width: 70%;
+	background: #196ca3;
+	padding: 5px;
 }
 #tabla_favoritos td{
 	padding: 8px 16px;
@@ -528,7 +541,40 @@ main{
 	color: #868a96;
 	padding: 10px;
 }
+#navegador_plataformas{
+	height: 45px;
+	width: 100%;
+	padding: 3%;
+	align-content: center;
+}
+#plataformas{
+	white-space: nowrap;
+	overflow-x: auto;
+	border: 1px solid #655c6e;
+}
+#plataformas::-webkit-scrollbar {
+height: 5px;
+}
+#plataformas::-webkit-scrollbar-thumb {
+    background-color: #8c82a1; 
+    border-radius: 20px; 
+}
 
+.boton_plataforma{
+	width: 150px;
+	padding: 3px;
+	margin: 3px;
+	display: inline-block;
+	cursor: pointer;
+	border: none;
+	background: #9598b9;
+	transition-duration: 0.5s;
+}
+.boton_plataforma:hover{
+	background: #403c66;
+	color: #c9cccf;
+	border-radius: 20px;
+}
 /* pie de pagina */
 
 footer{

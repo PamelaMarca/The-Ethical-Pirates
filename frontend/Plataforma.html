@@ -54,7 +54,6 @@
   
     </header>
     <main >
-        <nav id="navegador_plataformas"></nav>
         <div class="cuadro resultados" id="cuadro">
         </div>
     </main>
@@ -68,16 +67,21 @@
 
     <script>
         window.onload= function(){
-            pelis();
             verificar_sesion();
+			cargar_plataformas();
         }
-
-        function items_plataforma(dato, plataforma, tipo){
+		function items_plataforma(dato, plataforma){
             console.log(plataforma);
             const cuadro = document.getElementById('cuadro');
             cuadro.innerHTML='';
-            cuadro.innerHTML =`<h3>${tipo}</h3>`;
-            const lista = document.createElement('ul');
+            cuadro.innerHTML =`<div id="nombre_plataforma" style="display:flex; margin:10px;"><h3 style="margin:10px;">${plataforma}</h3></div>`;
+			const boton_modificar = document.createElement('button');
+			boton_modificar.innerText = 'Modificar Nombre';
+			boton_modificar.onclick = () => modificar_nombre_plataforma(plataforma);
+			const nombrePlataformaDiv = document.getElementById('nombre_plataforma');
+			nombrePlataformaDiv.appendChild(boton_modificar);
+
+			const lista = document.createElement('ul');
             lista.classList.add('fichas');
             dato.forEach(json=>{
                 if(json.PLATAFORMA === plataforma){
@@ -94,49 +98,67 @@
             }
         }
 
-        function plataformas(dato, tipo){
-            fetch('http://localhost:3000/api/v1/Plataformas')
-            .then(res => res.json())
-            .then(elemento =>{
-                const cuadro_externo= document.getElementById('navegador_plataformas');
-                const plataformas = document.createElement('div');
-                plataformas.id='plataformas';
-                elemento.forEach(p => {
-                    const boton_plataforma = document.createElement('button');
-                    boton_plataforma.innerText= p.plataforma;
-                    boton_plataforma.classList.add('boton_plataforma');
-                    boton_plataforma.onclick=()=> items_plataforma(dato, p.plataforma,tipo);
-                    plataformas.appendChild(boton_plataforma);
-                });
-                cuadro_externo.appendChild(plataformas);
+		function cargar_plataformas() {
+			const parametro = new URLSearchParams(window.location.search);
+			const nombre = parametro.get('plataforma');			
+			fetch(`http://localhost:3000/api/v1/Plataformas/${nombre}`)
+			.then(respuesta => respuesta.json())
+			.then(json => {
+				items_plataforma(json, nombre);
+			})
+			.catch(error => {
+				console.error('Error al cargar los items de la plataforma:', error);
+				const cuadro = document.getElementById('cuadro');
+				const aviso = document.createElement('div');
+				aviso.classList.add('css_mensaje');
+				aviso.innerHTML = 'Error al cargar los items de la plataforma';
+				cuadro.appendChild(aviso);
+			});
+		}
+		
+		function guardar_nombre(plataforma){
+			const nombre= document.getElementById('nuevo_nombre').value;
+			if (!nombre) {
+                alert('Esta vacio el campo para modificar');
+                return;
+            }
+			fetch(`http://localhost:3000/api/v1/Plataforma/${encodeURIComponent(plataforma)}`, {
+				method:'PUT',
+				headers:{
+                    'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ 
+					nombre_nuevo: nombre
+				})
+			})
+			.then(res=> res.json())
+			.then(json =>{
+				if(!json.mensaje)
+					window.location.href= `Plataforma.html?plataforma=${nombre}`;
+			})
+		}
+		function modificar_nombre_plataforma(plataforma){
+			const nombre_p = document.getElementById('nombre_plataforma');
+			nombre_p.innerHTML = '';
+			const formulario = document.createElement('form');
+			const titulo = document.createElement('input');
+			titulo.id='nuevo_nombre';
+			titulo.style.padding='5px'
+			titulo.placeholder=plataforma;
+			const boton_cambiar=document.createElement('button');
+			boton_cambiar.innerText='Aceptar modificacion';
+			boton_cambiar.id= 'cambiar';
+			boton_cambiar.style.padding='5px'
+			boton_cambiar.onclick=(event)=> {
+				event.preventDefault();
+				guardar_nombre(plataforma)
+			};
+			formulario.appendChild(titulo);
+			formulario.appendChild(boton_cambiar);
+			nombre_p.appendChild(formulario)
 
-            })
-        };
-        function pelis(){
-            fetch('http://localhost:3000/api/v1/Peliculas')
-            .then(respuesta => respuesta.json())
-            .then(json=>{
-                const cuadro = document.getElementById('cuadro');
-                plataformas(json.respuesta,"Peliculas");
-                cuadro.innerHTML =`<h3>Peliculas</h3>`
-                if(json.respuesta){
-                    const lista = document.createElement('ul');
-                    lista.classList.add('fichas')
-                    json.respuesta.forEach(pelicula =>{
-                        items(pelicula,lista);
-                    })
-                    cuadro.appendChild(lista);            
-                }
-                else if(json.mensaje){
-                    const aviso = document.createElement('div');
-                    aviso.classList.add('css_mensaje');
-                    aviso.innerHTML = json.mensaje;
-                    cuadro.appendChild(aviso);
-                }
-            })
-            .catch (error => console.error("No se pudieron cargar Peliculas: ",error));
-        }
-        
+		}
+
 
     </script>
 </body>

@@ -21,13 +21,6 @@ function enviar_comentario(item){
 }
 
 async function cargar_comentarios(dato){
-	// const carrusel = document.createElement('section');
-	// const siguiente = document.createElement('button');
-	// siguiente.innerText='>>';
-	// carrusel.appendChild(siguiente);
-	// const atras = document.createElement('button');
-	// atras.innerText= '<<'
-	// const pagina = document.createElement('span')
 	const lista = document.getElementById('lista_comentarios');
 
 	fetch('http://localhost:3000/api/v1/comentarios/'+ encodeURIComponent(dato.NOMBRE_COMPLETO))

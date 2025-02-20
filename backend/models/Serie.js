@@ -52,11 +52,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id_contenido',
       as: 'favoritos'
     });
-  };
-  Serie.associate = (models) => {
     Serie.hasMany(models.Comentarios, {
       foreignKey: 'nombre_item',
       as: 'comentarios'
+    });
+    Serie.belongsTo(models.Plataforma, {
+      foreignKey: 'plataforma',
+      as: 'plataformas',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     });
   };
 
