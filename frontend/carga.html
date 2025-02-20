@@ -8,6 +8,8 @@
   <style> /* cambiar a styles*/
     body {
       font-family: Arial, sans-serif;
+    }
+    main{
       margin: 20px;
     }
     form {
@@ -69,23 +71,21 @@
             </div>
             
             <nav id="navegador_interno">
-                <div class="icono_menu" onclick="desplegar()">☰</div>
-                <div class="cuadro_interno" id="cuadro_interno">
-                    <ul>
-                        <li><a id="perfil_usuario">Perfil</a></li>
-                        <li>
-                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt</strong></button>
-                            <ul id="menu">
-                                <li><a href="#">Mis Series</a></li>
-                                <li><a href="">Mis Peliculas</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="carga.html">Subir Pelis o Series</a></li>
-                        <li><a href="">Comentarios</a></li>
-                        <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
-                    </ul>
-                </div>
-
+              <div class="icono_menu" onclick="desplegar()">☰</div>
+              <div class="cuadro_interno" id="cuadro_interno">
+                  <ul>
+                      <li><a id="perfil_usuario">Perfil</a></li>
+                      <li>
+                          <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt;</strong></button>
+                          <ul id="menu">
+                              <li><a href="favoritos.html?tipo=Series">Mis Series</a></li>
+                              <li><a href="favoritos.html?tipo=Peliculas">MIs Peliculas</a></li>
+                          </ul>
+                      </li>
+                      <li><a href="carga.html">Subir Pelis o Series</a></li>
+                      <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
+                  </ul>
+              </div>
             </nav> 
         </section>    
         <section>
@@ -158,5 +158,12 @@
   </footer>
 
   <script src="./js/carga.js"></script>
+  <script src="./js/sesion_verificar.js"></script>
+  <script src="./js/perfil.js"></script>
+  <script>
+    window.onload = function(){
+      verificar_sesion();
+    }
+  </script>
 </body>
 </html>

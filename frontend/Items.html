@@ -39,18 +39,23 @@
             </nav> 
         </section>    
         <section>
-            <nav class="navegador">
-                <div class="paginas">
-                <a id="index" href="index.html">Home</a>
-                <a href="Series.html">Series</a>
-                <a href="Peliculas.html">Peliculas</a>
+            <nav id="navegador_interno">
+                <div class="icono_menu" onclick="desplegar()">☰</div>
+                <div class="cuadro_interno" id="cuadro_interno">
+                    <ul>
+                        <li><a id="perfil_usuario">Perfil</a></li>
+                        <li>
+                            <button class="biblio" onclick="desplega_biblio()">Mi Biblioteca  <strong id="signo">&lt;</strong></button>
+                            <ul id="menu">
+                                <li><a href="favoritos.html?tipo=Series">Mis Series</a></li>
+                                <li><a href="favoritos.html?tipo=Peliculas">MIs Peliculas</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="carga.html">Subir Pelis o Series</a></li>
+                        <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
+                    </ul>
                 </div>
-
-                <div id="buscador">
-                    <input type="text" id="search" placeholder="Buscar ...">
-                    <span id="buscar">&#128269</span>
-                </div>
-            </nav>
+            </nav> 
 
         </section>
   
