@@ -30,11 +30,8 @@
                                 <li><a href="favoritos.html?tipo=Peliculas">MIs Peliculas</a></li>
                             </ul>
                         </li>
-<<<<<<< HEAD:frontend/mis_favoritos.html
                         <li><a href="carga.html">Subir Pelis o Series</a></li>
                         <li><a href="">Comentarios</a></li>
-=======
->>>>>>> develop_v3:frontend/favoritos.html
                         <li><button id="cerrar_sesion" onclick="sesion_cerrada()">Cerrar Sesion</button></li>
                     </ul>
                 </div>
@@ -77,38 +74,22 @@
 			mostrar_fav()
             verificar_sesion();
         }
-		function eliminar_favorito(id_contenido){
-			const parametro = new URLSearchParams(window.location.search);
-			const tipo = parametro.get('tipo');
-			const token = localStorage.getItem('token');
-			const us = localStorage.getItem('id_user');
-			if (!token){
-				alert("Inicie sesion para eliminar de favorito")
-				sesion_cerrada();
-				window.location.href="inicio_registro.html";
-			}
-			let contenido;
-			if(tipo === 'Peliculas') contenido= 'pelicula';
-			else if(tipo === 'Series') contenido= 'serie';
-
-			console.log(`ID Usuario: ${us}, Tipo: ${contenido}, ID Contenido: ${id_contenido}`);
-			
-			fetch(`http://localhost:3000/api/v1/Favorito/${us}/${contenido}/${id_contenido}`,{
-				method: "DELETE",
-				headers: {
-					'Authorization': 'Bearer ' + token,
-					'Content-Type': 'application/json'
-					}
-			})
-			
-			.then(res => res.json())
-			.then( json=>{
-				if(!mensaje){
-					alert("Eliminado de favoritos con exito");
-					// mostrar_fav();
-				}
-			})
-		}
+		// function eliminar_favorito(){
+		// 	const token = localStorage.getItem('token');
+		// 	const us = localStorage.getItem('id_user');
+		// 	if (!token){
+		// 		alert("Inicie sesion para eliminar de favorito")
+		// 		sesion_cerrada();
+		// 		window.location.href="inicio_registro.html";
+		// 	}
+		// 	fetch(`http://localhost:3000/api/v1/Favorito/${us}/${tipo}/${id_contenido}`,{
+		// 		method: "DELETE",
+		// 		headers: {
+		// 			'Authorization': 'Bearer ' + token,
+		// 			'Content-Type': 'application/json'
+		// 			}
+		// 		})
+		// }
 
 		function mostrar_fav(){
 			const parametro = new URLSearchParams(window.location.search);
@@ -128,44 +109,29 @@
 			})
 			.then(res => res.json())
 			.then(fav =>{
-				const cuadro = document.getElementById('cuadro');
-				cuadro.innerHTML='';
-
+				console.log(fav);
 				if(Array.isArray(fav) && fav.length > 0){
-					const tabla = document.createElement('table');
-					tabla.id='tabla_favoritos';
-					const encabezado = document.createElement('thead');
-					encabezado.innerHTML='<tr><th id="Nombres_item">Nombre</th></tr>';
-					tabla.appendChild(encabezado);
-
-					const cuerpo = document.createElement('tbody');
+					const cuadro = document.getElementById('cuadro');
+					const div = document.createElement('div');
+					const columna = document.createElement('ul');
 					fav.forEach(element => {
-
-						const fila = document.createElement('tr');
-						const celda1 = document.createElement('td');
+						const fila = document.createElement('li');
 						const titulo = document.createElement('a');
 						titulo.innerText= element.contenido;
 						titulo.href="Items.html?nombre=" + encodeURIComponent(element.contenido);
-						celda1.appendChild(titulo);
+						fila.appendChild(titulo);
 
-						const celda2 = document.createElement('td');
 						const eliminar = document.createElement('button');
-						eliminar.classList.add('eliminar_fav');
-						eliminar.id='eliminar_fav';
 						eliminar.innerText="Eliminar de favoritos";
 						eliminar.onclick= ()=> eliminar_favorito(element.id_contenido);
-						celda2.appendChild(eliminar);
+						fila.appendChild(eliminar);
 
-						fila.appendChild(celda1);
-						fila.appendChild(celda2);
-						cuerpo.appendChild(fila);
+						columna.appendChild(fila);
 					});
-					tabla.appendChild(cuerpo);
-					cuadro.appendChild(tabla);
+					div.appendChild(columna);
+					cuadro.appendChild(div);
 				}else{
-					const mensaje = document.createElement('h2');
-					mensaje.innerText="No tienes favoritos Aun";
-					cuadro.appendChild(mensaje);
+					alert("No tienes favoritos");
 				}
 			})
 		}
