@@ -29,18 +29,23 @@ function eliminar_plataforma(){
 	if (nombrePlataforma === '') {
         alert('No se ingreso nada');
     }else{
-		fetch('http://localhost:3000/api/v1/Plataforma/'+ encodeURIComponent(nombrePlataforma), {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-		})
-		.then(res => res.json())
-		.then(json =>{
-			if(!json.mensaje){
-				alert("Plataforma eliminada con exito. Se borraron tambien peliculas con el nombre de plataforma");
-				input.value='';
-			}
-		})
+		const confirmacion = confirm(`¿Estás seguro de que quieres eliminar la plataforma "${nombrePlataforma}"?`);
+		if (confirmacion) {
+			fetch('http://localhost:3000/api/v1/Plataforma/'+ encodeURIComponent(nombrePlataforma), {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			})
+			.then(res => res.json())
+			.then(json =>{
+				if(!json.mensaje){
+					alert("Plataforma eliminada con exito. Se borraron tambien peliculas con el nombre de plataforma");
+					input.value='';
+				}
+			})
+		}else{
+			input.value='';
+		}
 	}
 }
