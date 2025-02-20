@@ -31,10 +31,6 @@ app.get('/', (req, res) => {
 app.get('/api/v1/Favorito/:id/:tipo', verificarToken, async (req, res) => {
     const tipo = req.params.tipo;
     const usuario = req.params.id;
-    
-    // const prueba = await Favoritos.findAll({ where: { id_usuario: req.params.id, contenido: 'pelicula' }, include: [{ model: Pelicula, as:'pelicula',attributes:['NOMBRE_COMPLETO']}]});
-    // console.log(prueba);
-    // res.status(200).json(prueba);
 
     try{
         let coleccion;
@@ -67,7 +63,6 @@ app.get('/api/v1/Favorito/:id/:tipo', verificarToken, async (req, res) => {
         console.error(error);
         res.status(500).json({ mensaje: "Error al obtener favoritos" });
     }
-
 });
 
 app.post('/api/v1/Favorito', verificarToken, async(req,res)=>{
@@ -85,8 +80,16 @@ app.post('/api/v1/Favorito', verificarToken, async(req,res)=>{
     res.json(favorito);
 });
 
-app.delete('/api/v1/Favorito/:id/:tipo/:id_contenido', verificarToken, async(req,res)=>{
-    const { id, tipo, id_contenido }= req.params;
+app.delete('/api/v1/Favorito/:ID/:TIPO/:ID_CONTENIDO', verificarToken, async(req,res)=>{
+    const { ID, TIPO, ID_CONTENIDO } = req.params;
+    console.log(`ID: ${ID}, TIPO: ${TIPO}, ID_CONTENIDO: ${ID_CONTENIDO}`);
+    const favorito = await Favoritos.findOne({ where: { id_usuario: ID, contenido: TIPO, id_contenido: ID_CONTENIDO } });
+    if (!favorito) {
+        return res.status(400).json({ mensaje: "Error al intentar eliminar de favoritos" });
+    }
+    console.log('Favorito encontrado:', favorito);
+    await favorito.destroy();
+    res.status(200).json(favorito);
      
 })
 

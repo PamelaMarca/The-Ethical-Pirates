@@ -36,8 +36,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 			const token_nombre = localStorage.getItem("nombre");
 			window.location.href= `perfil.html?cuenta=${token_nombre}`
 		})
-	}else{
-		console.error("Perfil no encontrado");
+	}
+	else{
+		console.log("Perfil no encontrado");
 	}
 	if(boton_cerrar){
 		boton_cerrar.addEventListener('click',()=>{
@@ -45,6 +46,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 			window.location.href='inicio_registro.html';
 		})
 	}else{
-		console.log("NO se pudo cerrar");
+		console.log("Nn se pudo cerrar sesion");
 	}
 })
