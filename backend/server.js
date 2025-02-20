@@ -249,6 +249,25 @@ app.delete('/api/v1/cuenta/:usuario', async (req,res)=>{
 
 })
 
+//formulario de carga
+app.post('/api/v1/Peliculas', verificarToken, async (req, res) => {
+    try {
+        const nuevaPelicula = await Pelicula.create(req.body);
+        res.status(201).json({ mensaje: "Película creada exitosamente", nuevaPelicula });
+    } catch (error) {
+        res.status(500).json({ mensaje: "Error al crear la película", error });
+    }
+});
+
+app.post('/api/v1/Series', verificarToken, async (req, res) => {
+    try {
+        const nuevaSerie = await Serie.create(req.body);
+        res.status(201).json({ mensaje: "Serie creada exitosamente", nuevaSerie });
+    } catch (error) {
+        res.status(500).json({ mensaje: "Error al crear la serie", error });
+    }
+});
+
 app.post('/api/v1/comentar', async (req, res)=>{
     const { ID_PERSONA, COMENTARIO, NOMBRE_ITEM  }= req.body;
         

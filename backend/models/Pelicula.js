@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         FECHA_ESTRENO: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
         },
         TOTAL_DURACION: {
             type: DataTypes.INTEGER
